@@ -1,0 +1,294 @@
+@import '../../../../config';
+
+.Create_Question_Paper,
+.own_question_paper,
+.adaptive_question_papers,
+.error_questions,
+.un_answered,
+.old_public_exam {
+    .aside {
+        @media (min-width: 992px) {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 260px;
+            z-index: 2;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: $theme2;
+    }
+
+    .single_question_card {
+        position: relative;
+
+        .icon_block .icons {
+            width: 50px;
+            height: 50px;
+            line-height: 55px;
+            border-radius: 50%;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: -2.4rem;
+
+            i {
+                font-size: 1.45rem;
+            }
+        }
+
+        .adaptive.icons {
+            background: linear-gradient(91deg, #07e63f 0%, #09722c 100%);
+        }
+
+        .custom.icons {
+            background: linear-gradient(91deg, #077EE6 0%, #3AC555 100%);
+        }
+
+        .error.icons {
+            background: linear-gradient(90deg, #A10000 0%, #E30303 100%);
+        }
+
+        .unanswered.icons {
+            background: linear-gradient(90deg, #F4A00B 0%, #FFDD00 100%);
+        }
+
+        .public.icons {
+            background: linear-gradient(90deg, #CFF40B 0%, #138128 100%);
+        }
+    }
+
+    .single_card {
+        position: relative;
+
+        &:hover,
+        &.active {
+            cursor: pointer;
+            box-shadow: 0px 1px 30px hsla(0, 0%, 0%, 0.2) !important;
+        }
+
+        .img_block img {
+            width: 50px;
+            height: 50px;
+            line-height: 55px;
+            border-radius: 50%;
+            text-align: center;
+            color: #ffffff;
+            border: 1px solid #EEEEEE;
+            margin-bottom: -2.4rem;
+        }
+
+        .class_section_names,
+        .description {
+            font-size: 13px;
+        }
+    }
+
+    .aside .single-list-card {
+        margin-bottom: 4px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-title {
+            font-size: 15px;
+        }
+
+        .topic-list li {
+            padding: 6px 10px 0;
+            margin-bottom: 4px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .custom_exam_papers {
+        position: relative;
+
+        @media (min-width: 768px) {
+            .custom_exam_card .card-header {
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+        }
+    }
+
+    .Custom_Exam_Syllabus {
+        .card-group {
+            .card {
+
+                .subjects-list li:hover,
+                .subjects-list li.active,
+                .chapter-list li:hover,
+                .chapter-list li.active {
+                    cursor: pointer;
+                    border-radius: 2px;
+                    background: #EFEFEF;
+                    padding: 0.2rem 0.5rem;
+                }
+
+                .list-unstyled li {
+                    padding: 0.2rem 0.5rem;
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+        @media (max-width: 991px) {
+            .card-group .card+.card {
+                border-left: 1px solid rgba(0, 0, 0, 0.125) !important;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .card-group {
+                display: flex;
+                flex-flow: column wrap;
+
+                .card {
+                    flex-direction: inherit;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+
+
+    .table-borderless {
+        margin-bottom: 0;
+
+        td,
+        th {
+            padding: 0.3rem 0.5rem;
+            border: 0;
+        }
+    }
+}
+
+.old_public_exam .custom_setup form .card .card-body {
+    @media (min-width: 768px) {
+        .no-gutters>[class*="col-"]:not(:last-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .no-gutters>[class*="col-"]:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .no-gutters>[class*="col-"]+[class*="col-"] {
+            margin-left: 0;
+            border-left: 0;
+        }
+
+    }
+
+    .chapter-list li:hover,
+    .chapter-list li.active {
+        cursor: pointer;
+        border-radius: 2px;
+        background: #EFEFEF;
+        padding: 0.2rem 0.5rem;
+    }
+
+    .list-unstyled li {
+        padding: 0.2rem 0.5rem;
+        text-transform: uppercase;
+    }
+}
+
+
+.Create_Question_Paper_type {
+    position: relative;
+
+    a {
+        text-decoration: none;
+        color: #1B2430;
+
+        .single-card {
+            position: relative;
+
+            &:hover,
+            &:focus {
+                box-shadow: 0 0.5rem 1rem rgba(66, 45, 45, 0.15) !important
+            }
+
+            .icons {
+                position: absolute;
+                left: 20px;
+                top: 15px;
+                width: 70px;
+                height: 70px;
+                line-height: 80px;
+                border-radius: 50%;
+                text-align: center;
+                color: #1B2430;
+                border: 1px solid #DEDEDE;
+                background: #DEDEDE;
+                margin-bottom: -8rem;
+
+                i {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+}
+
+#filter-popover.popover {
+    .popover-body {
+        padding: 0;
+
+        .nav-tabs {
+            background: #f8f9fa;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+        }
+
+        .nav-tabs .nav-item {
+            margin-bottom: 0;
+
+            .nav-link {
+                border: none;
+            }
+        }
+
+        .nav-tabs .nav-link {
+            font-weight: 500;
+            border: none;
+            color: #495057;
+        }
+
+        .nav-tabs .nav-link.active,
+        .nav-tabs .nav-item.show .nav-link {
+            font-weight: 600;
+            color: #121412;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #3ac555;
+        }
+
+        .tab-content {
+            padding: 0.5rem 0.5rem 0;
+            max-height: 130px;
+            overflow-y: scroll;
+
+            .custom-list li {
+                margin-bottom: 6px;
+
+                &:not(:last-child) {
+                    margin-right: 0;
+                }
+
+                .text {
+                    width: 250px;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+}

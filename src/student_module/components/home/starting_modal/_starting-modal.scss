@@ -1,0 +1,239 @@
+.preparation-lifecircle-modal {
+  .close-modal-btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    background: #ffffff5d;
+    font-size: 14px;
+    z-index: 1;
+  }
+
+  .modal-content {
+    position: relative;
+    box-shadow: 0px 3px 20px #00000029;
+    border-radius: 6px;
+    background: #f9c52d;
+
+    &::before {
+      left: 0px;
+      top: 145px;
+      content: "";
+      position: absolute;
+      background: url("../../../../images/lifecircle-waves2.png");
+      background-repeat: no-repeat;
+      width: 120px;
+      height: 60px;
+    }
+
+    .lines-img {
+      position: absolute;
+      top: 0px;
+      right: 5px;
+    }
+
+    .plm-content {
+      position: relative;
+
+      .plm-nav {
+        [class*="col-"] {
+          position: relative;
+
+          &:not(:last-child)::before {
+            width: 74px;
+            height: 100%;
+            right: -38px;
+            top: -5px;
+            content: "";
+            position: absolute;
+            background: url("../../../../images/step-direction.png");
+            background-repeat: no-repeat;
+            background-size: 100px;
+            background-position: center;
+            z-index: 1;
+          }
+
+          &:nth-child(1) {
+            @media (max-width: 575.98px) {
+              &::before {
+                top: -12px;
+              }
+            }
+
+            .direction-btn {
+              border-radius: 32% 70% 52% 50% / 44% 50% 56% 70%;
+            }
+          }
+
+          &:nth-child(2) {
+            &::before {
+              width: 80px;
+              right: -40px;
+              top: 14px;
+              transform: rotate(-180deg) scaleX(-1);
+
+              @media (max-width: 575.98px) {
+                width: 70px;
+                right: -34px;
+                top: 16px;
+              }
+            }
+
+            .direction-btn {
+              border-radius: 38% 36% 27% 64% / 60% 52% 50% 45%;
+            }
+          }
+
+          &:nth-child(3) {
+            &::before {
+              width: 80px;
+              right: -38px;
+              top: -12px;
+
+              @media (max-width: 575.98px) {
+                width: 74px;
+                right: -35px;
+                top: -11px;
+              }
+            }
+
+            .direction-btn {
+              border-radius: 32% 70% 52% 50% / 44% 50% 56% 70%;
+            }
+          }
+
+          &:nth-child(4) {
+            .direction-btn {
+              border-radius: 56% 36% 34% 39% / 52% 58% 42% 45%;
+            }
+          }
+
+          .direction-btn {
+            padding: 10px;
+            width: 70px;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: #00040a;
+            text-decoration: none;
+            border: 1px solid #f9c52d;
+            background: #ffffff;
+            box-shadow: 0px 3px 10px #0000001f;
+            font-size: 11px;
+            z-index: 1;
+
+            @media screen and (min-width: 992px) {
+              font-size: 14px;
+              width: 100px;
+            }
+
+            &:hover,
+            &.active {
+              border: 1px solid #fff;
+              background: #f9c52d;
+            }
+          }
+        }
+      }
+
+      .single-modal-card {
+        border-radius: 0.5rem;
+        overflow: hidden;
+
+        .card-body {
+          .lifecircle-modal-title {
+            font-size: 15px;
+          }
+
+          .lifecircle-modal-text {
+            font-size: 14px;
+          }
+        }
+
+        .card-footer {
+          text-align: center;
+          background: linear-gradient(106deg, #ecc602 0%, #e7889e 100%);
+
+          i {
+            right: 5px;
+            position: absolute;
+            background: #fff;
+            color: #000;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mobile-start-modal {
+  .close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1;
+    box-shadow: none;
+    outline: none;
+  }
+  .modal-content {
+    position: relative;
+    box-shadow: 0px 3px 20px #00000029;
+    border-radius: 2.5rem;
+    overflow: hidden;
+    .modal-body {
+      .custom-card {
+        margin-top: 2rem;
+        margin-bottom: 12rem;
+        margin: 0 auto;
+        position: relative;
+        background: transparent;
+        // box-shadow: 12px 1px 12px 2px rgba(0, 0, 0, 0.175);
+        z-index: 1;
+      }
+      .content {
+        .title {
+          color: #111b51;
+          font-weight: 700;
+        }
+        .subtitle {
+          color: #000;
+          font-weight: 400 !important;
+        }
+        .description {
+          font-size: 1.2rem;
+          color: #000;
+          text-transform: uppercase;
+        }
+      }
+      .waves img {
+        position: absolute;
+
+        &.img-1 {
+          left: -65px;
+          top: -90px;
+          transform: rotate(-5deg);
+        }
+        &.img-2 {
+          top: -120px;
+          right: -100px;
+        }
+        &.img-3 {
+          right: -62px;
+          bottom: -70px;
+        }
+        &.img-4 {
+          left: -143px;
+          bottom: -143px;
+        }
+      }
+    }
+  }
+}

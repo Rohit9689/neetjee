@@ -1,0 +1,842 @@
+.student-top-nav {
+    position: relative;
+    background: linear-gradient(180deg, #5db8fd 0%, #116cd3 74%);
+
+    &.dummyname {
+        background: linear-gradient(180deg, #ffffff 0%, #ffffff 74%);
+    }
+
+    .header-top {
+        box-shadow: none;
+        position: relative;
+        z-index: 1;
+
+        .navbar-nav {
+            align-items: center;
+
+            .nav-item {
+
+                .nav-link {
+                    color: #ffffff;
+                }
+            }
+
+            .profile-img {
+                background: #ffffff;
+                border: 1px solid #ffffff;
+                border-radius: 20px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .text {
+                    .profile-name {
+                        font-size: 14px;
+                        line-height: 6px;
+                    }
+                }
+            }
+        }
+
+        .search .search-bar {
+            color: #ffffff;
+            background: #ffffff17;
+            box-shadow: none;
+        }
+
+        .student-notification i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-bottom {
+        position: relative;
+    }
+
+    // physics
+    &.physics {
+        position: relative;
+
+        &::before {
+            content: "";
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background: transparent linear-gradient(180deg, #FEAF55 0%, #F05D70 100%);
+        }
+    }
+
+    // botany
+    &.botany {
+        position: relative;
+
+        &::before {
+            content: "";
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background: transparent linear-gradient(180deg, #68AC33 0%, #028163 100%);
+        }
+    }
+
+    // zoology
+    &.zoology {
+        position: relative;
+
+        &::before {
+            content: "";
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background: transparent linear-gradient(180deg, #C57B00 0%, #922E01 100%);
+        }
+    }
+
+    // chemistry
+    &.chemistry {
+        position: relative;
+
+        &::before {
+            content: "";
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background: transparent linear-gradient(180deg, #55B5FE 0%, #0060CE 100%);
+        }
+    }
+
+    // maths
+    &.maths {
+        position: relative;
+
+        &::before {
+            content: "";
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background: transparent linear-gradient(180deg, #6D6D6D 0%, #00040A 100%);
+        }
+    }
+}
+
+
+.student-home {
+
+    .student-subject-card {
+        position: relative;
+        margin-top: -3rem;
+
+        .single-card {
+            color: #ffffff;
+            overflow: hidden;
+            border-radius: 10px !important;
+            margin-bottom: 15px;
+            cursor: pointer;
+
+            .card-body {
+                .progress {
+                    height: 0.65rem;
+
+                    .progress-bar {
+                        border-radius: 4px;
+                        color: #f8f9fa;
+                        background: #152031 !important;
+                    }
+                }
+
+                .card-subtitle {
+                    width: 55px;
+                    height: 55px;
+                    line-height: 55px;
+                    border-radius: 15px;
+                    text-align: center;
+                    background: #ffffff1f;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .icon {
+                        width: 40px;
+                        height: 40px;
+                        line-height: 40px;
+                        border-radius: 50%;
+                        text-align: center;
+                        background: #ffffff1f;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        svg {
+                            width: 20px;
+                        }
+                    }
+                }
+            }
+
+            &.botany {
+                background: #3AC555;
+                border: 2px solid transparent;
+
+                &:hover,
+                &.active {
+                    box-shadow: 0px 20px 30px #00000047 !important;
+                    border: 2px solid #57E372;
+                }
+            }
+
+            &.zoology {
+                background: #C37800;
+                border: 2px solid transparent;
+
+                &:hover,
+                &.active {
+                    box-shadow: 0px 20px 30px #00000047 !important;
+                    border: 2px solid #E39E30;
+                }
+            }
+
+            &.physics {
+                background: #F05D70;
+                border: 2px solid transparent;
+
+                &:hover,
+                &.active {
+                    box-shadow: 0px 20px 30px #00000047 !important;
+                    border: 2px solid #FEAF55;
+                }
+            }
+
+            &.chemistry {
+                background: #0060CE;
+                border: 2px solid transparent;
+
+                &:hover,
+                &.active {
+                    box-shadow: 0px 20px 30px #00000047 !important;
+                    border: 2px solid #2785F2;
+                }
+            }
+
+            &.maths {
+                background: #707070;
+                border: 2px solid transparent;
+
+                &:hover,
+                &.active {
+                    box-shadow: 0px 20px 30px #00000047 !important;
+                    border: 2px solid #6D6D6D;
+                }
+            }
+        }
+    }
+
+    .learn_practice.card {
+        box-shadow: 0px 3px 20px #00000029;
+        border-radius: 6px;
+
+        .card-header {
+            border-radius: 6px 6px 0px 0px;
+
+            .icon {
+                background: #ffffff;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                box-shadow: 0px 3px 6px #00000029;
+            }
+
+            .header-text {
+                .card-title {
+                    font-size: 16px;
+                    color: #142031;
+                }
+
+                .card-subtitle {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .learn_practice_lists {
+            position: relative;
+
+            .singleTopic {
+                padding-top: 0.5rem;
+                padding-bottom: .9rem;
+
+                .topic-content {
+
+                    .sno {
+                        font-family: 'proxima-nova', sans-serif;
+                        font-size: 14px;
+                        width: 30px;
+                        height: 30px;
+                        line-height: 30px;
+                        border-radius: 50%;
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .content {
+                        .content-title {
+                            font: normal normal normal 14px/18px 'proxima-nova', sans-serif;
+                            letter-spacing: 0px;
+                            color: #142031;
+                        }
+
+                        .content-description {
+                            font: normal normal bold 12px/18px 'proxima-nova', sans-serif;
+                            letter-spacing: 0px;
+                        }
+                    }
+                }
+
+                .status,
+                .accurancy {
+                    font-family: 'proxima-nova', sans-serif;
+                    font-size: 12px;
+                    line-height: 1.4;
+                    letter-spacing: 0px;
+
+                    strong {
+                        font-size: 12px;
+                        font-weight: 600;
+                        letter-spacing: 0px;
+                    }
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        &.physics {
+            .card-header {
+                background: #f6ad541a !important;
+
+                .icon i {
+                    color: #F6AE54;
+                }
+
+                .header-text {
+                    .card-subtitle {
+                        color: #F78D08;
+                    }
+                }
+            }
+
+            .learn_practice_lists {
+                .singleTopic {
+                    .topic-content {
+
+                        .sno {
+                            color: #142031;
+                            background: #FEF7ED;
+                            border: 1px solid #F6AE54;
+                        }
+
+                        .content {
+                            .content-description {
+                                color: #F78D08;
+                            }
+                        }
+                    }
+
+                    .status,
+                    .accurancy {
+                        strong {
+                            color: #F78D08;
+                        }
+
+                        color: #F78D08;
+                    }
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid hsla(33, 90%, 65%, 0.5);
+                    }
+                }
+            }
+        }
+
+        &.botany {
+            .card-header {
+                background: #28a7454d !important;
+
+                .icon i {
+                    color: #68AC33;
+                }
+
+                .header-text {
+                    .card-subtitle {
+                        color: #68AC33;
+                    }
+                }
+            }
+
+            .learn_practice_lists {
+                .singleTopic {
+                    .topic-content {
+
+                        .sno {
+                            color: #142031;
+                            background: #68ac3344;
+                            border: 1px solid #68AC33;
+                        }
+
+                        .content {
+                            .content-description {
+                                color: #68AC33;
+                            }
+                        }
+                    }
+
+                    .status,
+                    .accurancy {
+                        strong {
+                            color: #68AC33;
+                        }
+
+                        color: #68AC33;
+                    }
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid hsla(166, 97%, 26%, 0.5);
+                    }
+                }
+            }
+        }
+
+        &.zoology {
+            .card-header {
+                background: #c57a0091 !important;
+
+                .icon i {
+                    color: #C57B00;
+                }
+
+                .header-text {
+                    .card-subtitle {
+                        color: #922E01;
+                    }
+                }
+            }
+
+            .learn_practice_lists {
+                .singleTopic {
+                    .topic-content {
+
+                        .sno {
+                            color: #142031;
+                            background: #dfd1bb;
+                            border: 1px solid #C57B00;
+                        }
+
+                        .content {
+                            .content-description {
+                                color: #922E01;
+                            }
+                        }
+                    }
+
+                    .status,
+                    .accurancy {
+                        strong {
+                            color: #922E01;
+                        }
+
+                        color: #922E01;
+                    }
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid hsla(19, 99%, 29%, 0.5);
+                    }
+                }
+            }
+        }
+
+        &.chemistry {
+            .card-header {
+                background: #0060CE69 !important;
+
+                .icon i {
+                    color: #0060CE;
+                }
+
+                .header-text {
+                    .card-subtitle {
+                        color: #0060CE;
+                    }
+                }
+            }
+
+            .learn_practice_lists {
+                .singleTopic {
+                    .topic-content {
+
+                        .sno {
+                            color: #142031;
+                            background: #b1c4da;
+                            border: 1px solid #0060CE;
+                        }
+
+                        .content {
+                            .content-description {
+                                color: #0060CE;
+                            }
+                        }
+                    }
+
+                    .status,
+                    .accurancy {
+                        strong {
+                            color: #0060CE;
+                        }
+
+                        color: #0060CE;
+                    }
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid hsla(212, 100%, 40%, 0.5);
+                    }
+                }
+            }
+        }
+
+        &.maths {
+            .card-header {
+                background: #6D6D6D69 !important;
+
+                .icon i {
+                    color: #6D6D6D;
+                }
+
+                .header-text {
+                    .card-subtitle {
+                        color: #56585a;
+                    }
+                }
+            }
+
+            .learn_practice_lists {
+                .singleTopic {
+                    .topic-content {
+
+                        .sno {
+                            color: #142031;
+                            background: #e2e2e2;
+                            border: 1px solid #6D6D6D;
+                        }
+
+                        .content {
+                            .content-description {
+                                color: #00040A;
+                            }
+                        }
+                    }
+
+                    .status,
+                    .accurancy {
+                        strong {
+                            color: #00040A;
+                        }
+
+                        color: #00040A;
+                    }
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid hsla(216, 100%, 2%, 0.5);
+                    }
+                }
+            }
+        }
+    }
+
+    .preparation-lifecircle {
+        position: relative;
+        box-shadow: 0px 3px 20px #00000029;
+        border-radius: 6px;
+        border: 1px solid #F9C52D;
+        overflow: hidden;
+
+        &::before {
+            top: 0;
+            right: 20px;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 76px;
+            background: url('../../../images/lifecircle-top-line.png');
+            background-repeat: no-repeat;
+            background-position: right;
+            z-index: 1;
+        }
+
+        .card-group {
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                width: 140px;
+                height: 80px;
+                left: 0;
+                bottom: 0px;
+                content: '';
+                position: absolute;
+                background-image: url('../../../images/lifecircle-waves.png');
+                background-repeat: no-repeat;
+                background-position: left bottom;
+                z-index: 1;
+            }
+
+            .card {
+                border: none;
+                position: relative;
+
+                .life-circle-heading {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: 'proxima-nova', sans-serif;
+
+                    .btnBg {
+                        padding: 12px 25px;
+                        position: relative;
+                        display: inline-block;
+                        cursor: pointer;
+                        color: #00040A;
+                        text-decoration: none;
+                        border: 1px solid #F9C52D;
+                        box-shadow: 0px 3px 10px #0000001f;
+
+                        span {
+                            font-family: 'proxima-nova', sans-serif;
+                            position: relative;
+                            font-size: 16px;
+                            font-weight: 600;
+                            z-index: 1;
+                        }
+
+                        &.btnOne {
+                            border-radius: 52% 53% 25% 85% / 40% 60% 55% 70%;
+                        }
+
+                        &.btnTwo {
+                            border-radius: 38% 36% 27% 64% / 60% 52% 50% 45%;
+                        }
+
+                        &.btnThree {
+                            border-radius: 32% 70% 52% 50% / 44% 50% 56% 70%;
+                        }
+
+                        &.btnFour {
+                            border-radius: 56% 36% 34% 39% / 52% 58% 42% 45%;
+                        }
+
+                        &.focus,
+                        &:focus,
+                        &:hover {
+                            color: #212529;
+                            background-color: #F9C52D;
+                            border-color: #212529;
+                        }
+                    }
+                }
+
+                .list-unstyled li {
+                    button {
+                        font-family: 'proxima-nova', sans-serif;
+                        font-size: 14px;
+                        line-height: 16px;
+                        color: #142031;
+                        background-color: #fefeff;
+                        border-color: #fefeff;
+                        box-shadow: 0px 3px 6px #00000021;
+                        width: 100%;
+                        height: 42px;
+
+                        &.focus,
+                        &:focus,
+                        &:hover {
+                            color: #212529;
+                            background-color: #F9C52D;
+                            border-color: #F9C52D;
+                        }
+                    }
+
+                    &:not(:last-child) {
+                        margin-bottom: 10px;
+                    }
+                }
+
+                @media screen and (min-width: 768px) {
+
+                    &:not(:last-child):before {
+                        top: 30%;
+                        right: -1px;
+                        content: '';
+                        position: absolute;
+                        background-image: radial-gradient(ellipse at center, hsla(45, 94%, 58%, 0.8) 0%, transparent 80%);
+                        height: 50%;
+                        width: 4px;
+                        border-radius: 50%;
+                    }
+
+                    &:not(:last-child):after {
+                        width: 48%;
+                        height: 100%;
+                        right: -36px;
+                        top: -110px;
+                        content: '';
+                        position: absolute;
+                        background-image: url('../../../images/step-direction.png');
+                        background-repeat: no-repeat;
+                        background-size: 160px;
+                        background-position: center;
+                        z-index: 1;
+                    }
+
+                    &:nth-child(2):after {
+                        width: 40%;
+                        transform: rotate(-180deg) scaleX(-1);
+                        top: -112px;
+                    }
+
+                    &:nth-child(3):after {
+                        right: -36px;
+                        width: 40%;
+                    }
+                }
+            }
+        }
+
+        .preparation-lifecircle-footer {
+            position: relative;
+
+            &::before {
+                width: 60px;
+                height: 100%;
+                right: 20px;
+                top: -50px;
+                content: '';
+                position: absolute;
+                background-image: url('../../../images/trophy.png');
+                background-repeat: no-repeat;
+                background-position: right;
+                z-index: 1;
+            }
+
+            img {
+                left: 0;
+                bottom: -16px;
+                position: absolute;
+                width: 100%;
+                background-repeat: no-repeat;
+            }
+
+            .btnBg {
+                position: relative;
+                height: 85px;
+                width: 120px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+
+                span {
+                    font-family: 'proxima-nova', sans-serif;
+                    position: relative;
+                    font-size: 16px;
+                    font-weight: 600;
+                    top: -2px;
+                    z-index: 1;
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url('../../../images/preparationLifecircle/footer_shape.svg');
+                    background-size: 130px;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    z-index: 1;
+                }
+            }
+
+            .list-inline {
+                position: relative;
+                z-index: 1;
+
+                li {
+                    &:not(:last-child) {
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                    }
+
+                    button {
+                        font-family: 'proxima-nova', sans-serif;
+                        font-size: 14px;
+                        line-height: 16px;
+                        color: #212529;
+                        background-color: #ffffff;
+                        border-color: #ffffff;
+                        border-radius: 20px;
+                        padding: 8px 20px;
+                        box-shadow: 0px 3px 10px #0000000D;
+
+                        &.focus,
+                        &:focus,
+                        &:hover {
+                            color: #ffffff;
+                            background-color: #00040A;
+                            border-color: #00040A;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .card.exam-name {
+        font-family: 'proxima-nova', sans-serif;
+        box-shadow: 0px 3px 20px #00000029;
+        border-radius: 8px;
+        overflow: hidden;
+
+        .card-body {
+            background: #FFFFFF;
+            border-radius: 6px;
+            margin-top: 0 !important;
+
+            .examIcon {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+        }
+
+        &.CurrentExam .card-body {
+            border: 1px solid #F08A5E;
+        }
+
+        &.UpcommingExam .card-body {
+            border: 1px solid #0254BD;
+        }
+    }
+}

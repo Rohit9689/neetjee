@@ -1,0 +1,160 @@
+.header-area {
+  .scroll-header .header-top {
+    position: relative;
+    box-shadow: none;
+    z-index: 2;
+
+    .navbar-nav {
+      align-items: center;
+
+      .nav-link {
+        color: #ffffff;
+      }
+
+      .profile-img {
+        background: #0000000d;
+        border: 1px solid #0000000a;
+        border-radius: 21px;
+
+        img {
+          width: 35px;
+          height: 35px;
+        }
+
+        .text {
+          .profile-name {
+            font-size: 14px;
+            line-height: 6px;
+          }
+        }
+      }
+    }
+
+    .search .search-bar {
+      color: #ffffff;
+      background: #ffffff17;
+      box-shadow: none;
+    }
+
+    .student-notification i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .header-bottom .title {
+    font: normal normal bold 22px/27px Proxima Nova;
+    letter-spacing: 0px;
+    color: #ffffff;
+    text-shadow: 0px 3px 6px #00000029;
+  }
+
+  &.mock-tests-eries-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #4d5ee3, #f9c52d);
+  }
+
+  &.previous-paper-analysis-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #30ffe3, #c698e9);
+  }
+
+  &.getreadyforexam-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #ffcf10, #98e9b3);
+  }
+
+  &.bookmarks-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #f7af4d, #2bb19e);
+  }
+
+  &.notes-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #3a4ace, #fb7369);
+  }
+
+  &.exam-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #d10781 0%, #cd43a2 2%, #c3daf5 100%);
+  }
+
+  &.videos-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #d10451, #eb6d7e);
+
+    .navbar-nav .profile-img {
+      color: #000000;
+      background: #ffffff;
+      border: 1px solid #ffffff;
+    }
+  }
+
+  &.notification-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #000000 0%, #5b2cf8 100%);
+    .navbar-nav .profile-img {
+      color: #000000;
+      background: #ffffff;
+      border: 1px solid #ffffff;
+    }
+  }
+  
+  &.blog-topnavbar .scroll-header {
+    position: relative;
+    background: linear-gradient(180deg, #000000 0%, #f8c52c 100%);
+    .navbar-nav .profile-img {
+      color: #000000;
+      background: #ffffff;
+      border: 1px solid #ffffff;
+    }
+  }
+}
+
+// modal-style
+.help-modal {
+  .modal-dialog-centered {
+    align-items: flex-end;
+  }
+
+  .modal-content {
+    background-color: transparent;
+    border: none;
+    margin-bottom: -28px;
+    pointer-events: painted;
+
+    .modal-header {
+      .close {
+        padding: 0;
+        color: #ff004e;
+        background: #fff !important;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        line-height: 30px;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+        z-index: 1;
+      }
+    }
+
+    .modal-body {
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 0.3rem;
+
+      img {
+        @media screen and (min-width: 992px) {
+          width: 350px;
+          position: absolute;
+          bottom: 6px;
+          right: 0;
+          z-index: 1;
+        }
+
+        @media screen and (max-width: 991px) {
+          width: 320px;
+        }
+      }
+    }
+  }
+}

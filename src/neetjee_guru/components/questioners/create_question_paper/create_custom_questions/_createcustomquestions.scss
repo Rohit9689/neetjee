@@ -1,0 +1,175 @@
+.create_custom_questions {
+    .create_custom_timeline {
+        position: relative;
+
+        &:before {
+            content: ' ';
+            border: 1px dashed #707070;
+            display: inline-block;
+            position: absolute;
+            left: 8px;
+            width: 1px;
+            height: 100%;
+            z-index: 400;
+            border-radius: 1rem;
+        }
+
+        li.create_custom_single_timeline {
+            margin: 2rem 0;
+            margin-left: 2rem;
+
+            &::before {
+                content: ' ';
+                background: #B5B5B5;
+                display: inline-block;
+                position: absolute;
+                border-radius: 50%;
+                border: 1px solid #707070;
+                left: 2px;
+                width: 14px;
+                height: 14px;
+                z-index: 400;
+            }
+
+            &::after {
+                content: ' ';
+                background: #B5B5B5;
+                display: inline-block;
+                position: absolute;
+                border-radius: 50%;
+                border: 1px solid #707070;
+                left: 2px;
+                bottom: 0;
+                width: 14px;
+                height: 14px;
+                z-index: 400;
+            }
+
+            .custom-groups .single-card-group {
+                margin-bottom: 0.82rem;
+                color: #787878;
+                background: #F6F6F6;
+                border: 1px solid #F6F6F6;
+                cursor: pointer;
+
+                &:hover,
+                &.active {
+                    box-shadow: 0px 3px 10px #0000000D;
+                    border: 1px solid #B4B4B4;
+                    border-radius: 5px;
+
+                    .card-left i {
+                        color: #5BC6FE;
+                    }
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                h6 {
+                    color: #555555;
+                    font-size: 14px;
+                }
+
+                p {
+                    font-size: 12px;
+                }
+
+                &.add-card {
+                    background: #ffffff;
+                    text-align: center;
+                    padding: 1.15rem 0;
+
+                    &:hover,
+                    &.active {
+                        box-shadow: 0px 3px 10px #0000000D;
+                        border: 1px solid #c9c9c9;
+                        border-radius: 5px;
+                    }
+                }
+
+                .card-right .signle-group {
+                    margin-right: 10px;
+
+                    &:first-child {
+                        margin-left: 6px;
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            @media (max-width: 991px) {
+                .card {
+                    margin: 10px;
+                }
+            }
+        }
+
+        .card {
+            position: relative;
+
+            .branches-list,
+            .subjects-list,
+            .sections-list {
+                li {
+                    cursor: pointer;
+                    border-radius: 2px;
+                    padding: 0.3rem 0.5rem;
+                    margin-left: 0.2rem;
+                    margin-bottom: 0.2rem;
+                    text-transform: uppercase;
+                    list-style-type: none;
+
+                    &:hover,
+                    &.active {
+                        cursor: pointer;
+                        border-radius: 2px;
+                        background: #EFEFEF;
+                        padding: 0.3rem 0.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.Create_Question_Paper_type {
+    position: relative;
+
+    a {
+        text-decoration: none;
+        color: #1B2430;
+
+        .single-card {
+            position: relative;
+
+            &:hover,
+            &:focus {
+                box-shadow: 0 0.5rem 1rem rgba(66, 45, 45, 0.15) !important
+            }
+
+            .icons {
+                position: absolute;
+                left: 20px;
+                top: 15px;
+                width: 70px;
+                height: 70px;
+                line-height: 80px;
+                border-radius: 50%;
+                text-align: center;
+                color: #1B2430;
+                border: 1px solid #DEDEDE;
+                background: #DEDEDE;
+                margin-bottom: -8rem;
+
+                i {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+}

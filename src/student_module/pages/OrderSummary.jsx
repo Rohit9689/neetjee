@@ -1,0 +1,125 @@
+import React, { Component } from 'react'
+import { Container, Row, Col, Card, Button } from 'react-bootstrap'
+import AsideNavbar from '../components/navbars/AsideNavbar';
+import Navbars from '../components/navbars/Navbars';
+import PackageOrderSummary from '../components/register_steps/PackageOrderSummary';
+import { graphql } from "@apollo/client/react/hoc";
+import { gql } from "@apollo/client";
+
+import * as Cookies from "es-cookie";
+const COUPN_VALIDATION = gql`
+  mutation($mobile: String,
+$plan_id: Int,
+$referral_code: String) {
+    validateReferralCode(mobile: $mobile, plan_id: $plan_id, referral_code: $referral_code){
+        referral_id
+        applied_amount
+        status
+        desc
+        type
+        value
+    } 
+  }
+`;
+class OrderSummary extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            couponob: "",
+            submitError4: ""
+        }
+    }
+    menuToggler = () => {
+        const toggled = Cookies.get("toggle");
+         if (toggled === "wrapper") {
+             this.setState({toggled:"wrapper sidebar-enable"});
+             Cookies.set("toggle", "wrapper sidebar-enable");
+         } else {
+             this.setState({toggled:"wrapper"});
+             Cookies.set("toggle", "wrapper");
+         }
+     };
+    coupnValidation = (e, data) => {
+        e.preventDefault();
+        if (data != "") {
+
+            this.coupnval(
+                Cookies.get("mobile"),
+                parseInt(this.props.history.location.state.getVideoPrices.id),
+                data
+            ).catch(error => {
+                console.log("catch if error");
+                console.log(error);
+                this.setState({
+                    submitError4: error.graphQLErrors.map(x => x.message)
+                });
+                console.error("ERR =>", error.graphQLErrors.map(x => x.message));
+            });
+
+        } else {
+            this.setState({ submitError4: "Please fill COUPON ID" });
+        }
+
+
+    }
+    coupnval = async (mobile,
+        plan_id,
+        referral_code) => {
+        await this.props.coupnval({
+            variables: {
+                mobile,
+                plan_id,
+                referral_code
+            },
+            update: (store, { data }) => {
+                //console.log("coupnvaldata", data);
+                if (data.validateReferralCode) {
+                    //Cookies.set("coupnvalmob", data.validateReferralCode);
+                    this.setState({
+                        couponob: data.validateReferralCode,
+                        submitError4: ""
+                    });
+
+                }
+            }
+        });
+    };
+    render() {
+        return (
+            <div className={Cookies.get("toggle")}>
+                <div className="header-area">
+                    <Navbars onClick={() => this.menuToggler()} />
+                </div>
+                <div className="main-wrapper">
+
+                    <AsideNavbar onClick={() => this.menuToggler()} />
+                    <div className="student-overlay" onClick={() => this.menuToggler()} />
+                    <div className="content-wrapper">
+
+                        <section className="student-package">
+                            <Container>
+
+                                <PackageOrderSummary
+                                    type="video"
+                                    coupnValidation={this.coupnValidation}
+                                    stateData={this.state}
+                                    locgetData={this.props.history.location.state != undefined ? this.props.history.location.state : ""}
+                                />
+
+
+                            </Container>
+                        </section>
+
+
+                    </div>
+                </div>
+            </div>
+
+        )
+    }
+}
+
+export default
+    graphql(COUPN_VALIDATION, {
+        name: "coupnval"
+    })(OrderSummary); 

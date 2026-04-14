@@ -1,0 +1,29 @@
+@import "../../../../config";
+
+.branches_section {
+  .location_cards .card {
+    margin-bottom: 15px;
+
+    .loacation_name {
+      @include fonts(400, 14px, 25px);
+      color: #1b2430;
+      text-transform: capitalize;
+    }
+
+    .counts {
+      @include fonts(600, 35px, 25px);
+    }
+  }
+}
+.complexityRow {
+  width: 350px !important;
+}
+.branch_name_row,
+.contact_no_row {
+  width: 180px !important;
+}
+.table td.DeleteRow,
+.table td.viewRow,
+.table td.EditRow {
+  width: 50px !important;
+}

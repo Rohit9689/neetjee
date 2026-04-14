@@ -1,0 +1,39 @@
+.manage_questionPaper_results {
+    .card-group {
+        .card {
+
+            .subjects-list li:hover,
+            .subjects-list li.active,
+            .chapter-list li:hover,
+            .chapter-list li.active {
+                cursor: pointer;
+                border-radius: 2px;
+                background: #EFEFEF;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .list-unstyled li {
+                padding: 0.2rem 0.5rem;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    @media (max-width: 991px) {
+        .card-group {
+            display: flex;
+            flex-flow: column wrap;
+
+            .card {
+                flex-direction: inherit;
+                margin-bottom: 15px;
+            }
+
+            .card+.card {
+                margin-left: 0;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                border-radius: 0.25rem;
+            }
+        }
+    }
+}

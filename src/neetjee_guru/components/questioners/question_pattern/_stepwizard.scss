@@ -1,0 +1,196 @@
+@import '../../../../config';
+
+.create_question_pattern {
+    position: relative;
+    padding-bottom: 4rem;
+
+    .step-wizard {
+        position: relative;
+
+        .stepTwo {
+
+            .biology_card,
+            .physics_card,
+            .chemistry_card {
+                .card {
+                    position: relative;
+                    z-index: 2;
+                }
+
+                .footer_card {
+                    padding-top: 2rem;
+                    margin-top: -10px;
+                    z-index: 1;
+                }
+            }
+        }
+
+        a {
+            color: $blue;
+            font-weight: 500;
+        }
+
+        button.addbutton {
+            color: $blue;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            outline: none;
+
+            &.active,
+            &:focus,
+            &:hover {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        button.remove {
+            color: #ff1100;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+
+            &.active,
+            &:focus,
+            &:hover {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .btn-group {
+            position: relative;
+
+            button {
+                font-weight: 400 !important;
+                border: 1px solid $gray;
+                background: $white;
+                color: #212529;
+
+                &.active,
+                &:hover {
+                    color: #212529;
+                    background: $gray;
+                    border-color: $gray;
+                }
+            }
+        }
+
+        .step-indicator {
+            border-collapse: separate;
+            display: table;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0px;
+            padding: 0;
+
+            li {
+                display: table-cell;
+                position: relative;
+                float: none;
+                padding: 0;
+                width: 1%;
+
+                &:after {
+                    background: $gray;
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    height: 12px;
+                    border-radius: 4px;
+                    top: 15px;
+                    left: 50%;
+                    z-index: 1;
+                }
+
+                &:last-child {
+                    &:before {
+                        background: $gray;
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        width: 100%;
+                        height: 12px;
+                        border-radius: 4px;
+                        top: 15px;
+                        right: 30%;
+                    }
+
+                    &:after {
+                        display: none;
+                    }
+                }
+
+                &:first-child {
+                    &:before {
+                        background: linear-gradient(90deg, $green 0%, $two 100%);
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        height: 12px;
+                        width: 100%;
+                        border-radius: 4px;
+                        top: 15px;
+                        right: -30%;
+                    }
+                }
+
+                &.active {
+                    .step {
+                        background: $two;
+                        color: #212529;
+                    }
+
+                    .caption {
+                        color: $blue;
+                    }
+                }
+
+                &.complete {
+                    &:after {
+                        background: linear-gradient(90deg, $green 0%, $two 100%);
+                    }
+
+                    .step {
+                        background: $green;
+                        color: $white;
+                    }
+
+                    .caption {
+                        color: $green;
+                    }
+                }
+            }
+
+            .step {
+                background: $gray;
+                border-radius: 50%;
+                color: $blue;
+                font-size: 20px;
+                height: 40px;
+                width: 40px;
+                line-height: 40px;
+                margin: 0 auto;
+                position: relative;
+                box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+                z-index: 2;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .caption {
+                font-size: 1rem;
+                font-weight: 500;
+                color: $gray;
+                padding: 11px 16px 0;
+            }
+        }
+    }
+}

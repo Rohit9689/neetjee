@@ -1,0 +1,155 @@
+import React, { Component } from 'react'
+import { Card } from 'react-bootstrap';
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
+import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import { articledata, articlecolumns, defaultSorted } from './TableInformation';
+
+import './_datatable.scss';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+
+import gql from "graphql-tag";
+import { graphql } from "react-apollo";
+import * as Cookies from "es-cookie";
+import * as compose from 'lodash.flowright';
+import { withRouter } from "react-router-dom";
+
+const FETCH_BRANCHES = gql`
+  query($username: String!, $rowsfrom: Int) {
+    getBranches(username: $username, rowsfrom:$rowsfrom ){
+        id
+        branch_name
+        principal
+        contact_no
+        complete_address
+        region_id
+        section_categories{
+            section_category
+            count
+        }
+        total_sections
+        }
+    }
+`;
+
+class DataTableWithOutSearch extends Component {
+    commaSeparated = (branchData) => {
+        console.log("branchData", branchData);
+        let newBranchArray = [];
+        for (let i = 0; i < branchData.length; i++) {
+            const edata = branchData[i];
+            console.log("edata", edata);
+            let commaSeparatedValue = [];
+            let cValue = "";
+            for (let x = 0; x < edata.section_categories.length; x++) {
+                const newValue = edata.section_categories[i];
+                cValue = newValue.section_category + "(" + newValue.count + ")";
+                commaSeparatedValue.push(cValue);
+            }
+
+            console.log("commaSeparatedValue", commaSeparatedValue);
+            let commavalue = commaSeparatedValue.join(",");
+            const newBranch = {
+                id: edata.id,
+                branch_name: edata.branch_name,
+                complete_address: edata.complete_address,
+                contact_no: edata.contact_no,
+                principal: edata.principal,
+                region_id: edata.region_id,
+                section_categories: commavalue,
+                total_sections: edata.total_sections
+            };
+            newBranchArray.push(newBranch);
+        }
+        return newBranchArray;
+    }
+    render() {
+        console.log("DataTableWithOutSearch", this.props);
+        const {
+            data: { loading, getBranches, error }
+        } = this.props;
+        if (loading) return null;
+
+        const customTotal = (from, to, size) => (
+            <span className="ml-2 react-bootstrap-table-pagination-total">
+                Showing {from} to {to} of {size} Results
+            </span>
+        );
+
+        const options = {
+            paginationSize: 4,
+            pageStartIndex: 1,
+            // alwaysShowAllBtns: true, // Always show next and previous button
+            withFirstAndLast: false, // Hide the going to First and Last page button
+            // hideSizePerPage: true, // Hide the sizePerPage dropdown always
+            // hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
+            firstPageText: 'First',
+            prePageText: 'Previous',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            sizePerPageList: [{
+                text: '10', value: 10
+            }, {
+                text: '25', value: 25
+            },
+            {
+                text: '50', value: 50
+            },
+            {
+                text: 'All', value: articledata.length
+            }]  // A numeric array is also available. the purpose of above example is custom the text
+        };
+
+        const contentTable = ({ paginationTableProps }) => (
+
+            <ToolkitProvider
+                keyField="id"
+                data={this.commaSeparated(getBranches)}
+                columns={articlecolumns}
+                defaultSorted={defaultSorted}
+                // search
+                bootstrap4>
+                {
+                    toolkitprops => (
+                        <Card className="border-0 shadow-sm mb-4">
+                            <Card.Header className="bg-white">
+                                <Card.Title className="mb-0">Branches</Card.Title>
+                            </Card.Header>
+                            <Card.Body>
+                                <BootstrapTable
+                                    bordered={false}
+                                    wrapperClasses="table-responsive"
+                                    {...toolkitprops.baseProps}
+                                    {...paginationTableProps}
+                                />
+                            </Card.Body>
+                        </Card>
+                    )
+                }
+            </ToolkitProvider>
+        );
+
+        return (
+            <PaginationProvider pagination={paginationFactory(options)}>
+                {contentTable}
+            </PaginationProvider>
+        )
+    }
+}
+
+export default withRouter(compose(
+    graphql(FETCH_BRANCHES,
+        {
+            options: props => ({
+                variables: {
+                    username: Cookies.get("username")
+                },
+            })
+        }))(DataTableWithOutSearch));

@@ -1,0 +1,103 @@
+.student_register {
+    background-color: #2d3e97;
+
+    .student_block {
+        position: relative;
+
+        &::before {
+            content: "";
+            background: url("../../../images/nav-bg.png") no-repeat top right;
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+
+            @media (max-width: 992px) {
+                background-size: 280%;
+            }
+        }
+
+        .student-login-register {
+            position: relative;
+
+            @media (max-width: 992px) {
+                .navbar-collapse.show {
+                    background: #232f73 !important;
+                }
+            }
+
+            .top-navbar {
+                padding: 0.45rem 1rem;
+
+                a {
+                    color: #ffffff;
+                    text-decoration: none;
+                    font-family: "Titillium Web", sans-serif;
+
+                    @media (min-width: 1200px) {
+                        padding-left: 20px !important;
+                        padding-right: 20px !important;
+                    }
+
+                    &:last-child {
+                        border-right: 0;
+                    }
+
+                    &.active {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .title-sections {
+            margin-top: 3rem;
+            margin-bottom: 6rem;
+        }
+
+        .LayerCurve {
+            display: none;
+        }
+    }
+
+    .student_footer {
+        position: relative;
+        background: #333333;
+
+        @media (max-width: 767px) {
+            text-align: center;
+        }
+
+        .footer-top {
+            background: #393939;
+
+            .import-link li {
+                margin-right: 2rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            .social-list li {
+                margin-right: 1rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .footer-middle {
+            .import-link2 li {
+                margin-right: 3rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

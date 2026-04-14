@@ -1,0 +1,890 @@
+.resultModal {
+    .speedometer .current-value {
+        fill: #333333 !important;
+    }
+
+    .observation-list .list-unstyled li {
+        position: relative;
+        padding-left: 15px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+    }
+
+    .observation-list .list-unstyled.one-list li {
+        &::before {
+            background: #F05D70;
+        }
+    }
+
+    .observation-list .list-unstyled.two-list li {
+        &::before {
+            // background: #00C596;
+            background: #ff471a;
+        }
+    }
+
+    .nav-pills {
+        border: 1px solid #212B65;
+        border-radius: 30px;
+        margin: 0;
+        padding: 3px;
+
+        .nav-item {
+            display: inline-block;
+            // width: 50%;
+
+            & {
+                margin-right: 2px;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            .nav-link {
+                text-align: center;
+                color: #212B65;
+                transition: all .2s linear;
+                padding: 0.35rem 0.5rem;
+
+                &.active {
+                    color: #ffffff;
+                    font-weight: 600;
+                    border-radius: 30px;
+                    background-color: #212B65 !important;
+                }
+            }
+        }
+    }
+
+    // .status-resport {
+    //     .rank-card {
+    //         color: #ffffff;
+    //         background: #00C596;
+    //         border: 1px solid #00C596;
+    //         border-radius: 5px;
+    //     }
+    // }
+
+    .examWise,
+    .chapterWise {
+        margin-bottom: 0;
+
+        th,
+        td {
+            padding: 6px 12px;
+        }
+
+        thead th {
+            vertical-align: middle;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        tbody td+td {
+            font-weight: 600 !important;
+        }
+
+    }
+
+    table.examWise th+th,
+    table.examWise td+td,
+    table.chapterWise th+th,
+    table.chapterWise td+td {
+        border-left: 1px solid #00000020;
+    }
+
+    .errorTitle {
+        background-color: #E1F2FF;
+        padding-top: 15px !important;
+
+        .errorText {
+            writing-mode: vertical-rl;
+            transform: rotate(179deg);
+
+        }
+    }
+
+    .correctComplexitytable {
+        .react-bootstrap-table .table {
+
+            th+th,
+            td+td {
+                border-left: 1px solid #00000020;
+            }
+
+            thead {
+                background: #ffffff !important;
+
+                th:nth-child(2) {
+                    color: #28a745 !important;
+                }
+
+                th:nth-child(3) {
+                    color: #dc3545 !important;
+                }
+
+                th:nth-child(4) {
+                    color: #ffc107 !important;
+                }
+            }
+
+            tbody {
+                td {
+                    color: #142031;
+                    font-weight: 600 !important;
+
+                    &:first-child {
+                        font-weight: 400 !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .questionTypetable .react-bootstrap-table .table {
+
+        th+th,
+        td+td {
+            border-left: 1px solid #00000020;
+        }
+
+        tbody {
+            td {
+                color: #142031;
+                font-weight: 600 !important;
+
+                &:first-child {
+                    font-weight: 400 !important;
+                }
+            }
+        }
+    }
+
+    .resultsortingtable {
+        .table {
+
+            td,
+            th {
+                color: #142031 !important;
+                // padding: 4px;
+                // padding: 0.65rem;
+                // font-size: 13px !important;
+                border-right: 1px solid #00000020;
+
+                &:last-child {
+                    border-right: none;
+                }
+            }
+
+            thead {
+                background: #ffffff !important;
+
+                th:nth-child(2) {
+                    color: #36A1F5 !important;
+                }
+
+                th:nth-child(3) {
+                    color: #00C596 !important;
+                }
+
+                th:nth-child(4) {
+                    color: #F05D70 !important;
+                }
+
+                th:nth-child(5) {
+                    color: #DF7E00 !important;
+                }
+            }
+        }
+
+        &.chapter_wisetable {
+            .table {
+
+                td,
+                th {
+                    // padding: 4px;
+                    // padding: 0.65rem;
+                    // font-size: 13px !important;
+                    border-right: 1px solid #00000020;
+
+                    &:last-child {
+                        border-right: none;
+                    }
+                }
+
+                thead {
+                    background: #ffffff !important;
+
+                    th:nth-child(2) {
+                        color: #ac072b !important;
+                    }
+
+                    th:nth-child(3) {
+                        color: #36A1F5 !important;
+                    }
+
+                    th:nth-child(4) {
+                        color: #00C596 !important;
+                    }
+
+                    th:nth-child(5) {
+                        color: #F05D70 !important;
+                    }
+
+                    th:nth-child(6) {
+                        color: #DF7E00 !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .questionTypetable {
+        .react-bootstrap-table .table thead {
+            background: #ffffff !important;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .card-group {
+            display: flex;
+            flex-flow: column wrap !important;
+
+        }
+
+        .card-group>.card:first-child {
+            padding: .5rem;
+        }
+
+        .card-group>.card {
+            margin-bottom: 15px;
+            border: none;
+        }
+    }
+}
+
+// Practice Test Exams CSS
+
+.practice_exams_area {
+    position: relative;
+
+    @media (max-width: 767px) {
+        .navbar-brand svg {
+            width: 100px;
+        }
+    }
+
+    .score-card {
+        border-radius: 8px;
+
+        .card-title {
+            @media (max-width: 767px) {
+                font-size: 2.35rem;
+            }
+        }
+
+        .dot-circle {
+            li {
+                width: 4%;
+                line-height: 16px !important;
+
+                i {
+                    font-size: 10px;
+                }
+            }
+        }
+
+        small {
+            font-size: 14px;
+        }
+    }
+
+    .avgtime-card {
+        border-radius: 8px;
+
+        .dot-circle {
+
+            li {
+                width: 4%;
+                line-height: 16px !important;
+
+                i {
+                    font-size: 10px;
+                }
+            }
+        }
+
+        small {
+            font-size: 14px;
+        }
+    }
+
+    .subject_cards {
+        border-radius: 8px;
+
+        .row [class*="col"]:not(:last-child) {
+            padding-right: 0.4rem !important;
+
+            @media (max-width: 767px) and (max-width: 575px) {
+                padding-right: 0px;
+            }
+        }
+
+        .col {
+            @media (max-width: 991px) {
+                flex: 0 0 50%;
+                max-width: 50%;
+                padding: 10px;
+            }
+
+            @media (max-width: 767px) {
+                flex: 0 0 50%;
+                max-width: 50%;
+                padding: 10px;
+            }
+
+            @media (max-width: 575px) {
+                flex: 0 0 50%;
+                max-width: 50%;
+                padding: 10px;
+            }
+        }
+
+        .card {
+            overflow: hidden;
+            border-radius: 8px;
+
+            .card-header {
+                .icon svg {
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+
+            .card-body {
+                border-radius: 8px;
+                color: #ffffff;
+
+                small {
+                    font-size: 14px;
+                }
+            }
+
+            &.physics {
+                border-color: #F05D70;
+
+                .card-body {
+                    background: #F05D70;
+                }
+            }
+
+            &.chemistry {
+                border-color: #0060CE;
+
+                .card-body {
+                    background: #0060CE;
+                }
+            }
+
+            &.botany {
+                border-color: #3AC555;
+
+                .card-body {
+                    background: #3AC555;
+                }
+            }
+
+            &.zoology {
+                border-color: #C37800;
+
+                .card-body {
+                    background: #C37800;
+                }
+            }
+
+            &.maths {
+                border-color: #707070;
+
+                .card-body {
+                    background: #707070;
+                }
+            }
+
+        }
+
+    }
+
+    .maintable {
+
+        .table {
+
+            th,
+            td {
+                padding: 8px 18px;
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr th {
+                border-top: none;
+            }
+
+            tbody {
+                tr {
+                    td {
+                        font-weight: 700;
+                        text-align: center;
+
+                        &:nth-child(2) {
+                            background: #f8fffa;
+                        }
+
+                        &:nth-child(3) {
+                            background: #fffcf6;
+                        }
+
+                        &:nth-child(4) {
+                            background: #fff9fa;
+                        }
+
+                        &:nth-child(5) {
+                            background: #fff8f8;
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        td:nth-child(2) {
+                            background: #eafff0;
+                        }
+
+                        td:nth-child(3) {
+                            background: #fff9e9;
+                        }
+
+                        td:nth-child(4) {
+                            background: #fdf0f2;
+                        }
+
+                        td:nth-child(5) {
+                            background: #ffe5e5;
+                        }
+                    }
+
+                    &:nth-child(3) {
+                        td:nth-child(2) {
+                            background: #dffbe7;
+                        }
+
+                        td:nth-child(3) {
+                            background: #fff6da;
+                        }
+
+                        td:nth-child(4) {
+                            background: #fce7ea;
+                        }
+
+                        td:nth-child(5) {
+                            background: #ffdada;
+                        }
+                    }
+
+                    &:nth-child(4) {
+                        td:nth-child(2) {
+                            background: #d0ffde;
+                        }
+
+                        td:nth-child(3) {
+                            background: #fff1ca;
+                        }
+
+                        td:nth-child(4) {
+                            background: #fbdce0;
+                        }
+
+                        td:nth-child(5) {
+                            background: #ffc7c7;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .totalgrand-table {
+        .table {
+
+            tr th,
+            tr td {
+                padding: 8px 18px;
+                border-top: none;
+                font-weight: 700;
+
+                .icon svg {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr th {
+                font-weight: 400;
+                border-top: none;
+            }
+
+            tbody tr:nth-child(1) {
+                background-color: #f8f1de;
+            }
+        }
+    }
+
+    .accurancy-table {
+        .table {
+
+            tr th,
+            tr td {
+                padding: 8px 18px;
+
+                .icon svg {
+                    width: 25px;
+                    height: 25px;
+                }
+
+            }
+
+            tr td {
+                text-align: center;
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr th {
+                text-align: center;
+                font-weight: 700;
+                border-top: none;
+            }
+
+            tbody tr {
+                td:first-child {
+                    font-weight: 700;
+                }
+
+                &:nth-child(1) {
+                    background-color: #f8f1de;
+                }
+
+                &:nth-child(8) {
+                    background-color: #F4F4F4;
+                }
+
+                &:nth-child(9) {
+                    background-color: #F4F4F4;
+                }
+
+                &:nth-child(10) {
+                    background-color: #F4F4F4;
+                }
+            }
+        }
+    }
+
+    .examquestion-table {
+        .table {
+
+            tr th,
+            tr td {
+                padding: 6px 10px;
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr th {
+                font-weight: 600;
+                border-top: none;
+                font-size: 12px;
+
+                &:nth-child(1) {
+                    text-align: left;
+                }
+            }
+
+            tbody tr td {
+                font-size: 12px;
+                text-align: center;
+
+                &:nth-child(1) {
+                    text-align: left;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .errorreport-table {
+        .card-header {
+            background: #e1f2ff;
+
+            .card-title {
+                transform: matrix(0, -1, 1, 0, -50, 70);
+                position: absolute;
+                left: 0;
+            }
+        }
+
+
+        .table {
+
+            tr th,
+            tr td {
+                padding: 8px 18px;
+                border-top: none;
+
+                .icon svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr th {
+                font-weight: 600;
+                border: none;
+            }
+        }
+    }
+
+    .observation-card {
+        position: relative;
+
+        .card-header {
+            background: #f7aeb7;
+
+            .card-title {
+                transform: matrix(0, -1, 1, 0, -45, 70);
+                position: absolute;
+                left: 0;
+            }
+        }
+
+        .card-body {
+            .observation-list li {
+                position: relative;
+                padding-left: 40px;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 20px;
+                    top: 8px;
+                    width: 8px;
+                    height: 8px;
+                    background: #F05D70;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+
+    .questiontypeanalysis-table,
+    .questiontheory-table {
+        .table {
+
+            tr th,
+            tr td {
+                padding: 8px 16px;
+                border-top: none;
+            }
+
+            tr td {
+                text-align: center;
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr th {
+                text-align: center;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .act-table {
+        .table {
+
+            tr th,
+            tr td {
+                padding: 8px;
+                border: none;
+            }
+
+            tr th {
+                h6 {
+                    margin-bottom: 0.2rem;
+                    font-size: 0.9rem;
+                }
+
+                p {
+                    font-size: 9px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+        }
+
+        .correct-table {
+            background: transparent linear-gradient(-90deg, #FFFFFF 0%, #19cba165 100%) 0% 0% no-repeat;
+
+            .card {
+                box-shadow: 0px 3px 20px #00000029;
+                border-radius: 6px;
+
+                &:not(:last-child) {
+                    margin-right: .3rem;
+                }
+            }
+        }
+
+        .wrong-table {
+            background: transparent linear-gradient(-90deg, #FFFFFF 0%, #f05d7170 100%) 0% 0% no-repeat;
+
+            .card {
+                box-shadow: 0px 3px 20px #00000029;
+                border-radius: 6px;
+
+                &:not(:last-child) {
+                    margin-right: .3rem;
+                }
+            }
+        }
+    }
+
+    .chapterwise-table {
+        .subjects-selection-filter {
+            @media (min-width: 768px) {
+                width: 25%;
+            }
+
+            @media (max-width: 767px) {
+                width: 100%;
+                margin-left: 0 !important;
+                margin-top: .65rem;
+            }
+        }
+
+        .table-fixed thead {
+            width: 98.5%;
+        }
+
+        .table-fixed tbody {
+            height: 250px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+
+            .table-fixed thead,
+            .table-fixed tbody,
+            .table-fixed tr,
+            .table-fixed td,
+            .table-fixed th {
+                display: flow-root;
+            }
+        }
+
+        @media (min-width: 992px) {
+
+            .table-fixed tbody td,
+            .table-fixed thead>tr>th {
+                float: left;
+                border-bottom-width: 0;
+            }
+        }
+
+        .table {
+
+            tr th,
+            tr td {
+                padding: 8px 18px;
+                border-top: none;
+                text-align: left;
+            }
+
+            tr td:nth-child(1) {
+                text-align: left;
+            }
+
+            tr th:not(:last-child),
+            tr td:not(:last-child) {
+                border-right: 1px solid #dee2e6;
+            }
+
+            thead tr {
+                th {
+                    font-weight: 600;
+                    border-bottom: 1px solid #dee2e6;
+                }
+            }
+
+            tbody {
+
+                tr td {
+                    &:nth-child(1) {
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    &:nth-child(2) {
+                        color: var(--red);
+                    }
+
+                    &:nth-child(3) {
+                        color: var(--info);
+                    }
+
+                    &:nth-child(4) {
+                        color: var(--green);
+                    }
+
+                    &:nth-child(5) {
+                        color: var(--pink);
+                    }
+
+                    &:nth-child(6) {
+                        color: var(--purple);
+                    }
+                }
+            }
+        }
+    }
+}

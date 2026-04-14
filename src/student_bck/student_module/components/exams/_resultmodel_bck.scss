@@ -1,0 +1,257 @@
+.resultModal {
+  .list-group-flush .list-unstyled li {
+    position: relative;
+    padding-left: 15px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+  }
+
+  .list-group-flush .list-unstyled.one-list li {
+    &::before {
+      background: #f05d70;
+    }
+  }
+
+  .list-group-flush .list-unstyled.two-list li {
+    &::before {
+      background: #ff471a;
+    }
+  }
+
+  .nav-pills .nav-item {
+    .nav-link {
+      color: #000000;
+
+      &.active {
+        color: #ffffff;
+      }
+    }
+  }
+
+  .status-resport {
+    .rank-card {
+      color: #ffffff;
+      background: #00c596;
+      border: 1px solid #00c596;
+      border-radius: 5px;
+    }
+    .react-bootstrap-table .table {
+      th, td {
+        padding: 4px 6px;
+        font-size: 12.9px !important;
+      }
+    }
+  }
+
+  .examWise,
+  .chapterWise {
+    margin-bottom: 0;
+
+    th,
+    td {
+      padding: 4px 6px;
+    }
+
+    thead th {
+      vertical-align: middle;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    tbody td {
+      padding: 7px 6px !important;
+    }
+  }
+
+  .chapterWise {
+    tbody td {
+      padding: 7px 6px !important;
+      border-bottom: 1px solid #dee2e6;
+    }
+  }
+
+  .examWiseTwo,
+  .examWiseThree {
+    margin-bottom: 0;
+
+    th,
+    td {
+      font-size: 13px;
+      padding: 1.5px 6px;
+    }
+  }
+
+  table.examWise th + th,
+  table.examWise td + td,
+  table.chapterWise th + th,
+  table.chapterWise td + td {
+    border-left: 1px solid #00000020;
+  }
+
+  .errorTitle {
+    background-color: #e1f2ff;
+    padding-top: 15px !important;
+
+    .errorText {
+      writing-mode: vertical-rl;
+      transform: rotate(179deg);
+    }
+  }
+
+  .depthreport {
+    .one-table {
+      // background-color: #b1b1b1;
+
+      tr {
+        border-bottom: 1px solid #dee2e6;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        th,
+        td {
+          border-top: 0;
+          font-weight: 600;
+        }
+      }
+
+      // th+th,
+      // td+td {
+      //     background-color: #a9a9a9;
+      // }
+
+      // th+th+th,
+      // td+td+td {
+      //     background-color: #a5a5a5;
+      // }
+
+      // th+th+th+th,
+      // td+td+td+td {
+      //     background-color: #a8a8a8;
+      // }
+    }
+
+    .two-table {
+      // background-color: #dbdbdb;
+
+      tr {
+        border-bottom: 1px solid #dee2e6;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        th,
+        td {
+          border-top: 0;
+          font-weight: 600;
+        }
+      }
+
+      // th+th,
+      // td+td {
+      //     background-color: #d9d7d8;
+      // }
+
+      // th+th+th,
+      // td+td+td {
+      //     background-color: #d3d3d3;
+      // }
+
+      // th+th+th+th,
+      // td+td+td+td {
+      //     background-color: #d9d7d8;
+      // }
+    }
+
+    .three-table {
+      tr {
+        border-bottom: 1px solid #dee2e6;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        th,
+        td {
+          border-top: 0;
+        }
+      }
+
+      tbody td {
+        // color: #f70303;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .correctComplexitytable {
+    .react-bootstrap-table .table thead {
+      background: #ffffff !important;
+      th:nth-child(2) {
+        color: #28a745 !important;
+      }
+      th:nth-child(3) {
+        color: #dc3545 !important;
+      }
+      th:nth-child(4) {
+        color: #caa605 !important;
+      }
+    }
+  }
+
+  .resultsortingtable {
+    .react-bootstrap-table .table {
+      td,th {
+        padding: 4px;
+        font-size: 13px !important;
+      }
+      thead {
+        background: #ffffff !important;
+        th:nth-child(2) {
+          color: #ff471a !important;
+        }
+        th:nth-child(3) {
+          color: #28a745 !important;
+        }
+        th:nth-child(4) {
+          color: #dc3545 !important;
+        }
+        th:nth-child(5) {
+          color: #caa605 !important;
+        }
+      }
+    }
+  }
+
+  .questionTypetable {
+    .react-bootstrap-table {
+      .table thead {
+        background: #ffffff !important;
+      }
+    }
+  }
+  @media (max-width: 991px) {
+    .card-group {
+      display: flex;
+      flex-flow: column wrap !important;
+    }
+
+    .card-group > .card:first-child {
+      padding: 0.5rem;
+    }
+
+    .card-group > .card {
+      margin-bottom: 15px;
+      border: none;
+    }
+  }
+}

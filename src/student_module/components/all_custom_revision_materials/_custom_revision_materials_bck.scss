@@ -1,0 +1,209 @@
+.custom-revision-material-header {
+    position: relative;
+    padding: 25px 0 5px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    background: #00a881;
+    box-shadow: 0px 3px 16px #00000029 !important;
+
+    form.top_header .css-2b097c-container {
+
+        .css-yk16xz-control,
+        .css-1pahdxg-control {
+            background: hsla(0, 0%, 100%, 0.22);
+            border-radius: 30px;
+            border-color: hsla(0, 0%, 100%, 0.22);
+            box-shadow: none;
+
+            .css-1uccc91-singleValue,
+            .css-1wa3eu0-placeholder,
+            .css-b8ldur-Input {
+                color: #ffffff;
+            }
+            .css-6q0nyr-Svg {
+                color: #ffffff;
+            }
+        }
+        .css-26l3qy-menu {
+            color: #212529;
+        }
+    }
+
+    &.chemistry {
+        background: #0060ce;
+    }
+
+    &.physics {
+        background: #feaf55
+    }
+
+    &.botany {
+        background: #3d8815;
+    }
+
+    &.zoology {
+        background: #C37800;
+    }
+
+    &.maths {
+        background: #707070;
+    }
+}
+
+
+.revision-materials-section {
+    .section-title {
+        background: linear-gradient(180deg, #F30000 0%, #FDAE1D 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .revision-material-cards .single-card {
+        margin-bottom: 20px;
+
+        .card {
+            color: #ffffff;
+            height: 80px;
+            border: 1px solid #a5a5a5;
+            border-radius: 0.45rem;
+            box-shadow: 0px 3px 20px #0000000b;
+            top: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            .title {
+                font-size: 14px;
+            }
+
+            &:hover {
+                top: -6px;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+
+        &.shortnotes .card {
+            background-image: linear-gradient(to top, #2b7270 0%, #a9e87c 100%);
+        }
+
+        &.formula .card {
+            background-image: linear-gradient(to top, #2c68d9 0%, #134297 100%);
+        }
+
+        &.videos .card {
+            background-image: linear-gradient(to top, #a4caec 0%, #505ad9 100%);
+        }
+
+        &.constants .card {
+            background-image: linear-gradient(to top, #f07752 0%, #dc517b 100%);
+        }
+
+        &.shapes .card {
+            background-image: linear-gradient(to bottom, #a9e87c 0%, #2b7270 100%);
+        }
+
+        &.reactions .card {
+            background-image: linear-gradient(to top, #f1c44f 0%, #f08d64 100%);
+        }
+
+        &.numericals .card {
+            background-image: linear-gradient(to top, #f0b1e3 0%, #816ebe 100%);
+        }
+
+        &.exceptions .card {
+            background-image: linear-gradient(to top, #b8222b 0%, #5a043d 100%);
+        }
+
+        &.diagrams .card {
+            background-image: linear-gradient(to top, #7579e4 0%, #f1b7c7 100%);
+        }
+
+        &.namedreactions .card {
+            background-image: linear-gradient(to top, #f1c44f 0%, #f08d64 100%);
+        }
+
+        &.abbreviation .card {
+            background-image: linear-gradient(to top, #a4caec 0%, #505ad9 100%);
+        }
+
+        &.importantpoints .card {
+            background-image: linear-gradient(to top, #f07752 0%, #dc517b 100%);
+        }
+
+        &.formuladerviation .card {
+            background-image: linear-gradient(to top, #f1c44f 0%, #f08d64 100%);
+        }
+
+        &.graph .card {
+            background-image: linear-gradient(to top, #f0b1e3 0%, #816ebe 100%);
+        }
+
+        &.examples .card {
+            background-image: linear-gradient(to top, #2b7270 0%, #a9e87c 100%);
+        }
+
+        &.properties .card {
+            background-image: linear-gradient(to top, #b8222b 0%, #5a043d 100%);
+        }
+
+        &.scientiest .card {
+            background-image: linear-gradient(to top, #7579e4 0%, #f1b7c7 100%);
+        }
+
+        &.definition .card {
+            background-image: linear-gradient(to top, #a4caec 0%, #505ad9 100%);
+        }
+
+        &.differences .card {
+            background-image: linear-gradient(to top, #f07752 0%, #dc517b 100%);
+        }
+
+        &.experiment .card {
+            background-image: linear-gradient(to top, #b8222b 0%, #5a043d 100%);
+        }
+
+        &.chemicalcomposition .card {
+            background-image: linear-gradient(to top, #134297 0%, #2c68d9 100%);
+        }
+
+        &.reactionsmechanisms .card {
+            background-image: linear-gradient(to top, #f0b1e3 0%, #816ebe 100%);
+        }
+
+        &.tipsshortcuts .card {
+            background-image: linear-gradient(to top, #134297 0%, #2c68d9 100%);
+        }
+    }
+}
+
+
+.custom-revision-materials {
+    .concept_cards {
+        .single_concept {
+            .icon-indicator {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+
+            .helpTags li i {
+                cursor: pointer;
+            }
+
+            .card-body {
+                overflow: hidden;
+                position: relative;
+                height: 96px;
+                padding-top: 0.5rem !important;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        &.singles-materials .single_concept .card-body {
+            position: relative;
+            height: 100%;
+            padding-top: 0.5rem !important;
+            margin-bottom: 0.5rem;
+        }
+    }
+}

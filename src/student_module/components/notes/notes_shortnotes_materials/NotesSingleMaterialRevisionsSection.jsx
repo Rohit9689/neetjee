@@ -1,0 +1,1455 @@
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { Scrollbars } from 'react-custom-scrollbars'
+import { components } from 'react-select'
+import Select from 'react-select';
+import { Container, Row, Col, Card, Form, Popover, OverlayTrigger, Button, } from 'react-bootstrap'
+import SelectDropDown from '../../../../neetjee_guru/components/selectdropdown/SelectDropDown';
+import { NotesMeterialsData } from './NotesShortnoteMaterialData';
+
+import { gql } from "@apollo/client";
+import { graphql } from "@apollo/client/react/hoc";
+import * as Cookies from "es-cookie";
+import * as compose from 'lodash.flowright';
+import { withRouter } from "react-router-dom";
+import parse, { domToReact } from 'html-react-parser';
+import SingleNoteModal from "../../learn_practice/revision_materials/SingleNoteModal";
+import SingleBookModal from "../../learn_practice/revision_materials/SingleBookModal";
+
+const UPDATE_NOTES = gql`
+  mutation(
+    $params:UpdateNotes  
+    ) {
+        updateStudentNotes(
+        params: $params
+     )
+  }
+`;
+
+const ADD_NOTES = gql`
+  mutation($params: AddNotes) {
+    addNotes(params: $params)
+  }
+`;
+
+const ADD_BOOKMARKS = gql`
+  mutation(
+    $params:AddBookmark  
+    ) {
+        addBookmark(
+        params: $params
+     )
+  }
+`;
+
+const REMOVE_BOOKMARKS = gql`
+  mutation(
+    $params:AddBookmark  
+    ) {
+        removeBookmark(
+        params: $params
+     )
+  }
+`;
+const FETCH_GLOBALS = gql`
+  query($mobile: String) {
+    studentGlobals(mobile: $mobile) {
+      reports {
+        id
+        report
+      }
+      tags {
+        id
+        tag
+        type
+      }
+      contentTypes {
+        id
+        customcontent
+      }
+    }
+  }
+`;
+const TOTAL_VIEWS = gql`
+  mutation($params: StudentContentViewInput) {
+    updateStudentContentViews(params: $params)
+  }
+`;
+class NotesSingleMaterialRevisionsSection extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            show: true,
+            modalShowb: false,
+            modalShow: false,
+            sidetoggle: false,
+            showDescription: false,
+            bookmarked: props.getData.getData.bookmarked,
+            id: props.getData.getData.id,
+            title: props.getData.getData.title,
+            desc: props.getData.getData.description,
+            totAryLen: props.getData.emptyMaterial.length,
+            index: props.getData.index,
+
+            ncomments: props.getData.getData.comments,
+
+            maincid: props.getData.maincid,
+            topic_name: props.getData.getData.topic_name,
+            subject_name: props.getData.getData.subject_name,
+            chapter_name: props.getData.getData.chapter_name,
+            submitError: "",
+            formValid: false,
+            currentStep: 1,
+            bnewtag: "",
+            btags: "",
+            btagsvalue: [],
+            formValid3: false,
+            submitError3: "",
+            submitError2: "",
+            ntags: props.getData.getData.tags,
+            ntagsvalue: [],
+            nnewtag: "",
+
+            formErrors: {
+                ntags: "",
+                nnewtag: "",
+                ncomments: ""
+
+            },
+            formValid2: false,
+            ntagsValid: false,
+            nnewtagValid: false,
+            ncommentsValid: false,
+            getDerived: 0
+        }
+        this.popoverHide = React.createRef();
+        this.scrollNotes = React.createRef();
+    }
+    bookmarkFun(typ) {
+        console.log("bookmarkFun", this.props.getData.studentGlobals);
+        let data = this.props.getData.studentGlobals.tags;
+        let sarray = [];
+        console.log("notesTags", data);
+        if (data != undefined) {
+            for (let i = 0; i < data.length; i++) {
+                let idata = data[i];
+                if (idata.type == "bookmark") {
+                    const obj = {
+                        value: idata.id,
+                        label: idata.tag,
+                    }
+                    sarray.push(obj);
+                }
+
+            }
+        }
+        let somvar = "";
+        if (typ == "def") {
+            somvar = sarray[0];
+        }
+        else {
+            somvar = sarray;
+        }
+        return somvar;
+    }
+    cancelFun3() {
+        this.popoverHide3.handleHide();
+    }
+    bookhandleFormSubmit = (contype, conid) => {
+        if (this.state.formValid3) {
+            const params = {
+                mobile: Cookies.get("mobile"),
+                content_type: parseInt(contype),
+                custom_content_id: parseInt(conid),
+                tags: this.state.btags,
+                new_tag: this.state.bnewtag
+            }
+            console.log("bookhandleFormSubmit", params);
+            this.addbookmark(
+                params
+
+            ).catch(error => {
+                console.log("catch if error");
+                console.log(error);
+                this.setState({
+                    submitError3: error.graphQLErrors.map(x => x.message)
+                });
+                console.error("ERR =>", error.graphQLErrors.map(x => x.message));
+            });
+        } else {
+            this.setState({ submitError3: "Please fill all the values to proceed" });
+        }
+    };
+    addbookmark = async (
+        params) => {
+        await this.props.addbookmark({
+            variables: {
+                params
+            },
+            update: (store, { data }) => {
+                //if (data.addBookmark) {
+                let globals1 = store.readQuery({
+                    query: FETCH_GLOBALS,
+                    variables: {
+                        mobile: Cookies.get("mobile"),
+                    },
+                });
+                const addBookmark = data.addBookmark.toString();
+                console.log("globals1", globals1);
+                if (this.state.bnewtag != "") {
+                    let tarray = globals1.studentGlobals.tags;
+
+                    let newobj = {
+                        id: data.addBookmark.toString(),
+                        tag: this.state.bnewtag,
+                        type: "bookmark",
+                        __typename: "Tags",
+                    };
+                    tarray.push(newobj);
+                    globals1.studentGlobals.tags = tarray;
+                    console.log("gbeforewrite", globals1);
+                }
+
+                try {
+                    store.writeQuery({
+                        query: FETCH_GLOBALS,
+                        variables: {
+                            mobile: Cookies.get("mobile"),
+                        },
+                        data: globals1,
+                    });
+                } catch (e) {
+                    console.log("Exception", e);
+                }
+                this.props.studentGlobals.tags = globals1.studentGlobals.tags;
+                const emptyMaterial = this.props.getData.emptyMaterial.map((item) => {
+                    if (this.props.getData.emptyMaterial[this.state.index].id == item.id) {
+                        console.log("sree", this.props.getData.emptyMaterial[this.state.index].id);
+                        return { ...item, bookmarked: "true" }
+                    }
+                    else {
+                        return { ...item }
+                    }
+
+                });
+                this.props.getData.emptyMaterial = emptyMaterial
+                this.setState({
+                    currentStep: 5,
+                    bookmarked: "true",
+                    btags: "",
+                    bnewtag: "",
+                    btagsvalue: [],
+                    submitError3: "",
+                    formValid3: false
+
+                });
+                setTimeout(() => { this.SetpageLoad3() }, 1500);
+            }
+        });
+    };
+    SetpageLoad3 = () => {
+        this.setState({ currentStep: 1, modalShowb: false });
+        //this.cancelFun3();
+    }
+    removebookhandleFormSubmit = (contype, conid) => {
+        console.log("removebookhandleFormSubmit", contype, conid);
+        const params = {
+            mobile: Cookies.get("mobile"),
+            content_type: parseInt(contype),
+            custom_content_id: parseInt(conid),
+        }
+        console.log("noteshandleFormSubmit", params);
+        this.removebookmark(
+            params
+
+        ).catch(error => {
+            console.log("catch if error");
+            console.log(error);
+            this.setState({
+                submitError3: error.graphQLErrors.map(x => x.message)
+            });
+            console.error("ERR =>", error.graphQLErrors.map(x => x.message));
+        });
+    };
+    removebookmark = async (
+        params) => {
+        await this.props.removebookmark({
+            variables: {
+                params
+            },
+            update: (store, { data }) => {
+                if (data.removeBookmark) {
+                    const emptyMaterial = this.props.getData.emptyMaterial.map((item) => {
+                        if (this.props.getData.emptyMaterial[this.state.index].id == item.id) {
+                            console.log("sree", this.props.getData.emptyMaterial[this.state.index].id);
+                            return { ...item, bookmarked: "false" }
+                        }
+                        else {
+                            return { ...item }
+                        }
+
+                    });
+                    this.props.getData.emptyMaterial = emptyMaterial
+                    this.setState({
+                        bookmarked: "false"
+                    });
+                }
+            }
+        });
+    };
+    handleFormSubmit = e => {
+        e.preventDefault();
+        if (this.state.formValid) {
+            let updatenotesobj = {
+                mobile: Cookies.get("mobile"),
+                ncomments: this.state.ncomments,
+                content_type: parseInt(this.state.maincid),
+                custom_content_id: parseInt(this.state.id)
+            };
+            console.log("updatenotesobj", updatenotesobj);
+
+            this.updatenotes(
+                updatenotesobj
+            ).catch(error => {
+
+                console.log("catch if error", error);
+                this.setState({
+                    submitError: error.graphQLErrors.map(x => x.message)
+                });
+                console.error("ERR =>", error.graphQLErrors.map(x => x.message));
+            });
+        } else {
+            this.setState({ submitError: "Please fill all the values to proceed" });
+        }
+    };
+    updatenotes = async (
+        params) => {
+        await this.props.updatenotes({
+            variables: {
+                params
+            },
+            update: (store, { data }) => {
+                if (data.updateStudentNotes) {
+                    this.setState({
+                        currentStep: 5,
+
+                    });
+
+                    setTimeout(() => { this.SetpageLoad1() }, 1500);
+                }
+            }
+        });
+    };
+    SetpageLoad1 = () => {
+
+        this.setState({ currentStep: 1, showDescription: false });
+    }
+    handleInputChange = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({ [name]: value }, () => {
+            this.validateField(name, value);
+        });
+    };
+
+
+    tagsfunction = (data) => {
+        let Arr = data.split(',');
+        let sample = [];
+        for (let i = 0; i <= Arr.length; i++) {
+            let idata = Arr[i];
+            if (idata != "") {
+                let getData = this.props.getData.studentGlobals.tags.find((a) => a.id == idata);
+                if (getData != undefined) {
+                    sample.push(getData.tag);
+                }
+
+            }
+        }
+        return sample.toString();
+    }
+    decodefun(data) {
+        var decdata = decodeURIComponent(data);
+        return decdata;
+    }
+    previousFunction = (indexid) => {
+        let index = parseFloat(indexid) - 1;
+        let array = this.props.getData.emptyMaterial[index];
+        let ntagsvalue = [];
+        let narray = array.tags.split(",");
+        console.log("narray", narray);
+        narray.map((aa) => {
+            //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
+            let findData = this.props.studentGlobals.studentGlobals.tags.find((a) => a.id == aa);
+            if (findData != undefined) {
+                const newObj = {
+                    value: findData.id,
+                    label: findData.tag
+                }
+
+                ntagsvalue.push(newObj);
+            }
+        });
+        if (array != undefined) {
+            this.setState({
+                title: array.title,
+                desc: array.description,
+                id: array.id,
+                index: index,
+                ntags: array.tags,
+                ncomments: array.comments,
+                ntagsvalue: ntagsvalue,
+                bookmarked: array.bookmarked
+            });
+        }
+    }
+    nextFunction = (indexid) => {
+        let index = parseFloat(indexid) + 1;
+        let ntagsvalue = [];
+        let array = this.props.getData.emptyMaterial[index];
+        let narray = array.tags.split(",");
+        console.log("narray", narray);
+        narray.map((aa) => {
+            //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
+            let findData = this.props.studentGlobals.studentGlobals.tags.find((a) => a.id == aa);
+            if (findData != undefined) {
+                const newObj = {
+                    value: findData.id,
+                    label: findData.tag
+                }
+
+                ntagsvalue.push(newObj);
+            }
+        });
+        if (array != undefined) {
+            this.setState({
+                title: array.title,
+                desc: array.description,
+                id: array.id,
+                index: index,
+                ntags: array.tags,
+                ncomments: array.comments,
+                ntagsvalue: ntagsvalue,
+                bookmarked: array.bookmarked
+            });
+        }
+    }
+    handleMutipleInputChange = (e, type) => {
+        // if (type == "ntags") {
+        //     let ntags = Array();
+        //     if (e != null) {
+        //         for (let i = 0; i < e.length; i++) {
+        //             const tag = e[i];
+        //             ntags.push(tag.value);
+        //         }
+        //         this.setState({
+        //             ntags: ntags.toString()
+        //         });
+        //     }
+        // }
+        if (type == "ntags") {
+            let ntags = Array();
+            let ntagsvalue = Array();
+            if (e.length != 0) {
+                for (let i = 0; i < e.length; i++) {
+                    const ntagsval = e[i];
+                    const newObj = {
+                        label: ntagsval.label,
+                        value: ntagsval.value
+                    }
+                    ntagsvalue.push(newObj);
+                    ntags.push(ntagsval.value);
+                }
+                this.setState({
+                    ntagsvalue: ntagsvalue,
+                    ntags: ntags.toString()
+                }, () => {
+                    this.validateField(type, "1");
+                });
+            }
+            else {
+                this.setState({
+                    ntagsvalue: [],
+                    ntags: ""
+                }, () => {
+                    this.validateField(type, "");
+                });
+
+            }
+        }
+        else if (type == "btags") {
+            let btags = Array();
+            let btagsvalue = Array();
+            if (e.length != 0) {
+                for (let i = 0; i < e.length; i++) {
+                    const btagsval = e[i];
+                    const newObj = {
+                        label: btagsval.label,
+                        value: btagsval.value
+                    }
+                    btagsvalue.push(newObj);
+                    btags.push(btagsval.value);
+                }
+                this.setState({
+                    btagsvalue: btagsvalue,
+                    btags: btags.toString()
+                }, () => {
+                    this.validateField(type, "1");
+                });
+            }
+            else {
+                this.setState({
+                    btagsvalue: [],
+                    btags: ""
+                }, () => {
+                    this.validateField(type, "");
+                });
+
+            }
+        }
+        // else if (type == "btags") {
+        //     let btags = Array();
+        //     if (e != null) {
+        //         for (let i = 0; i < e.length; i++) {
+        //             const tag = e[i];
+        //             btags.push(tag.value);
+        //         }
+        //         console.log("btags", btags);
+        //         this.setState({
+        //             btags: btags.toString()
+        //         });
+        //     }
+        // }
+    };
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let reportresonValid = this.state.reportresonValid;
+        let reportcommentValid = this.state.reportcommentValid;
+
+        let ntagsValid = this.state.ntagsValid;
+        let nnewtagValid = this.state.nnewtagValid;
+        let ncommentsValid = this.state.ncommentsValid;
+
+        switch (fieldName) {
+            case "reportreson":
+                if (value.length == "") {
+                    reportresonValid = false;
+                    fieldValidationErrors.reportreson = "Reason Cannot Be Empty";
+                } else {
+                    reportresonValid = true;
+                    fieldValidationErrors.reportreson = "";
+                }
+
+                break;
+
+            case "reportcomment":
+                if (value.length == "") {
+                    reportcommentValid = false;
+                    fieldValidationErrors.reportcomment = "nComments Cannot Be Empty";
+                } else {
+                    reportcommentValid = true;
+                    fieldValidationErrors.reportcomment = "";
+                }
+
+                break;
+
+            case "ntags":
+                if (value.length == "") {
+                    ntagsValid = false;
+                    fieldValidationErrors.ntags = "Bookmark new tag Cannot Be Empty";
+                } else {
+                    ntagsValid = true;
+                    fieldValidationErrors.ntags = "";
+                }
+
+                break;
+
+            case "nnewtag":
+                if (value.length == "") {
+                    nnewtagValid = false;
+                    fieldValidationErrors.nnewtag = "Bookmark new tag Cannot Be Empty";
+                } else {
+                    nnewtagValid = true;
+                    fieldValidationErrors.nnewtag = "";
+                }
+
+                break;
+
+            case "ncomments":
+                if (value.length == "") {
+                    ncommentsValid = false;
+                    fieldValidationErrors.ncomments = "note ncomments Cannot Be Empty";
+                } else {
+                    ncommentsValid = true;
+                    fieldValidationErrors.ncomments = "";
+                }
+
+                break;
+            default:
+                break;
+        }
+        this.setState(
+            {
+                formErrors: fieldValidationErrors,
+                reportresonValid: reportresonValid,
+                reportcommentValid: reportcommentValid,
+                ntagsValid: ntagsValid,
+                nnewtagValid: nnewtagValid,
+                ncommentsValid: ncommentsValid,
+
+            },
+            this.validateForm
+        );
+    }
+    validateForm() {
+        this.setState({
+            formValid: true,
+            formValid2:
+                (this.state.ntagsValid || this.state.nnewtagValid) &&
+                this.state.ncommentsValid,
+            formValid3: true
+        });
+        if (this.state.formValid3) {
+            this.setState({ submitError3: "" });
+        }
+        if (this.state.formValid2) {
+            this.setState({ submitError2: "" });
+        }
+        if (this.state.formValid) {
+            this.setState({ submitError: "" });
+        }
+    }
+
+
+    popoverFunction3 = (custonid) => {
+        return (<Popover {...this.props} id="filter-popover" className="custom-popover shadow border-0" style={{ width: '250px' }}>
+            <Popover.Content>
+                <div className="content-block p-3">
+                    <h6>Bookmarks</h6>
+                    {this.state.currentStep == 5 ? (
+                        <Form.Text className="form-text text-danger">
+                            Bookmark saved successfully
+                        </Form.Text>
+                    ) : (
+
+                            <Form.Text className="form-text text-danger">
+                                {this.state.submitError3}
+
+                            </Form.Text>
+
+                        )}
+                    <Form>
+                        <Form.Group
+                            //controlId="SelectBookmark"
+                            controlId="SelectPrinciple">
+                            <Select maxMenuHeight={150}
+                                defaultValue={this.bookmarkFun("def")}
+                                isMulti
+                                name="btags"
+                                options={this.bookmarkFun()}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                onChange={this.handleMutipleInputChange("btags")}
+                            />
+                        </Form.Group>
+                        <div className="mb-2 text-center">
+                            <span>or</span>
+                        </div>
+                        <Form.Group controlId="NewTag3">
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter New Tag"
+                                name="bnewtag"
+                                value={this.state.bnewtag}
+                                onChange={this.bhandleInputChange}
+                                autoComplete="off" />
+                        </Form.Group>
+                    </Form>
+                </div>
+                <Row className="text-center border-top">
+                    <Col xl={6} lg={6} md={6} sm={6} xs={6} className="border-right">
+                        <Button onClick={() => this.cancelFun3()} size="sm" variant="link" className="py-2">
+                            Cancel
+                    </Button>
+                    </Col>
+                    <Col xl={6} lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                            //onClick={() => this.popoverHide3.handleHide()} 
+                            onClick={(e) => this.bookhandleFormSubmit(this.state.maincid, custonid)}
+                            size="sm" variant="link" className="py-2">
+                            Submit
+                    </Button>
+                    </Col>
+                </Row>
+            </Popover.Content>
+        </Popover>);
+    }
+    contentIcons(contentid) {
+        if (contentid == "1") {
+            return ("");
+
+        }
+        else if (contentid == "2") {
+            return (<svg xmlns="http://www.w3.org/2000/svg" width="100" height="32" viewBox="0 0 112 32"><g transform="translate(-312 -63)"><g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 63)"><rect stroke="none" width="112" height="32" rx="4" /><rect fill="none" x="0.5" y="0.5" width="111" height="31" rx="3.5" /></g><text fill="#1592e6" transform="translate(351 85)"><tspan x="0" y="0">Formula</tspan></text><g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 63)"><rect stroke="none" width="32" height="32" rx="4" /><rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="3.5" /></g><g transform="translate(319.838 71)"><path fill="#35a2f5" d="M1348.208-1409.175v1.228c0,.079,0,.158,0,.236a.364.364,0,0,1-.339.337.347.347,0,0,1-.371-.317c-.016-.241-.01-.483-.01-.725s0-.491,0-.76c-.242,0-.465,0-.688,0a.367.367,0,0,1-.374-.255.356.356,0,0,1,.343-.465c.118,0,.236,0,.354,0h.365v-.236q0-6.627,0-13.254a1.8,1.8,0,0,1,.008-.236.347.347,0,0,1,.377-.307.35.35,0,0,1,.335.335c0,.05,0,.1,0,.152v13.546h12.851a.762.762,0,0,1,.232.023.361.361,0,0,1,.234.372.354.354,0,0,1-.3.315,1.645,1.645,0,0,1-.235.011h-12.778Z" transform="translate(-1346.409 1424.303)" /><path fill="#35a2f5" d="M1392.381-1368.044a8.877,8.877,0,0,1-5.536-2.113,8.867,8.867,0,0,1-2.912-4.589,8.543,8.543,0,0,1-.295-2.262.351.351,0,0,1,.336-.386.349.349,0,0,1,.38.358c.051.507.071,1.02.157,1.521a7.8,7.8,0,0,0,1.587,3.539,8.128,8.128,0,0,0,4.864,3.035c.47.1.956.114,1.436.166.094.01.191.008.285.02a.344.344,0,0,1,.307.361.348.348,0,0,1-.321.35C1392.573-1368.038,1392.477-1368.044,1392.381-1368.044Z" transform="translate(-1380.757 1381.369)" /><path fill="#35a2f5" d="M1501.251-1402.848c-.419-.631-.836-1.257-1.252-1.883a.674.674,0,0,1-.094-.177.35.35,0,0,1,.187-.424.351.351,0,0,1,.449.116c.166.233.321.475.48.712l.665.993c.048-.067.084-.114.117-.164.324-.486.645-.974.975-1.456a.6.6,0,0,1,.245-.215.315.315,0,0,1,.389.117.357.357,0,0,1,0,.439q-.517.779-1.036,1.556l-.254.383q.616.924,1.226,1.84a1.314,1.314,0,0,1,.1.172.362.362,0,0,1-.128.447.346.346,0,0,1-.447-.044,1.041,1.041,0,0,1-.124-.159q-.483-.72-.964-1.442c-.03-.045-.063-.089-.107-.152-.073.106-.135.2-.2.288-.308.462-.614.927-.925,1.387a.356.356,0,0,1-.468.147.352.352,0,0,1-.19-.423.824.824,0,0,1,.111-.206Q1500.631-1401.92,1501.251-1402.848Z" transform="translate(-1488.014 1407.181)" /><path fill="#35a2f5" d="M1463.3-1426.585h1.252c.056,0,.113,0,.169,0a.362.362,0,0,1,.368.36.357.357,0,0,1-.374.37c-.4.006-.809,0-1.214,0h-.2v.209q0,1.627,0,3.253a1.291,1.291,0,0,1,0,.168.362.362,0,0,1-.371.32.362.362,0,0,1-.354-.321,1.434,1.434,0,0,1,0-.168q0-2.436,0-4.872a1.464,1.464,0,0,1,1.393-1.473c.488-.024.977-.012,1.466-.007a.361.361,0,0,1,.386.36.364.364,0,0,1-.392.371c-.449.006-.9,0-1.349,0a.712.712,0,0,0-.766.75C1463.3-1427.042,1463.3-1426.824,1463.3-1426.585Z" transform="translate(-1453.572 1428.75)" /></g></g></svg>);
+        }
+        else if (contentid == "3") {
+            return (
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="112" height="32" viewBox="0 0 112 32">
+                    <g transform="translate(-312 -107)">
+                        <g transform="translate(312 107)">
+                            <g fill="#fcfeff" stroke="#35a2f5">
+                                <rect stroke="none" width="112" height="32" rx="5" />
+                                <rect fill="none" x="0.5" y="0.5" width="111" height="31" rx="4.5" />
+                            </g>
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 128)"><tspan x="0" y="0">Reactions</tspan></text>
+                        <g transform="translate(10897 15593)">
+                            <g fill="#fcfeff" stroke="#35a2f5" transform="translate(-10585 -15486)">
+                                <rect stroke="none" width="32" height="32" rx="5" />
+                                <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                            </g>
+                        </g>
+                        <g transform="translate(318 113)">
+                            <path
+                                fill="#35a2f5"
+                                d="M-1084.28-1418.322q0-3.536,0-7.073a.3.3,0,0,0-.211-.325,1.581,1.581,0,0,1-.9-1.713,1.559,1.559,0,0,1,1.387-1.292c.367-.033.738-.023,1.107-.024q2,0,3.991,0a1.579,1.579,0,0,1,1.626,1.2,1.57,1.57,0,0,1-.885,1.832.268.268,0,0,0-.2.29q.01,1.74,0,3.481a.293.293,0,0,0,.167.3q.865.494,1.717,1.01a.264.264,0,0,0,.318-.007q.844-.507,1.7-1a.311.311,0,0,0,.182-.313c-.009-.732,0-1.464-.007-2.195a.585.585,0,0,1,.335-.571c.67-.374,1.333-.761,2-1.134a.285.285,0,0,0,.167-.294c-.008-.687,0-1.375,0-2.062,0-.327.182-.538.458-.536a.482.482,0,0,1,.46.542c0,.695,0,1.389,0,2.084a.288.288,0,0,0,.171.3c.671.373,1.332.763,2,1.135a.562.562,0,0,1,.325.55c-.009.732,0,1.464-.007,2.195a.321.321,0,0,0,.184.33c.672.385,1.334.789,2.006,1.175a.554.554,0,0,1,.309.537q-.013,1.374,0,2.749a.575.575,0,0,1-.322.554c-.665.384-1.321.783-1.986,1.166a.322.322,0,0,0-.192.325c.01.747,0,1.493.007,2.24a.541.541,0,0,1-.3.521c-.662.374-1.318.757-1.983,1.125a.349.349,0,0,0-.215.358c.012.68.007,1.36,0,2.04a.475.475,0,0,1-.476.525.457.457,0,0,1-.441-.485c0-.709-.005-1.419,0-2.128a.3.3,0,0,0-.183-.308c-.664-.369-1.317-.759-1.984-1.123a.588.588,0,0,1-.338-.588c.01-.717,0-1.434.007-2.151a.339.339,0,0,0-.192-.351c-.566-.319-1.124-.652-1.68-.987a.281.281,0,0,0-.338-.006q-.842.512-1.7,1a.309.309,0,0,0-.174.316c.005,1.234,0,2.468,0,3.7a2.936,2.936,0,0,1-1.454,2.691,2.935,2.935,0,0,1-4.433-2.223c-.066-.711-.034-1.432-.036-2.148C-1084.282-1414.834-1084.28-1416.578-1084.28-1418.322Zm.921,4.8c0,.743,0,1.452,0,2.16a2.674,2.674,0,0,0,.043.506,2,2,0,0,0,2.141,1.627,2.017,2.017,0,0,0,1.9-2.136q0-6.972,0-13.944v-.238h-4.067v2.015c.451,0,.886,0,1.321,0a.462.462,0,0,1,.465.341.418.418,0,0,1-.2.5.657.657,0,0,1-.313.078c-.426.009-.851,0-1.293,0,0,.418,0,.809,0,1.2,0,.043.007.085.014.151.428,0,.848,0,1.267,0,.332,0,.536.184.536.462s-.2.452-.537.453c-.419,0-.838,0-1.267,0v1.363h1.182q.625,0,.623.457c0,.3-.209.452-.629.451h-1.175v1.364c.44,0,.867,0,1.294,0a.455.455,0,0,1,.509.436.464.464,0,0,1-.5.478c-.177.007-.355,0-.532,0h-.77v1.349c.454,0,.89,0,1.325,0a.462.462,0,0,1,.469.541.481.481,0,0,1-.5.378C-1082.478-1413.515-1082.905-1413.518-1083.359-1413.518Zm7.494-5.015c0,.362-.007.724.006,1.085a.308.308,0,0,0,.126.218q.853.512,1.721,1a.333.333,0,0,0,.275.007q.922-.5,1.829-1.032a.28.28,0,0,0,.12-.2q.014-1.074,0-2.148a.278.278,0,0,0-.117-.2q-.917-.533-1.848-1.044a.28.28,0,0,0-.233,0q-.882.506-1.751,1.036a.311.311,0,0,0-.124.22C-1075.872-1419.241-1075.864-1418.887-1075.864-1418.533Zm9.077.027c0-.347.01-.694-.007-1.04a.365.365,0,0,0-.141-.258q-.847-.522-1.713-1.013a.332.332,0,0,0-.274,0c-.6.328-1.194.673-1.794,1a.256.256,0,0,0-.148.262q.008,1.03,0,2.059a.258.258,0,0,0,.149.262c.6.34,1.2.692,1.805,1.03a.3.3,0,0,0,.25,0q.873-.5,1.732-1.024a.34.34,0,0,0,.135-.24C-1066.778-1417.811-1066.787-1418.158-1066.787-1418.505Zm-6.583-4.332c0,.318-.008.635.006.953a.314.314,0,0,0,.122.223q.889.54,1.793,1.055a.3.3,0,0,0,.251,0q.894-.51,1.773-1.045a.309.309,0,0,0,.128-.22q.015-.986,0-1.972a.3.3,0,0,0-.125-.219c-.567-.331-1.136-.658-1.717-.964a.476.476,0,0,0-.384.006c-.573.3-1.133.633-1.7.946a.255.255,0,0,0-.148.264C-1073.365-1423.487-1073.37-1423.162-1073.37-1422.837Zm4.078,8.674c0-.325.009-.65-.006-.975a.337.337,0,0,0-.135-.237c-.579-.353-1.168-.691-1.75-1.04a.234.234,0,0,0-.279-.007c-.588.354-1.183.7-1.768,1.053a.333.333,0,0,0-.134.24q-.017.952,0,1.905a.329.329,0,0,0,.133.24c.572.335,1.15.664,1.735.976a.425.425,0,0,0,.345,0c.585-.312,1.162-.641,1.736-.974a.284.284,0,0,0,.118-.2C-1069.284-1413.512-1069.291-1413.838-1069.291-1414.163Zm-12.048-12.308q1.219,0,2.438,0a.712.712,0,0,0,.608-.259.663.663,0,0,0,.078-.729.662.662,0,0,0-.652-.375q-1.3,0-2.594,0c-.769,0-1.537,0-2.305,0a.666.666,0,0,0-.7.519.679.679,0,0,0,.715.842C-1082.951-1426.466-1082.145-1426.47-1081.34-1426.471Zm3,5.813v4.27c.5-.293.98-.569,1.452-.855a.263.263,0,0,0,.1-.194q.01-1.086,0-2.172a.262.262,0,0,0-.1-.194C-1077.358-1420.089-1077.837-1420.365-1078.337-1420.658Z"
+                                transform="translate(1085.411 1428.751)"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            );
+        } else if (contentid == "4") {
+            return (
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="112" height="32" viewBox="0 0 112 32">
+                    <g transform="translate(-312 -150)">
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 150)">
+                            <rect stroke="none" width="112" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="111" height="31" rx="4.5" />
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 171)"><tspan x="0" y="0">Numericals</tspan></text>
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 150)">
+                            <rect stroke="none" width="32" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                        </g>
+                        <g transform="translate(318 156)">
+                            <path
+                                fill="#35a2f5"
+                                d="M2338.672-1418.782c0,2.263,0,4.527,0,6.79a2.876,2.876,0,0,1-2.913,2.962c-3.109.011-6.219,0-9.329,0q-2.126,0-4.252,0a2.914,2.914,0,0,1-3.042-3.044q0-6.791,0-13.581a3.066,3.066,0,0,1,2.549-3.06,2.831,2.831,0,0,1,.5-.029c4.476,0,8.953.016,13.429-.01a3.042,3.042,0,0,1,3.059,3.069q0,3.449,0,6.9Zm-.74-.049q0-3.4,0-6.791a2.243,2.243,0,0,0-2.3-2.288c-3.356,0-6.712-.015-10.067.007a25.579,25.579,0,0,0-3.609.079,2.217,2.217,0,0,0-1.993,2.26c0,4.506,0,9.012-.005,13.517a2.311,2.311,0,0,0,2.3,2.294q6.65-.043,13.3,0a2.344,2.344,0,0,0,2.383-2.373C2337.911-1414.362,2337.932-1416.6,2337.932-1418.832Z"
+                                transform="translate(-2319.136 1428.75)"
+                            />
+                            <path
+                                fill="#35a2f5"
+                                d="M2427.8-1389.969h-2.386v-.822c.047,0,.1-.014.157-.014q1.323,0,2.646,0a.447.447,0,0,1,.513.483c.006.846,0,1.692,0,2.538a1.224,1.224,0,0,1-.015.126h-2.568v1.576h2.478v.913c-.076,0-.14.01-.2.01q-1.291,0-2.581,0c-.392,0-.535-.144-.535-.537q0-1.128,0-2.256c0-.387.151-.536.541-.538.571,0,1.142,0,1.714,0h.239v-1.475Z"
+                                transform="translate(-2414.931 1394.513)"
+                            />
+                            <path
+                                fill="#35a2f5"
+                                d="M2378.738-1315.082v-.821h2.385v-1.48c-.076,0-.153-.011-.229-.011-.658,0-1.316,0-1.974,0-.152,0-.2-.046-.2-.2.01-.236,0-.473,0-.732h2.4v-1.485h-2.385v-.817c.064-.005.126-.014.188-.014q1.3,0,2.6,0c.377,0,.532.151.532.522q0,2.289,0,4.577a.4.4,0,0,1-.417.45C2380.684-1315.075,2379.723-1315.082,2378.738-1315.082Z"
+                                transform="translate(-2372.9 1331.198)"
+                            />
+                            <path fill="#35a2f5" d="M2429.467-1321.463v5.623h-.827v-2.3h-.972c-.318,0-.637.006-.955,0a.427.427,0,0,1-.477-.449c-.005-.933,0-1.866,0-2.8a.354.354,0,0,1,.018-.071h.8v2.37h1.581v-2.372Z" transform="translate(-2415.771 1331.944)" />
+                            <path fill="#35a2f5" d="M2380.958-1385.875h1.2v.817h-3.217v-.815h1.181v-3.981h-1.18v-.826h2.017Z" transform="translate(-2373.098 1394.399)" />
+                        </g>
+                    </g>
+                </svg>
+            );
+        } else if (contentid == "5") {
+            return ("");
+        } else if (contentid == "6") {
+            //not download
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="112" height="32" viewBox="0 0 112 32">
+                    <g transform="translate(-312 -193)">
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 193)">
+                            <rect stroke="none" width="112" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="111" height="31" rx="4.5" />
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 214)"><tspan x="0" y="0">Constants</tspan></text>
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 193)">
+                            <rect stroke="none" width="32" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                        </g>
+                        <g transform="translate(315 200)">
+                            <path
+                                fill="#35a2f5"
+                                d="M883.05-1427.912c-.079-1.138.508-.883,1.119-.587a7.283,7.283,0,0,1,.96.463c.245.167.613.465.583.648-.045.272-.361.541-.622.726a6.869,6.869,0,0,1-.963.454c-.589.289-1.133.5-1.067-.536h-5.332c.352.277.586.468.828.649a8.884,8.884,0,0,1,2.895,10.422,8.991,8.991,0,0,1-9.638,5.452,8.893,8.893,0,0,1-7.464-7.541c-.072-.557-.283-.685-.784-.671a23.621,23.621,0,0,1-2.676-.022c-.295-.025-.562-.362-.842-.556.288-.186.566-.509.867-.532.917-.071,1.845.008,2.764-.05a.849.849,0,0,0,.622-.5c.951-4.994,4.356-7.823,9.481-7.827,2.738,0,5.475.006,8.213.01Zm-17.637,9.531a7.787,7.787,0,0,0,8.415,7.139,7.872,7.872,0,0,0,7.124-8.532c-.256-4.159-4.165-7.307-8.662-6.975-3.576.264-7.115,3.944-6.813,7.137h4.618c.412-.344.661-.729.915-.732.708-.007,2.253.986,2.162,1.318-.266.969-1.291.916-1.985,1.284-.2.1-.659-.29-1-.455l.083-.184Z"
+                                transform="translate(-860.045 1428.751)"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            );
+        } else if (contentid == "7") {
+            return (
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="112" height="32" viewBox="0 0 112 32">
+                    <g transform="translate(-312 -237)">
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 237)">
+                            <rect stroke="none" width="112" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="111" height="31" rx="4.5" />
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 258)"><tspan x="0" y="0">Exceptions</tspan></text>
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 237)">
+                            <rect stroke="none" width="32" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                        </g>
+                        <g transform="translate(318 244)">
+                            <path
+                                fill="#35a2f5"
+                                d="M-95.353-1425.236v-2.751h1.477v5.925h-5.94v-1.411H-96a8.141,8.141,0,0,0-9.392-3.423,8.308,8.308,0,0,0-5.688,9.423,8.307,8.307,0,0,0,8.609,6.8,8.354,8.354,0,0,0,7.91-8.226h1.408a9.664,9.664,0,0,1-6.559,9.186,9.784,9.784,0,0,1-11.787-4.564,9.833,9.833,0,0,1,2.563-12.419A9.878,9.878,0,0,1-95.353-1425.236Z"
+                                transform="translate(112.683 1428.75)"
+                            />
+                            <path fill="#35a2f5" d="M-19.437-1382.307h1.372v7.434h-1.372Z" transform="translate(28.546 1386.844)" />
+                            <path fill="#35a2f5" d="M-18.1-1287.949h-1.369v-1.413H-18.1Z" transform="translate(28.574 1302.979)" />
+                        </g>
+                    </g>
+                </svg>
+            );
+        } else if (contentid == "8") {
+            return ("");
+        } else if (contentid == "9") {
+            return ("");
+        } else if (contentid == "10") {
+            return (
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="112" height="32" viewBox="0 0 112 32">
+                    <g transform="translate(-312 -280)">
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 280)">
+                            <rect stroke="none" width="112" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="111" height="31" rx="4.5" />
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 301)"><tspan x="0" y="0">Shapes</tspan></text>
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 280)">
+                            <rect stroke="none" width="32" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                        </g>
+                        <g transform="translate(318 287)">
+                            <path
+                                fill="#35a2f5"
+                                d="M377.892-1420.369h-3.164a.948.948,0,0,1-1.045-1.037q0-3.158,0-6.316a.926.926,0,0,1,1.026-1.027q3.175,0,6.35,0a.943.943,0,0,1,1.02,1.018q0,3.147,0,6.295a.958.958,0,0,1-1.064,1.065q-1.56,0-3.121,0Zm3.218-.958v-6.477h-6.479v6.477Z"
+                                transform="translate(-373.681 1428.751)"
+                            />
+                            <path
+                                fill="#35a2f5"
+                                d="M483.445-1420.252h-3.97c-.6-.005-.8-.348-.512-.867q1-1.782,2.009-3.561l1.969-3.484c.025-.044.048-.089.075-.132.264-.428.644-.433.9,0,.308.525.6,1.058.9,1.588q1.551,2.745,3.1,5.493a1.4,1.4,0,0,1,.173.439.4.4,0,0,1-.33.484,1.309,1.309,0,0,1-.322.04Q485.441-1420.25,483.445-1420.252Zm.019-6.939-3.366,5.98h6.743Z"
+                                transform="translate(-468.56 1428.633)"
+                            />
+                            <path
+                                fill="#35a2f5"
+                                d="M486.265-1314.847h-2.312c-.35,0-.45-.071-.557-.4l-1.428-4.4a.439.439,0,0,1,.2-.615q1.886-1.37,3.774-2.738a.431.431,0,0,1,.629,0q1.88,1.36,3.758,2.723a.456.456,0,0,1,.21.649q-.717,2.2-1.433,4.4c-.1.31-.194.378-.523.379-.771,0-1.542,0-2.312,0Zm-2.062-.946a.687.687,0,0,0,.081.011c1.288,0,2.576,0,3.864,0,.134,0,.171-.061.2-.166q.574-1.778,1.157-3.553a.214.214,0,0,0-.1-.286c-.534-.378-1.061-.765-1.59-1.148l-1.569-1.137c-1.079.781-2.145,1.551-3.2,2.33a.266.266,0,0,0-.05.235c.182.588.377,1.172.568,1.757Z"
+                                transform="translate(-471.344 1333.45)"
+                            />
+                            <path
+                                fill="#35a2f5"
+                                d="M377.9-1315.723a4.187,4.187,0,0,1-4.191-4.177,4.193,4.193,0,0,1,4.241-4.2,4.21,4.21,0,0,1,4.152,4.2A4.2,4.2,0,0,1,377.9-1315.723Zm0-7.428a3.249,3.249,0,0,0-3.254,3.187,3.27,3.27,0,0,0,3.252,3.31,3.257,3.257,0,0,0,3.258-3.209A3.232,3.232,0,0,0,377.9-1323.151Z"
+                                transform="translate(-373.703 1334.322)"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            );
+        } else if (contentid == "11") {
+            //not download
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="183" height="32" viewBox="0 0 183 32">
+                    <g transform="translate(-312 -323)">
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 323)">
+                            <rect stroke="none" width="183" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="182" height="31" rx="4.5" />
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 344)"><tspan x="0" y="0">Chemical Composition</tspan></text>
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 323)">
+                            <rect stroke="none" width="32" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                        </g>
+                        <g transform="translate(318 327)">
+                            <path
+                                fill="#35a2f5"
+                                d="M-596.256-1404.738a13.607,13.607,0,0,1-1.947-1.315,3.571,3.571,0,0,1-.764-1.459,1.292,1.292,0,0,1,.4-1.45c1.42-1.353,2.789-2.76,4.168-4.155a1.512,1.512,0,0,0,.324-.54,1.476,1.476,0,0,0,.012-.477c0-2.18,0-4.36,0-6.522-1.2-.473-1.581-.963-1.464-1.854.1-.791.62-1.149,1.928-1.311v-1.929h-3.922v-.985c.271-.014.542-.038.813-.039q1.652-.007,3.3,0c.782,0,.867.089.869.851,0,.7,0,1.39,0,2.112h.981c0-1.156-.01-2.273,0-3.391a1.443,1.443,0,0,1,.977-1.436,1.412,1.412,0,0,1,1.643.384c.209.235.247.615.413.9a3.669,3.669,0,0,0,.5.562c.164-.191.424-.359.476-.576a1.525,1.525,0,0,1,2.076-1.265,1.289,1.289,0,0,1,.932,1.148c.044,1.555.015,3.111.015,4.692h-1.025v-3.742c0-.18-.008-.361,0-.541.017-.333-.061-.676-.438-.63a.843.843,0,0,0-.526.556,1.583,1.583,0,0,1-1.429,1.385,1.464,1.464,0,0,1-1.577-1.32c-.042-.362-.135-.657-.544-.642-.438.017-.452.361-.45.7.007,1.058,0,2.117,0,3.221,1.015.018,1.856.262,1.967,1.424.081.847-.325,1.307-1.476,1.71,0,2.327,0,4.667.008,7.008a1.281,1.281,0,0,0,.185.435,18.159,18.159,0,0,1,1.546-1.437,16.021,16.021,0,0,1,1.734-.989v-5.047l-.954-.063c-.015-.311-.029-.615-.045-.971h4.984v.969l-.931.057v5.136a5.7,5.7,0,0,1,2.692,1.785,5.516,5.516,0,0,1-3.006,8.921,2.363,2.363,0,0,0-.319.127h-.961a2.748,2.748,0,0,0,.027-.476c-.044-.4.1-.551.521-.591a4.428,4.428,0,0,0,4-4.161,4.443,4.443,0,0,0-3.282-4.589.817.817,0,0,1-.729-.954c.021-1.52.008-3.04.005-4.56,0-.21-.021-.42-.033-.63h-.945v.682c0,1.5-.013,3,.007,4.5a.815.815,0,0,1-.72.961,4.31,4.31,0,0,0-2.764,2.222,2.944,2.944,0,0,1,.487.406,1.8,1.8,0,0,0,1.657.7c1.518-.054,3.039-.02,4.559-.015.681,0,.789.12.792.813a3.522,3.522,0,0,1-3.393,3.693.892.892,0,0,0-.608.252,4.153,4.153,0,0,1-2.349,1.746Zm5.231-15.042a1.318,1.318,0,0,0,.041-.186c0-.32,0-.641.007-.961,0-.761.066-.835.807-.852.349-.008.666-.038.655-.493-.011-.44-.325-.491-.673-.491q-1.8,0-3.6,0c-.352,0-.662.067-.665.5,0,.451.323.484.669.481.593-.005,1.186,0,1.783,0v1.02l-.979.063v.689c0,2.142.016,4.284-.018,6.426a1.5,1.5,0,0,1-.387.933c-1.319,1.369-2.646,2.734-4.034,4.034-.763.714-.619,1.117-.051,1.9a2.169,2.169,0,0,0,1.792.948c2.442.01,4.884.031,7.326-.012a2.427,2.427,0,0,0,2.21-1.673.74.74,0,0,0-.2-.952c-1.135-1.1-2.271-2.2-3.351-3.358a2.306,2.306,0,0,0-2.146-1c-.029,0-.066-.038-.128-.077v-.876l.943-.064v-.919l-.929-.061v-.986l.938-.06v-.923l-.933-.05v-.957l.946-.06v-.9l-.962-.1v-.935Zm6.006,12.01a2.345,2.345,0,0,0,2.424-2.425h-4.065C-586.213-1409.292-584.941-1409.019-585.019-1407.769Z"
+                                transform="translate(599.047 1428.75)"
+                            />
+                            <path fill="#35a2f5" d="M-582.486-1427.573h-.975v-.937h.975Z" transform="translate(584.984 1428.533)" />
+                            <path fill="#35a2f5" d="M-561.736-1428.407v.917h-.938v-.917Z" transform="translate(566.227 1428.441)" />
+                            <path fill="#35a2f5" d="M-542.237-1428.584h.934v.938h-.934Z" transform="translate(547.787 1428.6)" />
+                            <path
+                                fill="#35a2f5"
+                                d="M-572.073-1249.522v.991c-.775,0-1.53-.03-2.28.015a1.457,1.457,0,0,0-.829.33,16.646,16.646,0,0,0-2.017,2.134h7.1v.986c-.176.018-.33.048-.483.048-2.081,0-4.162,0-6.244,0a2.011,2.011,0,0,1-1.53-.559.543.543,0,0,1-.023-.879c.954-.942,1.894-1.9,2.852-2.836a.766.766,0,0,1,.46-.226C-574.087-1249.533-573.109-1249.522-572.073-1249.522Z"
+                                transform="translate(580.588 1267.034)"
+                            />
+                        </g>
+                    </g>
+                </svg>
+            );
+        } else if (contentid == "12") {
+            return (
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="155" height="32" viewBox="0 0 155 32">
+                    <g transform="translate(-312 -366)">
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 366)">
+                            <rect stroke="none" width="155" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="154" height="31" rx="4.5" />
+                        </g>
+                        <text fill="#1592e6" font-size="14px" font-family="ProximaNova-Regular, Proxima Nova" transform="translate(351 387)"><tspan x="0" y="0">Named Reactions</tspan></text>
+                        <g fill="#fcfeff" stroke="#35a2f5" transform="translate(312 366)">
+                            <rect stroke="none" width="32" height="32" rx="5" />
+                            <rect fill="none" x="0.5" y="0.5" width="31" height="31" rx="4.5" />
+                        </g>
+                        <g transform="translate(318 373)">
+                            <path
+                                fill="#35a2f5"
+                                d="M1848.5-1425.739a9.844,9.844,0,0,1-.262,2.267c-.026.12.008.152.11.185a10.953,10.953,0,0,1,1.77.716,5.568,5.568,0,0,1,1.566,1.13,2.251,2.251,0,0,1,.6,1.071,1.7,1.7,0,0,1-.267,1.288,4.071,4.071,0,0,1-1.388,1.27,9.781,9.781,0,0,1-2.241.99c-.116.036-.148.075-.119.2a9.62,9.62,0,0,1,.26,2.585,3.5,3.5,0,0,1-.577,1.978,1.676,1.676,0,0,1-1.646.675,5.472,5.472,0,0,1-2.493-1.086,11.134,11.134,0,0,1-1.17-.948c-.074-.068-.115-.042-.173.013a10.517,10.517,0,0,1-1.763,1.341,4.816,4.816,0,0,1-1.757.684,1.782,1.782,0,0,1-1.58-.437,2.306,2.306,0,0,1-.606-1.1,6.208,6.208,0,0,1-.152-2.075,11.163,11.163,0,0,1,.253-1.677c.023-.1-.039-.118-.109-.141a11.476,11.476,0,0,1-1.746-.7,5.861,5.861,0,0,1-1.517-1.056,2.3,2.3,0,0,1-.676-1.136,1.7,1.7,0,0,1,.243-1.282,3.959,3.959,0,0,1,1.3-1.227,9.841,9.841,0,0,1,2.332-1.057c.17-.055.177-.061.141-.233a12.177,12.177,0,0,1-.245-1.735,5.362,5.362,0,0,1,.257-2.225,1.829,1.829,0,0,1,1.008-1.135,2.079,2.079,0,0,1,1.22-.084,5.9,5.9,0,0,1,2.241,1.059,12.214,12.214,0,0,1,1.148.931c.068.06.1.061.169,0a10.119,10.119,0,0,1,1.7-1.307,5.037,5.037,0,0,1,1.747-.712,1.778,1.778,0,0,1,1.725.508,2.6,2.6,0,0,1,.587,1.248A4.859,4.859,0,0,1,1848.5-1425.739Zm-5.932,8.865c.552.022,1.113-.026,1.675-.055a.185.185,0,0,0,.156-.1,21.732,21.732,0,0,0,1.689-2.937.178.178,0,0,0,0-.17,21.135,21.135,0,0,0-1.7-2.946.16.16,0,0,0-.134-.084c-.33-.016-.659-.046-.988-.053-.805-.017-1.61-.009-2.414.052a.2.2,0,0,0-.168.1c-.19.3-.388.591-.575.891a20.7,20.7,0,0,0-1.094,2.01.216.216,0,0,0-.017.208,21.232,21.232,0,0,0,1.7,2.931.17.17,0,0,0,.142.092C1841.409-1416.9,1841.98-1416.854,1842.564-1416.874Zm8.867-3.166a1.047,1.047,0,0,0-.167-.5,3,3,0,0,0-.883-.842,9.064,9.064,0,0,0-2.3-1.061c-.111-.036-.116.03-.135.1a18,18,0,0,1-.814,2.209.16.16,0,0,0,0,.144,18,18,0,0,1,.827,2.219c.031.1.069.129.177.094a9.121,9.121,0,0,0,2.106-.949,3.325,3.325,0,0,0,.984-.875A1.132,1.132,0,0,0,1851.431-1420.04Zm-4.95-7.818a2.009,2.009,0,0,0-.641.116,7.658,7.658,0,0,0-2.613,1.695c-.065.058-.026.091.014.135.149.16.3.32.443.484.386.435.745.891,1.091,1.359a.148.148,0,0,0,.11.072,19.92,19.92,0,0,1,2.37.4c.1.022.108-.019.124-.094a9.233,9.233,0,0,0,.223-2.445,3.558,3.558,0,0,0-.2-1.034A.891.891,0,0,0,1846.481-1427.858Zm-9.006,13.441a4.591,4.591,0,0,0,.034.765,2.893,2.893,0,0,0,.252.894.839.839,0,0,0,.68.51,1.836,1.836,0,0,0,.793-.109,7.592,7.592,0,0,0,2.617-1.688c.062-.056.033-.089-.01-.135a18.681,18.681,0,0,1-1.486-1.791.35.35,0,0,0-.278-.149c-.189-.019-.377-.046-.566-.071a15.581,15.581,0,0,1-1.667-.314c-.078-.019-.124,0-.14.087A9.364,9.364,0,0,0,1837.475-1414.417Zm.484-5.617a.72.72,0,0,0-.076-.221,17.763,17.763,0,0,1-.762-2.079c-.032-.109-.064-.127-.169-.093a10.136,10.136,0,0,0-1.7.71,4.3,4.3,0,0,0-1.338,1.032.888.888,0,0,0-.059,1.185,2.834,2.834,0,0,0,.731.7,8.624,8.624,0,0,0,2.384,1.13c.092.03.127.006.155-.089a18.064,18.064,0,0,1,.725-2A1.014,1.014,0,0,0,1837.96-1420.034Zm.56-7.8a.732.732,0,0,0-.6.242,1.651,1.651,0,0,0-.359.776,5.434,5.434,0,0,0-.094,1.607,12.372,12.372,0,0,0,.218,1.5c.023.112.057.14.177.112a16.608,16.608,0,0,1,2.179-.376.4.4,0,0,0,.32-.175,15.852,15.852,0,0,1,1.444-1.736c.069-.071.085-.12-.007-.189-.111-.084-.207-.186-.314-.276a7.952,7.952,0,0,0-1.809-1.2A2.68,2.68,0,0,0,1838.52-1427.836Zm9.11,13.437a9.133,9.133,0,0,0-.208-1.851c-.059-.287-.062-.284-.353-.218a16.854,16.854,0,0,1-2.113.351.269.269,0,0,0-.205.122,17.487,17.487,0,0,1-1.486,1.792c-.062.066-.068.11,0,.169.183.151.358.311.543.459a6.676,6.676,0,0,0,1.981,1.177,2.084,2.084,0,0,0,.875.133.872.872,0,0,0,.737-.657A3.982,3.982,0,0,0,1847.63-1414.4Zm-4-9.687a15.39,15.39,0,0,0-1.045-1.218c-.056-.06-.095-.032-.137.015-.295.329-.593.655-.864,1-.045.058-.115.1-.126.191C1842.182-1424.122,1842.892-1424.126,1843.634-1424.087Zm-2.18,8.074c.023.039.029.052.037.063.31.4.651.776.991,1.152.066.073.1.026.143-.019.265-.269.509-.556.747-.848a1.521,1.521,0,0,0,.253-.348A17.055,17.055,0,0,1,1841.454-1416.012Zm5.138-2.946c-.015.013-.024.018-.028.025-.31.593-.635,1.177-1,1.741-.016.025-.051.061-.018.084a.164.164,0,0,0,.107.007c.461-.078.921-.161,1.377-.27.094-.022.1-.054.072-.132-.079-.233-.149-.469-.228-.7C1846.792-1418.458,1846.7-1418.711,1846.592-1418.958Zm-7.009-4.062c-.533.079-1.032.178-1.529.287-.088.019-.112.053-.08.144.113.324.213.653.329.977a2.344,2.344,0,0,0,.2.476C1838.833-1421.788,1839.189-1422.4,1839.583-1423.02Zm-1.083,4.074a.483.483,0,0,0-.044.07c-.178.463-.342.932-.484,1.408-.022.075.008.081.069.1q.649.155,1.309.254c.063.009.146.057.181,0s-.04-.114-.073-.167c-.227-.362-.452-.725-.655-1.1Zm6.99-4.073c.4.618.756,1.231,1.1,1.883.2-.513.37-1,.518-1.5.026-.089-.038-.083-.079-.092C1846.529-1422.84,1846.03-1422.943,1845.49-1423.019Z"
+                                transform="translate(-1832.772 1428.75)"
+                            />
+                            <path fill="#35a2f5" d="M1915.925-1354.683a1.81,1.81,0,0,1-1.819-1.812,1.818,1.818,0,0,1,1.82-1.819,1.81,1.81,0,0,1,1.818,1.834A1.8,1.8,0,0,1,1915.925-1354.683Z" transform="translate(-1906.16 1365.195)" />
+                        </g>
+                    </g>
+                </svg>
+
+            );
+        } else if (contentid == "13") {
+            return ("");
+        } else if (contentid == "14") {
+            return ("");
+        } else if (contentid == "16") {
+            return ("");
+        } else if (contentid == "17") {
+            return ("");
+        } else if (contentid == "18") {
+            return ("");
+        } else if (contentid == "19") {
+            return ("");
+        } else if (contentid == "20") {
+            return ("");
+        } else if (contentid == "21") {
+            return ("");
+        } else if (contentid == "22") {
+            return ("");
+        } else if (contentid == "23") {
+            return ("");
+        } else if (contentid == "24") {
+            return ("");
+        } else if (contentid == "99") {
+            return ("");
+        } else if (contentid == "98") {
+            return ("");
+        }
+    }
+    bookmarkButton = () => {
+        this.setState({
+            modalShowb: true,
+            formValid3: false,
+            submitError3: "",
+            bnewtag: "",
+            btags: "",
+            btagsvalue: []
+        });
+
+    }
+    notesButton = () => {
+        console.log("notesButton");
+        let ncomments = "";
+        let ntagsValid = false;
+        let ncommentsValid = false;
+        let formValid2 = false;
+        let ntags = [];
+        let ntagsvalue = [];
+        if (this.props.getData.emptyMaterial[this.state.index].comments != "") {
+            ncomments = this.props.getData.emptyMaterial[this.state.index].comments;
+            ncommentsValid = true;
+        }
+        if (this.props.getData.emptyMaterial[this.state.index].comments != "" && this.props.getData.emptyMaterial[this.state.index].tags != "") {
+
+            formValid2 = true;
+        }
+        if (this.state.tags != "") {
+            let narray = this.props.getData.emptyMaterial[this.state.index].tags.split(",");
+            console.log("narray", narray);
+
+            ntagsValid = true;
+
+
+            narray.map((aa) => {
+                //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
+                let findData = this.props.studentGlobals.studentGlobals.tags.find((a) => a.id == aa);
+                if (findData != undefined) {
+                    const newObj = {
+                        value: findData.id,
+                        label: findData.tag
+                    }
+                    ntags.push(findData.id);
+                    ntagsvalue.push(newObj);
+                }
+            });
+            this.setState({
+                modalShow: true,
+                ntags: ntags.toString(),
+                ntagsvalue: ntagsvalue,
+                ncomments: ncomments,
+                ntagsValid: ntagsValid,
+                ncommentsValid: ncommentsValid,
+                formValid2: formValid2
+            })
+        }
+        else {
+            this.setState({
+                modalShow: true,
+                ntags: ntags.toString(),
+                ntagsvalue: ntagsvalue,
+                ncomments: ncomments,
+                ntagsValid: ntagsValid,
+                ncommentsValid: ncommentsValid,
+                formValid2: formValid2
+            })
+        }
+    }
+    showFunction = () => {
+        console.log("showFunction");
+        if (this.state.show == true) {
+            this.setState({ show: false });
+        }
+        else {
+            this.setState({ show: true });
+        }
+
+
+    }
+
+    //add note
+    noteshandleFormSubmit = (ntags, nnewtag, ncomments, contype, conid, getDerived) => {
+        console.log("handleFormSubmit", contype, conid);
+        //e.preventDefault();
+        const params = {
+            mobile: Cookies.get("mobile"),
+            tags: ntags,
+            new_tag: nnewtag,
+            comments: ncomments,
+            content_type: parseInt(contype),
+            custom_content_id: parseInt(conid),
+        };
+        console.log("noteshandleFormSubmit", params);
+        this.addnotes(params, getDerived).catch((error) => {
+            console.log("catch if error");
+            console.log(error);
+            this.setState({
+                submitError2: error.graphQLErrors.map((x) => x.message),
+            });
+            console.error(
+                "ERR =>",
+                error.graphQLErrors.map((x) => x.message)
+            );
+        });
+
+    };
+    addnotes = async (params, getDerived) => {
+        await this.props.addnotes({
+            variables: {
+                params,
+            },
+            update: (store, { data }) => {
+                console.log("data.addNotes", data.addNotes);
+                //if (data.addNotes) {
+                let globals1 = store.readQuery({
+                    query: FETCH_GLOBALS,
+                    variables: {
+                        mobile: Cookies.get("mobile"),
+                    },
+                });
+                const addNotes = data.addNotes.toString();
+                console.log("globals1", globals1);
+                if (params.new_tag != "") {
+                    let tarray = globals1.studentGlobals.tags;
+
+                    let newobj = {
+                        id: data.addNotes.toString(),
+                        tag: params.new_tag,
+                        type: "notes",
+                        __typename: "Tags",
+                    };
+                    tarray.push(newobj);
+                    globals1.studentGlobals.tags = tarray;
+                    console.log("gbeforewrite", globals1);
+                }
+
+                try {
+                    store.writeQuery({
+                        query: FETCH_GLOBALS,
+                        variables: {
+                            mobile: Cookies.get("mobile"),
+                        },
+                        data: globals1,
+                    });
+                } catch (e) {
+                    console.log("Exception", e);
+                }
+                let notetag = [];
+                if (params.new_tag != "") {
+                    notetag.push(addNotes);
+                }
+                if (params.tags != "") {
+                    let array = params.tags.split(",");
+                    array.map((item) => {
+                        notetag.push(item)
+                    });
+                }
+                const emptyMaterial = this.props.getData.emptyMaterial.map((item) => {
+                    if (this.props.getData.emptyMaterial[this.state.index].id == item.id) {
+                        console.log("sree", this.props.getData.emptyMaterial[this.state.index].id);
+                        return { ...item, comments: params.comments, tags: notetag.toString() }
+                    }
+                    else {
+                        return { ...item }
+                    }
+
+                });
+                this.props.getData.emptyMaterial = emptyMaterial
+                this.setState({
+                    submitError2: "",
+                    ntags: "",
+                    ntagsvalue: [],
+                    nnewtag: "",
+                    ncomments: params.comments,
+                    formErrors: {
+                        ntags: "",
+                        nnewtag: "",
+                        ncomments: ""
+                    },
+                    currentStep: 5,
+                    formValid2: false,
+                    ntagsValid: false,
+                    nnewtagValid: false,
+                    ncommentsValid: false
+                });
+
+                setTimeout(() => {
+                    this.SetpageLoad2(getDerived);
+                }, 1500);
+                //}
+            },
+        });
+    };
+    SetpageLoad2 = (getDerived) => {
+        this.setState({ currentStep: 1, modalShow: false, show: true, getDerived: parseInt(getDerived) + 1 });
+        //this.cancelFun2();
+    };
+    handleEditorChange = (e) => {
+        console.log("handleEditorChange", e.target.getContent());
+        this.setState({
+            ncomments: e.target.getContent()
+        }, () => {
+            this.validateField("ncomments", "1");
+        });
+
+    }
+    notonHide = (getDerived) => {
+        let ncomments = "";
+        if (this.props.getData.emptyMaterial[this.state.index].comments != "") {
+            ncomments = this.props.getData.emptyMaterial[this.state.index].comments;
+        }
+        this.setState({ modalShow: false, ncomments: ncomments, getDerived: parseInt(getDerived) + 1 })
+    }
+    render() {
+        const studentGlobals = this.props.studentGlobals;
+        const loading2 = studentGlobals.loading;
+        const error2 = studentGlobals.error;
+        if (loading2) return null;
+        if (error2 !== undefined) {
+            alert("Server Error. " + error2.message);
+            return null;
+        }
+        console.log("cstate", this.state);
+
+        console.log("NotesSingleMaterialRevisionsSection", this.props.getData);
+        const Reasons = [
+            { value: 1, label: 'Reasons-1' },
+            { value: 2, label: 'Reasons-2' },
+            { value: 3, label: 'Reasons-3' }
+        ];
+        const SectionData = [
+            { value: 'NEET 2020', label: 'NEET 2020', color: '#00B8D9', isFixed: true },
+            { value: 'JEE 2020', label: 'JEE 2020', color: '#0052CC', isFixed: true },
+            { value: 'EAMCET 2020', label: 'EAMCET 2020', color: '#5243AA' },
+        ];
+        const DropdownIndicator = props => {
+            return (
+                components.DropdownIndicator && (
+                    <components.DropdownIndicator {...props}>
+                        <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="css-6q0nyr-Svg"><path fill="currentColor" d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
+                    </components.DropdownIndicator>
+                )
+            );
+        };
+
+        const renderThumb = ({ style, ...props }) => {
+            const thumbStyle = {
+                borderRadius: 6,
+                width: '3px',
+                backgroundColor: 'rgba(0, 0, 0, 0.1)'
+            };
+            return <div style={{ ...style, ...thumbStyle }} {...props} />;
+        };
+        return (
+            <div className="bookmark_shortNote_materials pt-xl-4 pt-lg-4 px-xl-4 px-lg-4">
+                <Container>
+                    <div className="section-description mb-4">
+                        <div className="breadcrumb-content d-md-flex justify-content-between align-items-center">
+                            <h5 className="mb-0 pt-3">Revision Materials</h5>
+                            <Link
+                                to={{
+                                    pathname: "/student/notes/shortnotes-and-materials",
+                                    state: {
+                                        tagid: this.props.getData.tagid,
+                                        subjectid: this.props.getData.subjectid,
+                                        defaultActiveKey: "second"
+
+                                    }
+                                }}
+                                className="btn btn-link text-dark"><i className="fal fa-long-arrow-alt-left" /> Back</Link>
+                        </div>
+                    </div>
+                    <div className="shortnote_cards list-unstyled">
+                        <div key={this.state.id} className="single_material_list">
+                            <Card className="single_card">
+                                <Card.Header className="border-0 py-2 bg-light">
+
+                                    <Card.Title className="h6 mb-0">{this.state.title}</Card.Title>
+
+
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <p className="subTitle">{this.state.subject_name} - {this.state.chapter_name} - {this.state.topic_name}</p>
+                                        <ul className="helpTags list-inline m-0 p-0">
+                                        <li className="list-inline-item">
+                                            <Button variant="link p-0 text-decoration-none position-relative" style={{ lineHeight: '21px' }}
+                                                onClick={() => {
+                                                    this.scrollNotes.current.scrollIntoView({ behavior: 'smooth' });
+                                                }}>
+                                                <i className="fal fa-notes-medical" title="Notes" style={{ color: '#00000082' }} />
+                                                {this.state.ncomments != "" ? ( <i className="fas fa-circle position-absolute text-danger" style={{ fontSize: 5, top: -5, right: 0 }} />):("")}
+                                            </Button>
+                                        </li>
+
+                                            {this.state.bookmarked == "true" ? (<li className="list-inline-item" >
+
+                                                <i style={{ cursor: "pointer" }}
+                                                    className="fas fa-bookmark text-success"
+                                                    title="Remove Bookmark"
+                                                    onClick={(e) => this.removebookhandleFormSubmit(this.state.maincid, this.state.id)} />
+
+                                            </li>) : (
+                                                    
+                                                    <li className="list-inline-item">
+                                                        <Button variant="link p-0 text-decoration-none position-relative" style={{ lineHeight: '21px' }}
+                                                           
+                                                            onClick={() => this.bookmarkButton()}
+                                                        >
+                                                            <i className="fal fa-bookmark" title="Bookmark" style={{ color: '#00000082' }} />
+                                                        </Button>
+                                                    </li>
+
+                                                )}
+                                        </ul>
+                                    </div>
+                                </Card.Header>
+                                <Card.Body>
+                                    <Scrollbars style={{ height: 200 }}
+                                        {...this.props}
+                                        renderThumbVertical={renderThumb}
+                                        autoHide
+                                        autoHideTimeout={500}
+                                        autoHideDuration={200}>
+                                        <Card.Text>
+                                            <div className="d-flex justify-content-between align-items-start">
+                                                <div className="text-left mb-3 w-75">
+                                                    <ul className="sr-tags-list list-inline mt-2">
+                                                        {this.state.ntags.split(",").map((getData) => {
+                                                            let tname = studentGlobals.studentGlobals.tags.find(a => a.id == getData && a.type == "notes");
+                                                            console.log("tname", studentGlobals.studentGlobals.tags, getData, tname);
+                                                            if (tname != undefined) {
+                                                                return (
+                                                                    <li className="list-inline-item">
+
+                                                                        {tname.tag}
+                                                                        <span className="ml-2 font-weight-bold">{tname.count}</span>
+
+                                                                    </li>)
+                                                            }
+                                                        })}
+                                                    </ul>
+                                                </div>
+                                                <div className="text-right mb-3">
+                                                    {this.contentIcons(this.state.maincid)}
+                                                </div>
+                                            </div>
+                                            {parse(this.state.desc)}
+                                        </Card.Text>
+                                    </Scrollbars>
+                                </Card.Body>
+                            </Card>
+                            {/* <Card as={Card.Body} className="shadow-sm mb-5">
+                            <Row>
+                                <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-eye text-primary"></i>Views : <strong>{singleData.total_views}</strong> </Col>
+                                <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-bookmark text-primary"></i>Bookmarked : <strong>{singleData.bookmark_count}</strong></Col>
+                                <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-eye text-success"></i>Your views : <strong>{singleData.your_views}</strong> </Col>
+                                <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-bookmark text-success"></i>Bookmarked : <strong>{singleData.bookmarked == false ? ("No") : ("Yes")}</strong></Col>
+                            </Row>
+                        </Card> */}
+                        </div>
+                        <div className="notesTags mt-5" id="noteid" ref={this.scrollNotes}>
+                            <Row>
+                                <Col xl={12} lg={12} md={12} sm={12}><h5 className="mb-3">Notes</h5></Col>
+                                <Col xl={12} lg={12} md={12} sm={12}>
+                                    <Card as={Card.Body}
+                                    >{
+                                            this.state.modalShow == false ? (<Form.Label className="font-weight-bold text-right">Edit <Button variant="link text-decoration-none" onClick={() => this.notesButton()}><i className="fal fa-edit" /></Button></Form.Label>) : ("")}
+                                        <h6 className="mb-0">{parse(this.state.ncomments)} </h6>
+                                    </Card>
+                                </Col>
+                                {/* <Col xl={6} lg={6} md={6} sm={12}>
+                                    <Card as={Card.Body}>
+                                        <h6 className="mb-0">Imp Notes</h6>
+                                    </Card>
+                                </Col> */}
+                            </Row>
+                        </div>
+                        {this.state.totAryLen>1?(
+                            <div className="pagination p-2 d-flex justify-content-between align-items-center">
+                            {this.state.index > 0 ? (
+                                <Button variant="outline-primary"
+                                    onClick={(e) => this.previousFunction(this.state.index)}>Previous</Button>
+                            ) : ("")}
+                            {this.state.index < parseFloat(this.state.totAryLen) - 1 ? (
+                                <Button variant="outline-primary" onClick={(e) => this.nextFunction(this.state.index)}>Next</Button>
+                            ) : ("")}
+                        </div>
+                        ):("")}
+                        
+                        <div className={`asideNavBar ${this.state.sidetoggle === true ? 'active' : ''}`}>
+                            <div className="overlay" onClick={() => this.setState({ sidetoggle: false })}></div>
+                            <Card className="aside-content rounded-left">
+                                <Card.Header className="bg-white d-flex justify-content-between align-items-center">
+                                    <Card.Title onClick={() => this.setState({ sidetoggle: false })} className="mb-0"><i className="fal fa-arrow-left" /></Card.Title>
+                                    <Card.Title className="mb-0">
+                                        {
+                                            this.state.showDescription ?
+                                                (
+                                                    <i className="fal fa-save" onClick={this.handleFormSubmit} />
+                                                )
+                                                :
+                                                (
+                                                    <i className="fal fa-edit" onClick={() => this.setState({ showDescription: !this.state.showDescription })} />
+                                                )
+                                        }
+                                    </Card.Title>
+                                </Card.Header>
+                                <Card.Body>
+                                    <Scrollbars style={{ height: '100vh', maxHeight: '100%' }}
+                                        {...this.props}
+                                        renderThumbVertical={renderThumb}
+                                        autoHide
+                                        autoHideTimeout={500}
+                                        autoHideDuration={200}>
+                                        {this.state.currentStep == 5 ? (
+                                            <Form.Text className="form-text text-danger">
+                                                Saved successfully
+                                            </Form.Text>
+                                        ) : (
+
+                                                <Form.Text className="form-text text-danger">
+                                                    {this.state.submitError}
+                                                </Form.Text>
+                                            )}
+                                        <Row>
+                                            {
+                                                this.state.showDescription ?
+                                                    (
+                                                        <Col xl={12} lg={12} md={12} sm={12}>
+                                                            <Card className="p-3 mb-3">
+                                                                <h6 className="mb-0">{this.tagsfunction(this.state.tags)}</h6>
+                                                            </Card>
+                                                            <Card>
+                                                                <Card.Body>
+                                                                    <Form.Control as="textarea" rows="10"
+                                                                        name="ncomments"
+                                                                        value={this.state.ncomments}
+                                                                    //onChange={this.handleInputChange} 
+                                                                    />
+                                                                </Card.Body>
+                                                                {/* <Card.Footer className="bg-white">
+                                                                    <Button variant="outline-primary">Save</Button>
+                                                                </Card.Footer> */}
+                                                            </Card>
+                                                        </Col>
+                                                    )
+
+                                                    :
+
+                                                    (
+                                                        <Col xl={12} lg={12} md={12} sm={12}>
+                                                            <p>{parse(this.state.ncomments)}</p>
+                                                        </Col>
+                                                    )
+                                            }
+                                        </Row>
+                                    </Scrollbars>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    </div>
+                </Container>
+                {/* note modal*/}
+                <SingleNoteModal
+                    modaltype="notes"
+                    studentGlobals={studentGlobals.studentGlobals}
+                    noteshandleFormSubmit={this.noteshandleFormSubmit}
+                    removecontypId={this.state.maincid}
+                    custonid={this.state.id}
+                    stateData={this.state}
+                    show={this.state.modalShow}
+                    onHide={this.notonHide}
+
+                />
+                {/* bookmark modal */}
+
+                <SingleBookModal
+                    studentGlobals={studentGlobals.studentGlobals}
+                    bookhandleFormSubmit={this.bookhandleFormSubmit}
+                    handleMutipleInputChange={this.handleMutipleInputChange}
+                    handleInputChange={this.handleInputChange}
+                    removecontypId={this.state.maincid}
+                    custonid={this.state.id}
+                    stateData={this.state}
+                    show={this.state.modalShowb}
+                    onHide={() => this.setState({ modalShowb: false })} />
+            </div>
+        )
+    }
+}
+
+
+export default withRouter(compose(
+    graphql(FETCH_GLOBALS,
+        {
+            options: props => ({
+                variables: {
+                    mobile: Cookies.get("mobile")
+                },
+                fetchPolicy: "cache-and-network"
+            }), name: "studentGlobals"
+        }),
+    graphql(TOTAL_VIEWS, {
+        name: "totalviews",
+    }),
+    graphql(UPDATE_NOTES, {
+        name: "updatenotes"
+    }),
+    graphql(ADD_NOTES, {
+        name: "addnotes",
+    }),
+    graphql(ADD_BOOKMARKS, {
+        name: "addbookmark"
+    }), graphql(REMOVE_BOOKMARKS, {
+        name: "removebookmark"
+    }))(NotesSingleMaterialRevisionsSection));

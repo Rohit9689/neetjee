@@ -1,0 +1,20 @@
+@import "../../../../config";
+
+.add_section {
+  .card {
+    margin-bottom: 15px;
+
+    .loacation_name {
+      @include fonts(400, 14px, 25px);
+      color: #1b2430;
+      text-transform: capitalize;
+    }
+
+    .counts {
+      @include fonts(600, 35px, 25px);
+    }
+  }
+}
+.complexityRow {
+  width: 350px !important;
+}

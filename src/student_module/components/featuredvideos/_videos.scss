@@ -1,0 +1,136 @@
+.video_section,
+.recentlywatched-videos {
+  .video_filter {
+    background: linear-gradient(180deg, #d10451, #eb6d7e);
+    position: relative;
+    border-radius: 30px;
+    padding: 4px;
+
+    .nav-item {
+      display: inline-block;
+      // width: 32%;
+      @media screen and (max-width:767px) {
+        width: 100%;
+      }
+
+      &:not(:last-child) {
+        margin-right: 6px;
+      }
+
+      .nav-link {
+        text-align: center;
+        color: #ffffff;
+        transition: all 0.2s linear;
+        padding: 0.65rem 2rem;
+        border-radius: 30px;
+
+        &.active,
+        &:hover {
+          color: #fff;
+          background: #ffc107;
+        }
+      }
+    }
+  }
+
+  .slider-wrapper {
+    // width: 100%;
+    // margin: auto;
+
+    .slick-slide > div {
+      margin: 2px 8px;
+    }
+    .slick-list {
+      margin: 0 -15px;
+      .slick-track {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
+  
+    .slick-slide {
+      position: relative;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .slick-prev,
+    .slick-next {
+      top: -12px;
+      z-index: 1;
+      &.slick-disabled {
+        .next-slick-arrow,
+        .prev-slick-arrow {
+          color: #a5a5a5;
+          box-shadow: 0 0.1rem 0.15rem rgba(0, 0, 0, 0.015);
+        }
+      }
+    }
+    .slick-prev {
+      left: 270px;
+    }
+    .slick-next {
+      left: 295px;
+    }
+
+    .slick-next:before,
+    .slick-prev:before {
+      content: "" !important;
+      color: #777777;
+    }
+    .next-slick-arrow,
+    .prev-slick-arrow {
+      color: #000000;
+      font-size: 0.8rem;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.15);
+      line-height: 25px;
+    }
+  }
+  .advance-videos .slider-wrapper {
+    .slick-prev {
+      left: 290px;
+    }
+    .slick-next {
+      left: 315px;
+    }
+  }
+
+  .single-slide-card {
+    .card-header .slick-slide-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .card-body {
+      min-height: 138px;
+
+      .slick-slide-title {
+        font-size: 18px;
+      }
+
+      .no-gutters > [class*="col-"] {
+        font-size: 13px;
+        line-height: 18px;
+      }
+    }
+
+    .card-footer {
+      button {
+        font-size: 12px;
+        color: #ffffff;
+        background: #202b63;
+        text-decoration: none;
+      }
+    }
+  }
+}

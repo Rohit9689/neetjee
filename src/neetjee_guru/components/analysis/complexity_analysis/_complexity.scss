@@ -1,0 +1,246 @@
+@import '../../../../_config.scss';
+
+.complexity-nav {
+    position: relative;
+    background: #F39C37;
+
+    .header-top {
+        position: relative;
+        box-shadow: none;
+        z-index: 2;
+
+        .navbar-nav {
+            align-items: center;
+
+            .nav-link {
+                color: #ffffff;
+            }
+
+            .profile-img {
+                background: #ffffff2a;
+                border: 1px solid #ffc27b;
+                border-radius: 21px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .text {
+                    .profile-name {
+                        font-size: 14px;
+                        line-height: 6px;
+                    }
+                }
+            }
+        }
+
+        .search .search-bar {
+            color: #ffffff;
+            background: #e240567e;
+            box-shadow: none;
+        }
+
+        .student-notification i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-bottom {
+        position: relative;
+        z-index: 1;
+
+        .title {
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: #ffffff;
+        }
+
+        .card {
+            border-radius: 10px;
+            background-color: #ffffff80;
+            border: 1px solid #FBE1C3;
+
+            img {
+                margin-top: -3rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .datePicker {
+            .calendar {
+                color: #ffffff;
+                position: absolute;
+                left: 15px;
+                top: 0;
+                font-size: 18px;
+                background: #ffffff3a;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .form-control {
+                padding-left: 40px;
+                border: 1px solid #FBE1C3;
+                background-color: #ffffff80;
+                color: #ffffff;
+
+                &::placeholder {
+                    color: #ffffff;
+                }
+            }
+
+            .rdtPicker {
+                right: 0;
+            }
+        }
+    }
+}
+
+.complexity-analysis {
+    .filter {
+        button {
+            padding: 0.45rem 1rem;
+            box-shadow: 0px 0px 10px #0000001A;
+        }
+    }
+
+    .exam-wise {
+        .card-header {
+            background: #EEEEEE;
+
+            h6.title {
+                color: #33333369;
+            }
+        }
+
+        .card-body .card-group .card {
+
+            .react-bootstrap-table,
+            .table {
+                border: none;
+                border-radius: 0;
+
+                thead {
+                    background: #EEEEEE;
+
+                    th {
+                        font-size: 13px;
+                        padding: 1rem 0.35rem;
+                        font-weight: 400;
+                        color: #707070;
+                    }
+                }
+
+                tbody tr td {
+                    font-size: 13px;
+                    padding: 0.95rem 0.35rem;
+
+                    &:nth-child(2) {
+                        color: #077EE6;
+                    }
+
+                    &:nth-child(3) {
+                        color: #00C596;
+                    }
+
+                    &:nth-child(4) {
+                        color: #FEAF55;
+                    }
+
+                    &:last-child {
+                        color: #F05D70;
+                    }
+                }
+            }
+        }
+    }
+
+    .complexity-subjects {
+        position: relative;
+        border-radius: 6px;
+
+        .table {
+            thead th {
+                border: 1px solid #dee2e6;
+
+                .accurency {
+                    background: #d8e1e980;
+                    border-radius: 5px;
+                    padding: 0.45rem 0.75rem;
+
+                    p {
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+
+    .complexity-question {
+        position: relative;
+
+        .react-bootstrap-table,
+        .table {
+            border: none !important;
+
+            thead {
+                background-color: #ffffff;
+            }
+
+            th,
+            td {
+                padding: 0.95rem 0.55rem;
+                outline: none;
+            }
+        }
+
+        .table {
+            thead {
+                border-top: 1px solid #dee2e6;
+                border-bottom: 1px solid #dee2e6;
+
+                th {
+                    border-right: 1px solid #dee2e6;
+
+                    &:nth-child(2n) {
+                        border-right: 1px solid #dee2e6;
+                    }
+
+                    &:last-child,
+                    &:nth-child(2),
+                    &:nth-child(4),
+                    &:nth-child(6),
+                    &:nth-child(8) {
+                        border-right: 0;
+                    }
+                }
+            }
+
+            tbody {
+                td {
+                    border-right: 1px solid #dee2e6;
+
+                    &:last-child,
+                    &:nth-child(2),
+                    &:nth-child(4),
+                    &:nth-child(6),
+                    &:nth-child(8) {
+                        font-weight: 600 !important;
+                        border-right: 0;
+                    }
+
+                    &:nth-child(3),
+                    &:nth-child(5),
+                    &:nth-child(7),
+                    &:nth-child(9) {
+                        font-weight: 400 !important;
+                        color: #077EE6;
+                    }
+                }
+            }
+        }
+    }
+}

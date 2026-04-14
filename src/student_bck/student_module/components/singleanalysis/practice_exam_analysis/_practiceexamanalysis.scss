@@ -1,0 +1,424 @@
+@import '../../../../_config.scss';
+
+
+.practice-exam-analysis-nav {
+    position: relative;
+    background: #077EE6;
+
+    .header-top {
+        position: relative;
+        box-shadow: none;
+        z-index: 2;
+
+        .navbar-nav {
+            align-items: center;
+
+            .nav-link {
+                color: #ffffff;
+            }
+
+            .profile-img {
+                background: #ffffff2a;
+                border: 1px solid #84b9e2;
+                border-radius: 21px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .text {
+                    .profile-name {
+                        font-size: 14px;
+                        line-height: 6px;
+                    }
+                }
+            }
+        }
+
+        .search .search-bar {
+            color: #ffffff;
+            background: #ffffff17;
+            box-shadow: none;
+        }
+
+        .student-notification i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-bottom {
+        position: relative;
+        z-index: 1;
+
+        .list-inline li {
+            margin-right: 35px;
+            position: relative;
+
+            &::before {
+                right: -25px;
+                bottom: 3px;
+                position: absolute;
+                color: #ffffff;
+                content: "\f30b";
+                font-family: "Font Awesome 5 Pro";
+                font-weight: 900;
+                display: inline-block;
+                font-style: normal;
+                font-variant: normal;
+                text-rendering: auto;
+                line-height: 1;
+            }
+
+            &:last-child {
+                margin-right: 0;
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+
+        .card {
+            border-radius: 10px;
+            background-color: hsla(0, 0%, 100%, 0.46);
+
+            img {
+                margin-top: -3rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .datePicker {
+            .calendar {
+                color: #ffffff;
+                position: absolute;
+                left: 15px;
+                top: 0;
+                font-size: 18px;
+                background: #ffffff75;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .form-control {
+                padding-left: 40px;
+                background-color: hsla(0, 0%, 100%, 0.46);
+                color: #ffffff;
+
+                &::placeholder {
+                    color: #ffffff;
+                }
+            }
+
+            .rdtPicker {
+                right: 0;
+            }
+        }
+    }
+}
+
+.practice-exam-analysis {
+    .filter {
+        button {
+            padding: 0.45rem 1rem;
+            box-shadow: 0px 0px 10px #0000001A;
+        }
+    }
+
+    .totalPractice {
+        position: relative;
+        border-radius: 6px;
+        background: #D8D8D8;
+
+        .card-header {
+            border-radius: 6px;
+            box-shadow: 0px 0px 20px #00000029;
+            border: 1px solid #EEEEEE;
+
+            .content {
+                .accuracy {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    padding: 10px;
+                    background: #D8E1E9;
+                    border-radius: 0px 6px;
+                }
+
+                .student-img {
+                    position: relative;
+                    margin-top: -3.2rem;
+                }
+            }
+
+            .appaired {
+                border: none;
+                background: #EEEEEE
+            }
+
+            .status-list .list-inline-item {
+                padding: 0.45rem;
+                border-right: 1px solid #dee2e6;
+
+                p.title {
+                    font-size: 13px;
+                    line-height: 14px !important;
+                    height: 27px;
+                }
+
+                &:last-child {
+                    border-right: 0;
+                }
+            }
+        }
+
+        .card-body {
+            overflow: hidden;
+
+            .totalPractice-tabs {
+                background: #F2F5F8;
+                border: 1px solid #D8D8D8;
+                border-radius: 6px;
+
+                .nav-pills .nav-item .nav-link {
+                    color: #A2A2B1;
+                    border-radius: 0.25rem;
+                    padding: 0.25rem 0.75rem;
+                    transition: ease-in all 0.2s;
+
+                    &.active,
+                    &:hover {
+                        border-radius: 30px;
+                        color: #fff;
+                        background-color: #007bff;
+                    }
+                }
+
+                .btn-lightblue {
+                    border-radius: 6px;
+                    font-size: 13px;
+                    padding: 0.45rem 0.75rem;
+                }
+
+                .tab-content {
+                    .single-card {
+                        .title span {
+                            color: #00c596;
+                        }
+
+                        .card {
+                            padding: 0.45rem;
+                            background: #D8D8D8;
+                            border-radius: 4px;
+                            margin: 4px 0;
+                            border: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .totalExams {
+        position: relative;
+        border-radius: 6px;
+        background: #D8D8D8;
+
+        .card-header {
+            border-radius: 6px;
+            box-shadow: 0px 0px 20px #00000029;
+            border: 1px solid #EEEEEE;
+
+            .content {
+                .accuracy {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    padding: 10px;
+                    background: #D8E1E9;
+                    border-radius: 0px 6px;
+                }
+
+                .student-img {
+                    position: relative;
+                    margin-top: -8rem;
+                }
+            }
+
+            .appaired {
+                border: none;
+                background: #EEEEEE
+            }
+
+            .totalExam-list li {
+                width: 59px;
+                height: 50px;
+                padding: 3px;
+                text-align: center;
+                background: #DFE9F3;
+                border-radius: 4px;
+                display: inline-block;
+                margin-right: 10px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                h6 {
+                    font-size: 12px;
+                }
+
+                p {
+                    font-size: 10px;
+                }
+            }
+
+            .status-list .list-inline-item {
+                padding: 0.45rem;
+                border-right: 1px solid #dee2e6;
+
+                p.title {
+                    font-size: 13px;
+                    line-height: 14px !important;
+                    height: 27px;
+                }
+
+                &:last-child {
+                    border-right: 0;
+                }
+            }
+        }
+
+        .card-body {
+            overflow: hidden;
+
+            .totalExams-tabs {
+                background: #ffffff;
+                border: 1px solid #D8D8D8;
+                border-radius: 6px;
+
+                .nav-pills .nav-item .nav-link {
+                    color: #A2A2B1;
+                    border-radius: 0.25rem;
+                    padding: 0.25rem 0.75rem;
+                    transition: ease-in all 0.2s;
+
+                    &.active,
+                    &:hover {
+                        border-radius: 30px;
+                        color: #fff;
+                        background-color: #FEAF55;
+                    }
+                }
+
+                .btn-lightblue {
+                    border-radius: 6px;
+                    font-size: 13px;
+                    padding: 0.45rem 0.75rem;
+                }
+
+                .tab-content {
+                    .table {
+                        thead {
+                            border-bottom: 1px solid #D8D8D8;
+                        }
+
+                        tbody td {
+                            padding: 5px 6px;
+                        }
+
+                        tbody tr:nth-child(1) td {
+                            color: #00C596;
+                        }
+
+                        tbody tr:nth-child(5) td {
+                            color: #f50049;
+                        }
+
+                        .btn-lightblue {
+                            border-radius: 25px;
+                            font-size: 13px;
+                            padding: 0.25rem 0.75rem;
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .conduct-exams {
+        .table {
+            thead th {
+                text-align: center;
+                vertical-align: middle;
+                border-bottom: 1px solid #dee2e6;
+
+                .types {
+                    p {
+                        font-weight: 400;
+                        padding: 6px;
+                        color: #ced4da;
+                    }
+
+                    p:nth-child(1) {
+                        text-align: right;
+                    }
+
+                    hr {
+                        margin: 0;
+                        transform: rotate(20deg);
+                    }
+                }
+            }
+
+            thead th:first-child {
+                padding: 0;
+                text-align: left;
+            }
+
+            thead th:first-child,
+            tbody td:first-child {
+                border-right: 1px solid #D8D8D8;
+            }
+
+            tbody td {
+                text-align: center;
+                vertical-align: middle;
+                padding: 1rem .65rem;
+
+                .count {
+                    span {
+                        color: #F05D70;
+                        position: relative;
+                        width: 25px;
+                        height: 25px;
+                        font-size: 12px;
+                        text-align: center;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            width: 22px;
+                            height: 22px;
+                            border: 1px solid #F05D70;
+                            border-radius: 50%;
+                            left: -6px;
+                            top: -4px;
+                        }
+                    }
+                }
+
+                i {
+                    color: #00C596;
+                    font-size: 1.4rem;
+                }
+            }
+
+            tbody tr td:first-child {
+                text-align: center;
+            }
+        }
+    }
+}

@@ -1,0 +1,87 @@
+@import '../../../../config';
+
+@mixin Cards {
+    .card {
+        padding: 6px 10px;
+        background: hsla(0, 0%, 100%, 0.39);
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .title {
+            @include fonts(400, 14px, 24px);
+            color: $theme2;
+            text-transform: capitalize;
+            margin: 0;
+        }
+
+        .counts {
+            @include fonts(400, 24px, 24px);
+            color: $gray-4;
+            text-transform: capitalize;
+            margin: 0;
+        }
+    }
+}
+
+.students_section {
+    .students_status {
+        background: $gray-2;
+        margin-bottom: 20px;
+
+
+        .students_total_status {
+            background: $gray-3;
+            @include Cards;
+
+            .border-dashed {
+                border-bottom: 1px dashed $white;
+            }
+        }
+
+        @media (max-width: 1024.99px) {
+            .students_total_status {
+                margin-bottom: 20px;
+            }
+        }
+
+        .students_wise_status {
+            @include Cards;
+
+            .card {
+                background: $white;
+                margin-bottom: 10px;
+
+                &.single_students {
+                    .counts {
+                        @include fonts(500, 35px, 24px);
+                        color: $theme2;
+                        text-transform: capitalize;
+                        margin-top: 0.5rem;
+                    }
+                }
+
+                i {
+                    font-size: 12px;
+                    cursor: pointer;
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                    color: $gray-3;
+                }
+            }
+
+            @media (max-width: 1024.99px) {
+                .col-6 {
+                    margin-bottom: 30px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

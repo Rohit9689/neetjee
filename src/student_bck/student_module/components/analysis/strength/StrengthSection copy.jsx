@@ -1,0 +1,874 @@
+import React, { Component } from 'react'
+import { Link } from "react-router-dom";
+import { Row, Col, Card, CardGroup, ListGroup, Form, Button, Table, Badge } from 'react-bootstrap';
+import AnalysisFilter from '../AnalysisFilter'
+
+import './_strength.scss'
+import { gql } from "@apollo/client";
+import { graphql } from "@apollo/client/react/hoc";
+import * as compose from 'lodash.flowright';
+import { withRouter } from "react-router-dom";
+import PreloaderTwo from '../../preloader/PreloaderTwo';
+import ChapterAndtopicModal from "../ChapterAndtopicModal";
+import { Scrollbars } from 'react-custom-scrollbars'
+
+const renderThumb = ({ style, ...props }) => {
+    const thumbStyle = {
+        borderRadius: 6,
+        width: '3px',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)'
+    };
+    return <div style={{ ...style, ...thumbStyle }} {...props} />;
+};
+const FETCH_SUBJECTANALYSIS = gql` 
+query($mobile: String!,$exam_type: String!,$class_id: String!) {
+    getSubjectAnalysisData(mobile: $mobile,exam_type: $exam_type,class_id: $class_id){
+        
+        class_id
+        subject_data{
+            id
+            subject
+            strength
+            practice_total
+            practice_strength
+            exam_total
+            exam_strength
+            total_questions
+            answered_questions
+            answered_strength
+            skipped_questions
+            skipped_strength
+            error_questions
+            error_strength
+            class_wise_data{
+                exam_type
+                class1_total
+                class1_strength
+                class2_total
+                class2_strength
+            }
+            weak_chapters{
+                id
+                chapter_name
+                accuracy
+            }
+        }
+        syllabus_analysis{
+            id
+            subject
+            chapters_strength{
+                strength
+                total
+                chapter_list{
+                    id
+                    chapter
+                }
+            }
+            topics_strength{
+                strength
+                total
+                topic_list{
+                    id
+                    topic
+                    chapter
+                }
+            }
+        }
+        
+        
+        
+    }
+}
+`;
+
+class StrengthSection extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            chapter: "1",
+            topic: "",
+            strengthCuttOffVal: "0",
+            modalShow: false,
+            modaldata: [],
+            name: ""
+        }
+    }
+    modalFun = (data, name) => {
+        console.log("modalFun");
+        this.setState({
+            modalShow: true,
+            modaldata: data,
+            name: name
+        });
+
+    }
+    chaaptercount(data) {
+        let newArray = [];
+        data.map((item) => {
+            newArray.push(item.total);
+        });
+
+        var sumaccuracy = newArray.reduce(function (a, b) {
+            return a + b;
+        }, 0);
+        return sumaccuracy;
+
+    }
+    topiccount = (data) => {
+        let newArray = [];
+        data.map((item) => {
+            newArray.push(item.total);
+        });
+
+        var sumaccuracy = newArray.reduce(function (a, b) {
+            return a + b;
+        }, 0);
+        return sumaccuracy;
+    }
+    handleInput = (type) => {
+        if (type == "topic") {
+            this.setState({
+                topic: "1",
+                chapter: ""
+            });
+        }
+        if (type == "chapter") {
+            this.setState({
+                chapter: "1",
+                topic: ""
+            });
+        }
+
+    }
+    classNameIcon = (data) => {
+        //let classname = "";
+        console.log("classNameIcon", data);
+        if (data == "Botany") {
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 40 40"><circle fill="#00c596" cx="20" cy="20" r="20" /><g transform="translate(13.679 4.56)"><path fill="#ffffff" d="M18.525,128.355v1.515c-.415,0-.814-.006-1.211,0-.379.007-.874-.076-.868.494.006.531.477.447.837.451.385,0,.769,0,1.211,0V132.5c-.7,0-1.4,0-2.112,0-.365,0-.767,0-.751.483s.425.466.783.465c.687,0,1.375,0,2.1,0V135.1c-.494,0-.976,0-1.458,0-.349,0-.67.118-.594.5.037.186.366.407.587.44a10.232,10.232,0,0,0,1.449.021v1.652c-.723,0-1.429,0-2.136,0-.374,0-.755.044-.733.516.02.435.4.44.74.438.708,0,1.417,0,2.116,0a4.238,4.238,0,0,1-4.444,4.315,4.282,4.282,0,0,1-4.114-4.267c-.022-3.242,0-6.486-.018-9.728,0-.423.162-.615.542-.616C13.12,128.351,15.788,128.355,18.525,128.355Z" transform="translate(-8.692 -112.579)" /><path fill="#ffffff" d="M5.1,11.841V9.457c-.324-.058-.64-.1-.953-.168A5.2,5.2,0,0,1,.027,4.059c.012-.485.226-.65.677-.64a5.5,5.5,0,0,1,4.035,1.76c.092.1.181.2.3.332a16.631,16.631,0,0,1,.269-1.676A5.2,5.2,0,0,1,10.269,0c.747,0,.842.1.817.858A5.14,5.14,0,0,1,6.609,5.888c-.181.026-.359.061-.562.1V11.75c.218.012.431.033.644.034.98.007,1.96-.027,2.937.022a1.566,1.566,0,0,1,1.519,1.606,1.546,1.546,0,0,1-1.577,1.54q-4.008.033-8.018,0A1.516,1.516,0,0,1,0,13.4a1.546,1.546,0,0,1,1.617-1.554C2.756,11.83,3.894,11.841,5.1,11.841Z" transform="translate(0 0.001)" /></g></svg>
+            );
+        } else if (data == "Physics") {
+            // classname = "fal fa-atom fa-fw fa-2x";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 40 40"><circle fill="#feaf55" cx="20" cy="20" r="20" /><g transform="translate(7.07 5.925)"><path fill="#fff" d="M23.085,6.47c.084-.345.162-.683.249-1.019a11.75,11.75,0,0,1,1.577-3.873A5.187,5.187,0,0,1,26.049.4a1.95,1.95,0,0,1,2.408.017,12.039,12.039,0,0,1,.969.864,2.279,2.279,0,0,1,2.2-.054A2.376,2.376,0,0,1,32.81,2.534a2.446,2.446,0,0,1-1.591,3.193l.175.75c.15-.04.282-.073.412-.11a13.689,13.689,0,0,1,4.345-.676,5.9,5.9,0,0,1,1.729.325,2.149,2.149,0,0,1,1.365,2.72,7.394,7.394,0,0,1-1.82,3.04c-.535.6-1.116,1.151-1.7,1.752.181.168.38.346.571.53a12.005,12.005,0,0,1,2.643,3.365,3.2,3.2,0,0,1,.388,1.738,2.294,2.294,0,0,1-1.867,1.983c-.039.009-.078.015-.128.024-.028.186-.046.374-.085.558a2.366,2.366,0,0,1-4.685-.511c.008-.317-.084-.442-.38-.491-.253-.042-.5-.127-.768-.2-.15.584-.278,1.148-.441,1.7a10.153,10.153,0,0,1-1.694,3.623,2.537,2.537,0,0,1-2.142,1.138,2.623,2.623,0,0,1-1.911-1.121,8.563,8.563,0,0,1-1.461-2.878c-.231-.724-.406-1.465-.606-2.2-.021-.076-.04-.152-.068-.262l-2.043.522a1.492,1.492,0,0,1-.4,1.133,1.464,1.464,0,0,1-2.49-.6c-.058-.215-.154-.276-.375-.324A6.624,6.624,0,0,1,16.24,20.8a2.088,2.088,0,0,1-1-2.524,7.366,7.366,0,0,1,1.819-3.041c.536-.6,1.116-1.151,1.707-1.754-.187-.173-.393-.357-.592-.55A11.834,11.834,0,0,1,15.54,9.556a3.168,3.168,0,0,1-.366-1.8,2.075,2.075,0,0,1,1.316-1.7,5.5,5.5,0,0,1,2.656-.35,17.4,17.4,0,0,1,3.765.736A1.39,1.39,0,0,0,23.085,6.47ZM31.039,13.5h0c0-.682.008-1.364-.008-2.046a.418.418,0,0,0-.186-.3q-1.688-.95-3.394-1.869a.5.5,0,0,0-.41,0q-1.707.917-3.393,1.871a.443.443,0,0,0-.188.323q-.019,2.016,0,4.031a.411.411,0,0,0,.165.307q1.714.965,3.447,1.9a.436.436,0,0,0,.354,0q1.732-.934,3.447-1.9a.384.384,0,0,0,.165-.278C31.046,14.868,31.039,14.186,31.039,13.5Zm-7.017,6.755c.147.573.278,1.168.454,1.75a9.348,9.348,0,0,0,1.576,3.315c.025.031.051.062.077.092A1.308,1.308,0,0,0,28.35,25.4a8.671,8.671,0,0,0,1-1.63,14.65,14.65,0,0,0,1.094-3.523c-1.055-.442-2.085-.876-3.119-1.3a.293.293,0,0,0-.2.019C26.114,19.386,25.1,19.81,24.022,20.259Zm-4.5-7.41c.806-.585,1.557-1.174,2.354-1.693a1.3,1.3,0,0,0,.722-1.144c.029-.847.182-1.689.286-2.566-.346-.1-.7-.2-1.056-.29a11.262,11.262,0,0,0-3.8-.452,4.415,4.415,0,0,0-1.267.325.943.943,0,0,0-.606,1.04,3.383,3.383,0,0,0,.243.981A12.147,12.147,0,0,0,19.524,12.849Zm15.448-.019a13.832,13.832,0,0,0,2.74-3.078,5.61,5.61,0,0,0,.579-1.31A1.146,1.146,0,0,0,37.5,6.915a2.86,2.86,0,0,0-1.021-.209,22.651,22.651,0,0,0-2.63.194c-.765.112-1.512.348-2.238.522.116,1.085.224,2.11.342,3.133a.388.388,0,0,0,.147.238C33.044,11.47,33.994,12.139,34.972,12.83ZM19.46,14.14c-.69.747-1.418,1.492-2.095,2.282a5.166,5.166,0,0,0-1.17,2.11,1.166,1.166,0,0,0,.822,1.563,6.3,6.3,0,0,0,1.144.217.381.381,0,0,0,.276-.117,1.448,1.448,0,0,1,2.049-.188.35.35,0,0,0,.231.093c.728-.165,1.454-.343,2.155-.512-.115-1.084-.22-2.108-.337-3.132a.389.389,0,0,0-.148-.239C21.443,15.539,20.493,14.87,19.46,14.14Zm10.99-7.367c-.059-.254-.133-.5-.172-.759a.331.331,0,0,0-.293-.31,2.4,2.4,0,0,1-1.542-3.35c.21-.444.215-.448-.128-.8a2.85,2.85,0,0,0-.439-.364.99.99,0,0,0-1.209-.025,3.74,3.74,0,0,0-.83.811A11.414,11.414,0,0,0,24.232,5.9c-.077.3-.134.6-.2.879a21.624,21.624,0,0,1,2.235.908,1.9,1.9,0,0,0,1.976-.005A22.483,22.483,0,0,1,30.451,6.773ZM31.6,19.559c.389.107.78.224,1.177.317a.307.307,0,0,0,.242-.1,2.348,2.348,0,0,1,4,.281.313.313,0,0,0,.25.127,1.241,1.241,0,0,0,1.061-1.312,3.149,3.149,0,0,0-.291-1.029,12.593,12.593,0,0,0-3.091-3.694l-.254.188c-.693.512-1.365,1.058-2.089,1.523A1.3,1.3,0,0,0,31.886,17C31.853,17.849,31.7,18.69,31.6,19.559Zm3.335,3.1a1.469,1.469,0,0,0,1.4-1.472,1.453,1.453,0,0,0-1.419-1.42,1.47,1.47,0,0,0-1.4,1.472A1.455,1.455,0,0,0,34.936,22.658ZM32,3.388a1.412,1.412,0,1,0-2.823-.066A1.412,1.412,0,0,0,32,3.388Zm.065,11.682L34.2,13.5,32.065,11.93Zm-9.644.009V11.932L20.286,13.51Zm1.415-7.331c-.1.792-.194,1.518-.294,2.3l2.551-1.407Zm7.108,9.21-2.552,1.41,2.257.884C30.751,18.462,30.844,17.739,30.945,16.958ZM28.391,8.64l2.55,1.4c-.1-.792-.2-1.522-.3-2.292ZM23.838,19.254l2.25-.893-2.545-1.4C23.643,17.743,23.737,18.471,23.838,19.254Zm-4.266,2.437a.536.536,0,0,0,.5-.538.509.509,0,0,0-1.019.02A.539.539,0,0,0,19.572,21.692Z" transform="translate(-14.236 0.009)" /><path fill="#fff" d="M81.748,20.163A1.927,1.927,0,1,1,83.663,18.2,1.913,1.913,0,0,1,81.748,20.163Zm0-.962a.964.964,0,1,0-.974-.946A.988.988,0,0,0,81.747,19.2Z" transform="translate(-74.993 -15.325)" /><path fill="#fff" d="M2.888,201.432A1.43,1.43,0,0,1,1.4,202.868a1.445,1.445,0,0,1,.078-2.889A1.428,1.428,0,0,1,2.888,201.432Zm-.963-.008a.508.508,0,0,0-.48-.482.481.481,0,0,0,0,.961A.5.5,0,0,0,1.925,201.425Z" transform="translate(0 -187.911)" /><path fill="#fff" d="M400.661,202.878a1.444,1.444,0,1,1,1.446-1.472A1.428,1.428,0,0,1,400.661,202.878Zm.483-1.43a.51.51,0,0,0-.466-.5.5.5,0,0,0-.495.466.51.51,0,0,0,.466.5A.5.5,0,0,0,401.145,201.448Z" transform="translate(-375.129 -187.921)" /><path fill="#fff" d="M180.466,186.447a2.408,2.408,0,1,1-2.381-2.427A2.391,2.391,0,0,1,180.466,186.447Zm-.962-.016a1.446,1.446,0,1,0-1.472,1.442A1.472,1.472,0,0,0,179.5,186.431Z" transform="translate(-165.05 -172.915)" /></g></svg>
+            );
+        } else if (data == "Chemistry") {
+            // classname = "fal fa-flask fa-fw fa-2x";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 40 40"><circle fill="#077ee6" cx="20" cy="20" r="20" /><g transform="translate(10.37 7.407)"><path fill="#fff" d="M9.5,23.044c-2.245,0-4.491-.009-6.736,0A2.509,2.509,0,0,1,.293,21.8a2.464,2.464,0,0,1,.3-2.74q2.867-4.254,5.678-8.546a1.927,1.927,0,0,0,.3-.978q.036-3.734,0-7.47c0-.262-.229-.515-.322-.783S6,.718,6.078.5A.868.868,0,0,1,6.7.019q2.8-.056,5.6,0a.851.851,0,0,1,.613.491c.074.217-.086.524-.176.782s-.319.514-.322.771q-.038,3.734,0,7.47a1.907,1.907,0,0,0,.3.978q2.853,4.344,5.755,8.656a2.4,2.4,0,0,1,.267,2.571,2.364,2.364,0,0,1-2.3,1.3Q12.97,23.047,9.5,23.044ZM7.366.871c-.034.518-.089,1-.09,1.476-.009,2.423.012,4.846-.02,7.268A2.3,2.3,0,0,1,6.9,10.778q-2.865,4.374-5.788,8.711A1.8,1.8,0,0,0,.868,21.48a1.822,1.822,0,0,0,1.8.891q6.835-.008,13.67,0a1.79,1.79,0,0,0,1.8-.9,1.845,1.845,0,0,0-.258-1.995q-2.92-4.338-5.789-8.71a2.143,2.143,0,0,1-.327-1.1c-.027-2.922-.016-5.846-.016-8.818l.445-.085c0-.024-.007-.048-.011-.072H6.793c0,.024-.007.048-.009.072Z" transform="translate(0 0.009)" /><path fill="#fff" d="M19.6,113.326a1.228,1.228,0,0,1,.947-1.344,1.482,1.482,0,0,1,1.784.667l1.454-.746c.986,1.494,1.984,2.911,2.876,4.39a1.494,1.494,0,0,1-1.3,2.245q-6.638.03-13.274,0a1.5,1.5,0,0,1-1.273-2.271c.99-1.6,2.071-3.151,3.15-4.775a25.862,25.862,0,0,0,2.4,1c1.068.331,2.17.545,3.258.81a1.211,1.211,0,0,0,.786,1.379,1.435,1.435,0,0,0,1.97-1.752C21.413,113.07,20.509,113.2,19.6,113.326ZM17.1,116.291a.958.958,0,0,0,.955-.977.979.979,0,0,0-.96-.982.979.979,0,1,0,.005,1.958Z" transform="translate(-9.174 -96.534)" /><path fill="#fff" d="M61.395,78.895c.306,1.069.008,1.8-.8,2.04a1.355,1.355,0,0,1-1.716-.962c-.227-.8.276-1.461,1.375-1.769-.021-.535.165-1.023.742-1.061a1.188,1.188,0,0,1,.912.472C62.251,78.179,61.882,78.607,61.395,78.895Z" transform="translate(-50.932 -66.793)" /><path fill="#fff" d="M67.54,45.391c-.262.173-.551.511-.779.475a.923.923,0,0,1-.621-.66c0-.224.393-.6.645-.625.231-.027.506.317.761.5C67.544,45.183,67.542,45.287,67.54,45.391Z" transform="translate(-57.268 -38.598)" /><path fill="#fff" d="M67.977,27.36c.236.294.5.495.474.621-.048.193-.3.335-.471.5-.149-.157-.4-.3-.417-.474S67.771,27.662,67.977,27.36Z" transform="translate(-58.499 -23.689)" /></g></svg>
+            );
+        } else if (data == "Zoology") {
+            // classname = "fal fa-microscope fa-fw fa-2x";
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 40 40"><circle fill="#71a53b" cx="20" cy="20" r="20" /><g transform="translate(8.548 8.698)"><path fill="#fff" d="M39.9,94.917h3.013c.06,0,.121,0,.182,0,.372.009.614.217.615.527,0,.325-.247.53-.639.522q-2.066-.041-4.132-.084-2.729-.058-5.457-.119a3.112,3.112,0,0,1-.441-.029.515.515,0,0,1-.266-.883q.686-.8,1.4-1.577c.483-.532,1-1.037,1.464-1.583a4.783,4.783,0,0,0,1.246-2.636,15.375,15.375,0,0,0-.036-1.577,1.979,1.979,0,0,1,.081-.678c.5-1.382,1.026-2.756,1.541-4.133.012-.032.017-.066.043-.174-.094.108-.147.165-.194.225q-.678.872-1.354,1.745c-.221.284-.438.363-.69.258s-.344-.318-.311-.669c.107-1.121.239-2.24.3-3.363a3.331,3.331,0,0,0-1.286-2.822q-.993-.838-1.993-1.669A1.423,1.423,0,0,0,31,76.193c-.694.575-1.392,1.145-2.072,1.735a3.457,3.457,0,0,0-1.2,3.138c.1,1,.2,2,.286,3,.033.373-.069.564-.323.663s-.468.01-.7-.294c-.488-.629-.975-1.258-1.5-1.871a1.743,1.743,0,0,0,.047.174c.518,1.385,1.045,2.767,1.549,4.158a1.319,1.319,0,0,1,.038.655,5.075,5.075,0,0,0,1.571,4.55c.84.9,1.659,1.816,2.487,2.725a.536.536,0,0,1-.426.928q-3.509.073-7.017.151l-2.832.064c-.367.008-.588-.148-.629-.442a.523.523,0,0,1,.571-.607q1.533-.033,3.067-.061a.264.264,0,0,0,.184-.053c-.468-.1-.936-.211-1.4-.315-.4-.088-.795-.172-1.192-.26a.536.536,0,0,1-.482-.644c.064-.3.339-.456.715-.376.981.209,1.961.427,2.941.64l1.428.309c-.074-.1-.106-.153-.148-.2q-1.739-1.879-3.48-3.756a2.058,2.058,0,0,1-.354-2.49c.1-.2.2-.4.305-.6a2.3,2.3,0,0,1,2.992-1.135l.228.092c-.044-.135-.074-.239-.112-.34-.7-1.871-1.4-3.741-2.1-5.615a.34.34,0,0,0-.369-.271c-.485,0-.971-.012-1.455-.021-.379-.007-.6-.207-.6-.532s.228-.512.615-.513h.755c-.153-.16-.267-.283-.384-.4-.133-.136-.274-.266-.4-.407a.516.516,0,0,1,0-.764.522.522,0,0,1,.745.039c.256.254.5.522.744.784l.09-.046c0-.247,0-.494,0-.741.007-.382.207-.615.52-.614s.521.244.522.615c0,.572,0,1.144.006,1.715a.555.555,0,0,0,.087.31c.785,1.025,1.577,2.043,2.369,3.063a1.4,1.4,0,0,0,.113.1c-.034-.39-.053-.726-.094-1.059a4.51,4.51,0,0,1,1.381-4.089c.767-.713,1.584-1.375,2.409-2.019a2.426,2.426,0,0,1,3.034.032c.785.627,1.568,1.26,2.309,1.938a4.407,4.407,0,0,1,1.451,3.884c-.042.421-.076.843-.113,1.265l.074.065a1,1,0,0,1,.088-.177c.757-.98,1.521-1.956,2.272-2.94a.683.683,0,0,0,.128-.376c.015-.537.007-1.074.008-1.612a1.742,1.742,0,0,1,.009-.233.522.522,0,0,1,1.042.028c.015.281,0,.563,0,.845l.089.051c.251-.27.494-.546.754-.807a.523.523,0,0,1,.645-.083.476.476,0,0,1,.231.557.779.779,0,0,1-.2.323c-.23.242-.475.469-.769.757.328,0,.566,0,.8,0,.381,0,.612.2.611.52s-.236.517-.612.525c-.5.01-1.005.011-1.507.037a.352.352,0,0,0-.263.169c-.744,1.956-1.477,3.917-2.211,5.877a.631.631,0,0,0-.024.091,8.548,8.548,0,0,1,1.128-.181,2.139,2.139,0,0,1,2,1.168c.136.231.248.476.368.715a2.043,2.043,0,0,1-.337,2.491c-1.091,1.186-2.191,2.365-3.286,3.547a1.56,1.56,0,0,0-.295.406c.513-.11,1.026-.218,1.538-.33l2.713-.594c.405-.089.683.033.765.332a.523.523,0,0,1-.437.672c-.793.177-1.589.347-2.383.521-.074.016-.146.04-.22.059C39.9,94.841,39.9,94.879,39.9,94.917Zm-5.571-.255.027.1c.429,0,.859.01,1.287-.007a.529.529,0,0,0,.328-.142c.364-.371.711-.758,1.064-1.14q1.837-1.983,3.673-3.966a.984.984,0,0,0,.19-1.339c-.108-.217-.217-.433-.331-.647a1.2,1.2,0,0,0-1.608-.565c-.293.127-.571.288-.863.419a.269.269,0,0,0-.182.339,4.851,4.851,0,0,1-.059,1.832,7.525,7.525,0,0,1-2.144,3.612C35.231,93.639,34.789,94.159,34.33,94.662Zm-4.727.1.034-.1c-.466-.51-.915-1.037-1.4-1.526a7.55,7.55,0,0,1-2.1-3.492,4.95,4.95,0,0,1-.1-1.8c.017-.148.109-.329-.106-.432-.335-.16-.661-.345-1-.487a1.2,1.2,0,0,0-1.481.518c-.15.263-.281.537-.417.807A.975.975,0,0,0,23.2,89.44q2.411,2.6,4.824,5.2a.317.317,0,0,0,.189.113C28.673,94.763,29.138,94.759,29.6,94.759Z" transform="translate(-20.263 -74.748)" /><path fill="#fff" d="M256.45,128.738a6.738,6.738,0,0,1,.212-.981,2.841,2.841,0,0,0-.558-2.885c-.032-.041-.072-.075-.1-.116-.1-.133-.129-.277.01-.392a.244.244,0,0,1,.384.061,9.438,9.438,0,0,1,.745,1.238,2.758,2.758,0,0,1,.039,2.15,2.746,2.746,0,0,0-.091,1.606c.155.7.285,1.407.423,2.11.035.179.048.365-.186.412-.215.043-.282-.106-.317-.286-.162-.831-.331-1.662-.491-2.494a3.307,3.307,0,0,1-.028-.414Z" transform="translate(-243.639 -121.715)" /><path fill="#fff" d="M202.56,131.81c.114-.589.214-1.107.316-1.624.058-.3.115-.594.18-.89a2.369,2.369,0,0,0-.1-1.353,3.327,3.327,0,0,1,.674-3.368c.027-.034.056-.066.086-.1a.258.258,0,0,1,.389-.052c.143.119.107.254.006.389a6.171,6.171,0,0,0-.422.59,2.634,2.634,0,0,0-.241,2.387,2.73,2.73,0,0,1,.129,1.533q-.238,1.209-.474,2.418c-.031.159-.111.3-.291.257C202.708,131.976,202.628,131.864,202.56,131.81Z" transform="translate(-193.063 -121.773)" /><path fill="#fff" d="M205.769,331.949c-.058.06-.131.2-.214.206a.36.36,0,0,1-.292-.168,5.023,5.023,0,0,1-.2-.724c-.238-.992-.471-1.985-.711-2.976-.043-.177-.055-.342.153-.4s.3.072.342.255q.441,1.841.884,3.681C205.741,331.845,205.748,331.87,205.769,331.949Z" transform="translate(-194.742 -314.683)" /><path fill="#fff" d="M268.032,328.456l-.178.734q-.366,1.525-.732,3.051c-.041.17-.108.34-.318.3s-.241-.207-.192-.4c.241-.982.475-1.965.712-2.949a5.941,5.941,0,0,1,.2-.752.366.366,0,0,1,.289-.175C267.889,328.261,267.967,328.395,268.032,328.456Z" transform="translate(-253.759 -315.053)" /><path fill="#fff" d="M293.186,162.784c-.085.379-.175.808-.28,1.233-.043.172-.148.31-.356.239s-.194-.236-.135-.406a3.225,3.225,0,0,0,.145-1.809c-.02-.088.1-.207.151-.311.109.059.288.1.315.181A6.753,6.753,0,0,1,293.186,162.784Z" transform="translate(-278.201 -157.199)" /><path fill="#fff" d="M181.79,162.533c.055-.333.087-.572.137-.807.034-.159.135-.271.314-.234s.223.179.185.341a3.075,3.075,0,0,0,.131,1.755.719.719,0,0,1,.028.1c.03.148.015.283-.152.338a.245.245,0,0,1-.338-.192C181.978,163.375,181.879,162.913,181.79,162.533Z" transform="translate(-173.375 -156.965)" /></g></svg>
+            );
+        } else if (data == "Mathematics") {
+            // classname = "fal fa-microscope fa-fw fa-2x";
+            return (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="60"
+                    height="60"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        fill="#fff"
+                        d="m21.25 24h-18.5c-1.517 0-2.75-1.233-2.75-2.75v-18.5c0-1.517 1.233-2.75 2.75-2.75h18.5c1.517 0 2.75 1.233 2.75 2.75v18.5c0 1.517-1.233 2.75-2.75 2.75zm-18.5-22.5c-.689 0-1.25.561-1.25 1.25v18.5c0 .689.561 1.25 1.25 1.25h18.5c.689 0 1.25-.561 1.25-1.25v-18.5c0-.689-.561-1.25-1.25-1.25z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m12 24c-.414 0-.75-.336-.75-.75v-22.5c0-.414.336-.75.75-.75s.75.336.75.75v22.5c0 .414-.336.75-.75.75z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m23.25 12.75h-22.5c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h22.5c.414 0 .75.336.75.75s-.336.75-.75.75z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m6 9c-.414 0-.75-.336-.75-.75v-3.5c0-.414.336-.75.75-.75s.75.336.75.75v3.5c0 .414-.336.75-.75.75z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m7.75 7.25h-3.5c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h3.5c.414 0 .75.336.75.75s-.336.75-.75.75z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m4.75 20c-.192 0-.384-.073-.53-.22-.293-.293-.293-.768 0-1.061l2.5-2.5c.293-.293.768-.293 1.061 0s.293.768 0 1.061l-2.5 2.5c-.147.147-.339.22-.531.22z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m7.25 20c-.192 0-.384-.073-.53-.22l-2.5-2.5c-.293-.293-.293-.768 0-1.061s.768-.293 1.061 0l2.5 2.5c.293.293.293.768 0 1.061-.147.147-.339.22-.531.22z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m20.25 7h-4.5c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h4.5c.414 0 .75.336.75.75s-.336.75-.75.75z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m20.25 20h-4.5c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h4.5c.414 0 .75.336.75.75s-.336.75-.75.75z"
+                    />
+                    <path
+                        fill="#fff"
+                        d="m20.25 17h-4.5c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h4.5c.414 0 .75.336.75.75s-.336.75-.75.75z"
+                    />
+                </svg>
+            );
+        }
+        //return classname;
+    };
+    practiseFun(val1, val2) {
+        console.log("practiseFun", val1, val2);
+        let sum = "";
+        if (val1 == "0" || val2 == "0") {
+            sum = val1 + val2;
+        }
+        else {
+            sum = (val1 + val2) / 2;
+        }
+        return Math.round(sum) + "%";
+
+    }
+    examFun(val1, val2) {
+        let sum = "";
+        if (val1 == "0" || val2 == "0") {
+            sum = val1 + val2;
+        }
+        else {
+            sum = (val1 + val2) / 2;
+        }
+        return Math.round(sum) + "%";
+    }
+    strengthCuttOff = (e) => {
+        console.log("strengthCuttOff", e.target.value);
+        this.setState({
+            strengthCuttOffVal: e.target.value
+        });
+
+    }
+    render() {
+        const getSubjectAnalysisData = this.props.getSubjectAnalysisData;
+        const loading1 = getSubjectAnalysisData.loading;
+        const error1 = getSubjectAnalysisData.error;
+        if (loading1) return <PreloaderTwo />;
+        if (error1 !== undefined) {
+            alert("Server Error. " + error1.message);
+            return null;
+        }
+        console.log("Practicestrength", getSubjectAnalysisData.getSubjectAnalysisData, this.props.stateData.exam_type, this.props.stateData.class_id);
+        let practiceSubjectAnalysisData = "";
+        if (this.props.stateData.class_id == "1,2") {
+            practiceSubjectAnalysisData = getSubjectAnalysisData.getSubjectAnalysisData.find((item) => item.class_id == "0");
+        }
+        else {
+            practiceSubjectAnalysisData = getSubjectAnalysisData.getSubjectAnalysisData.find((item) => item.class_id == this.props.stateData.class_id);
+        }
+        return (
+            <div className="strength-analysis pt-4">
+                <AnalysisFilter
+                    defaultActiveKeyFun={this.props.defaultActiveKeyFun}
+                    stateData={this.props.stateData}
+                    selecthandleInputChange={this.props.selecthandleInputChange} />
+                {practiceSubjectAnalysisData.subject_data.map((item) => (
+                    <Card as={Card.Body} className="single-row border-0 px-3 py-0 my-3">
+                        <Row>
+                            <Col xl={4} lg={6} md={12} sm={12}>
+                                <Card className="subject-card my-3 border-0">
+                                    <Card.Header className="bg-white d-flex justify-content-between align-items-center pb-4">
+                                        <div className="icon d-flex align-items-center">
+                                            {this.classNameIcon(item.subject)}
+
+                                            <p className="ml-2 mb-0">{item.subject}</p>
+                                        </div>
+                                        <div className="subject-status d-flex align-items-center">
+                                            <p className="mb-0 mr-3">Accuracy</p>
+                                            <h6 className="mb-0">{item.strength}%</h6>
+                                        </div>
+                                    </Card.Header>
+                                    <Card.Body className="p-1">
+                                        <Table borderless>
+                                            <thead>
+                                                <tr>
+                                                    <th className="grayTxt">Class wise</th>
+                                                    {this.props.stateData.exam_type == "0,1" ? (
+                                                        <React.Fragment>
+                                                            <th>Practice</th>
+                                                            <th>Exams</th>
+                                                        </React.Fragment>
+                                                    ) : this.props.stateData.exam_type == "0" ?
+                                                            (<th>Practice</th>)
+                                                            : (<th>Exams</th>)}
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {this.props.stateData.class_id == "1,2" ? (
+                                                    <React.Fragment>
+                                                        <tr>
+                                                            <td>
+                                                                <h6>Class XI</h6>
+                                                                <p className="grayTxt">Strength</p>
+                                                            </td>
+                                                            {this.props.stateData.exam_type == "0,1" ? (
+                                                                <React.Fragment>
+                                                                    <td>
+                                                                        <h6>{item.class_wise_data[0].class1_total}</h6>
+                                                                        <p className="grayTxt">{item.class_wise_data[0].class1_strength}%</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6>{item.class_wise_data[1].class1_total}</h6>
+                                                                        <p className="grayTxt">{item.class_wise_data[1].class1_strength}%</p>
+                                                                    </td>
+                                                                </React.Fragment>
+                                                            ) : this.props.stateData.exam_type == "0" ? (
+                                                                <td>
+                                                                    <h6>{item.class_wise_data[0].class1_total}</h6>
+                                                                    <p className="grayTxt">{item.class_wise_data[0].class1_strength}%</p>
+                                                                </td>
+                                                            ) : (
+                                                                        <td>
+                                                                            <h6>{item.class_wise_data[1].class1_total}</h6>
+                                                                            <p className="grayTxt">{item.class_wise_data[1].class1_strength}%</p>
+                                                                        </td>
+                                                                    )}
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6>Class XII</h6>
+                                                                <p className="grayTxt">Strength</p>
+                                                            </td>
+                                                            {this.props.stateData.exam_type == "0,1" ? (
+                                                                <React.Fragment>
+                                                                    <td>
+                                                                        <h6>{item.class_wise_data[0].class2_total}</h6>
+                                                                        <p className="grayTxt">{item.class_wise_data[0].class2_strength}%</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6>{item.class_wise_data[1].class2_total}</h6>
+                                                                        <p className="grayTxt">{item.class_wise_data[1].class2_strength}%</p>
+                                                                    </td>
+                                                                </React.Fragment>
+                                                            )
+                                                                : this.props.stateData.exam_type == "0" ? (
+                                                                    <td>
+                                                                        <h6>{item.class_wise_data[0].class2_total}</h6>
+                                                                        <p className="grayTxt">{item.class_wise_data[0].class2_strength}%</p>
+                                                                    </td>
+                                                                ) : (
+                                                                        <td>
+                                                                            <h6>{item.class_wise_data[1].class2_total}</h6>
+                                                                            <p className="grayTxt">{item.class_wise_data[1].class2_strength}%</p>
+                                                                        </td>
+                                                                    )}
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6>Total Accuracy</h6>
+                                                            </td>
+                                                            {this.props.stateData.exam_type == "0,1" ? (
+                                                                <React.Fragment>
+                                                                    <td>
+                                                                        <h6>{this.practiseFun(item.class_wise_data[0].class1_strength, item.class_wise_data[0].class2_strength)}</h6>
+                                                                    </td>
+                                                                    <td>
+                                                                        <h6>{this.examFun(item.class_wise_data[1].class1_strength, item.class_wise_data[1].class2_strength)}</h6>
+                                                                    </td>
+                                                                </React.Fragment>
+
+                                                            )
+                                                                : this.props.stateData.exam_type == "0" ? (<td>
+                                                                    <h6>{this.practiseFun(item.class_wise_data[0].class1_strength, item.class_wise_data[0].class2_strength)}</h6>
+                                                                </td>) : (
+                                                                        <td>
+                                                                            <h6>{this.examFun(item.class_wise_data[1].class1_strength, item.class_wise_data[1].class2_strength)}</h6>
+                                                                        </td>
+                                                                    )}
+
+                                                        </tr>
+                                                    </React.Fragment>
+                                                )
+                                                    : this.props.stateData.class_id == "1" ? (
+                                                        <React.Fragment>
+                                                            <tr>
+                                                                <td>
+                                                                    <h6>Class XI</h6>
+                                                                    <p className="grayTxt">Strength</p>
+                                                                </td>
+                                                                {this.props.stateData.exam_type == "0,1" ? (
+                                                                    <React.Fragment>
+                                                                        <td>
+                                                                            <h6>{item.class_wise_data[0].class1_total}</h6>
+                                                                            <p className="grayTxt">{item.class_wise_data[0].class1_strength}%</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h6>{item.class_wise_data[1].class1_total}</h6>
+                                                                            <p className="grayTxt">{item.class_wise_data[1].class1_strength}%</p>
+                                                                        </td>
+                                                                    </React.Fragment>
+                                                                ) : this.props.stateData.exam_type == "0" ? (
+                                                                    <td>
+                                                                        <h6>{item.class_wise_data[0].class1_total}</h6>
+                                                                        <p className="grayTxt">{item.class_wise_data[0].class1_strength}%</p>
+                                                                    </td>
+                                                                ) : (
+                                                                            <td>
+                                                                                <h6>{item.class_wise_data[1].class1_total}</h6>
+                                                                                <p className="grayTxt">{item.class_wise_data[1].class1_strength}%</p>
+                                                                            </td>
+                                                                        )}
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <h6>Total Accuracy</h6>
+                                                                </td>
+                                                                {/* {this.props.stateData.exam_type == "0,1" ? (
+                                                                    <React.Fragment></React.Fragment>
+                                                                ):this.props.stateData.exam_type == "0" ?():()} */}
+                                                                {this.props.stateData.exam_type == "0,1" ? (
+                                                                    <React.Fragment>
+                                                                        <td>
+                                                                            <h6>{this.practiseFun(item.class_wise_data[0].class1_strength, 0)}</h6>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h6>{this.examFun(item.class_wise_data[1].class1_strength, 0)}</h6>
+                                                                        </td>
+                                                                    </React.Fragment>
+                                                                ) : this.props.stateData.exam_type == "0" ? (
+                                                                    <td>
+                                                                        <h6>{this.practiseFun(item.class_wise_data[0].class1_strength, 0)}</h6>
+                                                                    </td>
+                                                                ) : (<td>
+                                                                    <h6>{this.examFun(item.class_wise_data[1].class1_strength, 0)}</h6>
+                                                                </td>)}
+
+                                                            </tr>
+                                                        </React.Fragment>
+
+                                                    ) : (
+                                                            <React.Fragment>
+                                                                <tr>
+                                                                    <td>
+                                                                        <h6>Class XII</h6>
+                                                                        <p className="grayTxt">Strength</p>
+                                                                    </td>
+                                                                    {this.props.stateData.exam_type == "0,1" ? (
+                                                                        <React.Fragment>
+                                                                            <td>
+                                                                                <h6>{item.class_wise_data[0].class2_total}</h6>
+                                                                                <p className="grayTxt">{item.class_wise_data[0].class2_strength}%</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h6>{item.class_wise_data[1].class2_total}</h6>
+                                                                                <p className="grayTxt">{item.class_wise_data[1].class2_strength}%</p>
+                                                                            </td>
+                                                                        </React.Fragment>
+                                                                    ) : this.props.stateData.exam_type == "0" ? (
+                                                                        <td>
+                                                                            <h6>{item.class_wise_data[0].class2_total}</h6>
+                                                                            <p className="grayTxt">{item.class_wise_data[0].class2_strength}%</p>
+                                                                        </td>
+                                                                    ) : (
+                                                                                <td>
+                                                                                    <h6>{item.class_wise_data[1].class2_total}</h6>
+                                                                                    <p className="grayTxt">{item.class_wise_data[1].class2_strength}%</p>
+                                                                                </td>
+                                                                            )}
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <h6>Total Accuracy</h6>
+                                                                    </td>
+                                                                    {this.props.stateData.exam_type == "0,1" ? (
+                                                                        <React.Fragment>
+                                                                            <td>
+                                                                                <h6>{this.practiseFun(0, item.class_wise_data[0].class2_strength)}</h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h6>{this.examFun(0, item.class_wise_data[1].class2_strength)}</h6>
+                                                                            </td>
+                                                                        </React.Fragment>
+                                                                    ) : this.props.stateData.exam_type == "0" ? (
+                                                                        <td>
+                                                                            <h6>{this.practiseFun(0, item.class_wise_data[0].class2_strength)}</h6>
+                                                                        </td>
+                                                                    ) : (<td>
+                                                                        <h6>{this.examFun(0, item.class_wise_data[1].class2_strength)}</h6>
+                                                                    </td>)}
+
+                                                                </tr>
+                                                            </React.Fragment>
+
+                                                        )}
+
+
+
+                                            </tbody>
+                                        </Table>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                            <Col xl={4} lg={6} md={12} sm={12}>
+                                <Card className="Qappaired-card my-3 border-0">
+                                    <Card.Header className="question-status mx-2 mt-2 border-0 d-flex justify-content-between align-items-center">
+                                        <h6 className="mb-0">Questions Appeared</h6>
+                                        <h6 className="mb-0">{item.total_questions}</h6>
+                                    </Card.Header>
+                                    <Card.Body className="p-2">
+                                        <ul className="list-inline status-list d-flex justify-content-between m-0 p-0">
+                                            <li className="list-inline-item">
+                                                <div className="title">Answered</div>
+                                                <div className="d-flex">
+                                                    <p className="mr-2">{item.answered_questions}</p>
+                                                    <p>{item.answered_strength}%</p>
+                                                </div>
+                                            </li>
+                                            <li className="list-inline-item">
+                                                <div className="title">Error</div>
+                                                <div className="d-flex">
+                                                    <p className="mr-2">{item.error_questions}</p>
+                                                    <p>{item.error_strength}%</p>
+                                                </div>
+                                            </li>
+                                            <li className="list-inline-item">
+                                                <div className="title">Skipped</div>
+                                                <div className="d-flex">
+                                                    <p className="mr-2">{item.skipped_questions}</p>
+                                                    <p>{item.skipped_strength}%</p>
+                                                </div>
+                                            </li>
+                                            {/* <li className="list-inline-item">
+                                                <div className="title">Error Corrected</div>
+                                                <div className="d-flex">
+                                                    <p className="mr-2">1030</p>
+                                                    <p>33%</p>
+                                                </div>
+                                            </li> */}
+                                        </ul>
+                                        {/* <Table borderless responsive>
+                                            <thead>
+                                                <tr>
+                                                    <th>Questions</th>
+                                                    <td>Accuracy</td>
+                                                    <td>Correct</td>
+                                                    <td>Skipped</td>
+                                                    <td>Error</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Easy</td>
+                                                    <td>55%</td>
+                                                    <td>369</td>
+                                                    <td>124</td>
+                                                    <td>36</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Moderate</td>
+                                                    <td>55%</td>
+                                                    <td>369</td>
+                                                    <td>22 </td>
+                                                    <td>25 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Difficult</td>
+                                                    <td>55%</td>
+                                                    <td>369</td>
+                                                    <td>125 </td>
+                                                    <td>44 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Very Difficult</td>
+                                                    <td>55%</td>
+                                                    <td>369</td>
+                                                    <td>226</td>
+                                                    <td>43</td>
+                                                </tr>
+                                            </tbody>
+                                        </Table> */}
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                            <Col xl={4} lg={6} md={12} sm={12}>
+                                <Card className="weeklist-card my-3 border-0">
+                                    <Card.Header className="bg-white d-flex justify-content-between align-items-center">
+                                        <h6 className="week-title mb-0">Your are weak in below listed Chapters
+</h6>
+
+                                        <Form.Group controlId="exampleForm.ControlSelect1" className="cutoff mb-0">
+                                            <Form.Label>Accuracy cutoff</Form.Label>
+                                            <Form.Control as="select" custom="true" onClick={(e) => this.strengthCuttOff(e)}>
+                                                <option value="0">All</option>
+                                                <option value="1">0% - 15%</option>
+                                                <option value="2">15% - 30%</option>
+                                                <option value="3">30% - 45%</option>
+                                                <option value="4">45% - 60%</option>
+                                                <option value="5">60% - 70%</option>
+                                                <option value="6">70% - 80%</option>
+
+                                                <option value="7">above 80%</option>
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Card.Header>
+                                    <Card.Body className="p-2">
+                                        <Scrollbars style={{ height: "250" }}
+                                            {...this.props}
+                                            renderThumbVertical={renderThumb}
+                                            autoHide
+                                            autoHideTimeout={500}
+                                            autoHideDuration={200}>
+                                            <ul className="list-unstyled chapter-list my-2 p-0">
+                                                {item.weak_chapters.map((weakmap) => {
+                                                    if (this.state.strengthCuttOffVal == "0") {
+                                                        return (<li className="d-flex justify-content-between align-items-center">
+                                                            <div className="title">{weakmap.chapter_name}
+                                                            </div>
+
+                                                            <div className="d-flex ">
+                                                                <p className="mr-2">Strength</p>
+
+                                                                {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                {/* <Form.Check.Input type="checkbox" /> */}
+                                                                <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                {/* </Form.Check> */}
+                                                            </div>
+                                                        </li>);
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "1") {
+                                                        if (weakmap.accuracy >= 0 && weakmap.accuracy < 15) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "2") {
+                                                        if (weakmap.accuracy >= 15 && weakmap.accuracy < 30) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "3") {
+                                                        if (weakmap.accuracy >= 30 && weakmap.accuracy < 45) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "4") {
+                                                        if (weakmap.accuracy >= 45 && weakmap.accuracy < 60) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "5") {
+                                                        if (weakmap.accuracy >= 60 && weakmap.accuracy < 70) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "6") {
+                                                        if (weakmap.accuracy >= 70 && weakmap.accuracy < 80) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+                                                    }
+                                                    else if (this.state.strengthCuttOffVal == "7") {
+                                                        if (weakmap.accuracy >= 80) {
+                                                            return (<li className="d-flex justify-content-between align-items-center">
+                                                                <div className="title">{weakmap.chapter_name}
+                                                                </div>
+
+                                                                <div className="d-flex ">
+                                                                    <p className="mr-2">Strength</p>
+
+                                                                    {/* <Form.Check type="checkbox" id="checkboxOne" custom="true"> */}
+                                                                    {/* <Form.Check.Input type="checkbox" /> */}
+                                                                    <Form.Check.Label htmlFor="checkboxOne">{weakmap.accuracy}%</Form.Check.Label>
+                                                                    {/* </Form.Check> */}
+                                                                </div>
+                                                            </li>);
+                                                        }
+                                                    }
+                                                })}
+                                            </ul>
+                                            {/* <Row className="mt-3">
+                                            <Col>
+                                                <Button className="btn btn-lightgreen btn-block text-capitalize">Learn Now</Button>
+                                            </Col>
+                                            <Col>
+                                                <Button className="btn btn-lightOrange btn-block text-capitalize">Practice Now</Button>
+                                            </Col>
+                                        </Row> */}
+                                        </Scrollbars>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Card>
+                ))}
+                <Card className="syllabus-status my-3">
+                    <Card.Header className="bg-white d-flex justify-content-between align-items-center">
+                        <h6 className="card-title mb-0">Syllabus analysis</h6>
+                        <ul className="filter">
+                            {/* <li><Link className="active" to="#">Chapters</Link></li>
+                            <li><Link to="#">Topics</Link></li> */}
+                            <li><a className={this.state.chapter == "1" ? ("active") : ("")} onClick={(e) => this.handleInput("chapter")}>Chapters</a></li>
+                            <li><a className={this.state.topic == "1" ? ("active") : ("")} onClick={(e) => this.handleInput("topic")}>Topics</a></li>
+                        </ul>
+                    </Card.Header>
+                    {this.state.chapter == "1" ? (
+                        <Card.Body className="p-0">
+                            <CardGroup>
+                                {practiceSubjectAnalysisData.syllabus_analysis.map((subitem) => (
+                                    <Card>
+                                        <Card.Header className="bg-white">{subitem.subject}</Card.Header>
+                                        <Card.Body className="p-2">
+                                            <ListGroup variant="flush">
+                                                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                                    <h6 className="font-weight-normal">Total Chapters</h6>
+                                                    <Button variant="dark">{this.chaaptercount(subitem.chapters_strength)}</Button>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                                    <p className="font-weight-bold">Strength</p>
+                                                    <p className="font-weight-bold">Chapters</p>
+                                                </ListGroup.Item>
+                                                {subitem.chapters_strength.map((chsmap) => (<ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                                    <p>{chsmap.strength}%</p>
+                                                    <a
+                                                        onClick={(e) => this.modalFun(chsmap.chapter_list, "Chapters Data")}>{chsmap.total}<i className="ml-3 fal fa-angle-right" /></a>
+                                                    {/* <p><Link>{chsmap.total}<i className="ml-3 fal fa-angle-right" /></Link></p> */}
+                                                </ListGroup.Item>))}
+                                            </ListGroup>
+                                        </Card.Body>
+                                    </Card>
+                                ))}
+                            </CardGroup>
+                        </Card.Body>
+                    ) : ("")}
+
+                    {this.state.topic == "1" ? (
+                        <Card.Body className="p-0">
+                            <CardGroup>
+                                {practiceSubjectAnalysisData.syllabus_analysis.map((subitem) => (
+                                    <Card>
+                                        <Card.Header className="bg-white">{subitem.subject}</Card.Header>
+                                        <Card.Body className="p-2">
+                                            <ListGroup variant="flush">
+                                                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                                    <h6 className="font-weight-normal">Total Topics</h6>
+                                                    <Button variant="dark">{this.topiccount(subitem.topics_strength)}</Button>
+                                                </ListGroup.Item>
+                                                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                                    <p className="font-weight-bold">Strength</p>
+                                                    <p className="font-weight-bold">Topics</p>
+                                                </ListGroup.Item>
+                                                {subitem.topics_strength.map((topsmap) => (<ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                                    <p>{topsmap.strength}%</p>
+                                                    <a
+                                                        onClick={(e) => this.modalFun(topsmap.topic_list, "Chapters And Topics Data")}>{topsmap.total}<i className="ml-3 fal fa-angle-right" /></a>
+                                                    {/* <p><Link>{chsmap.total}<i className="ml-3 fal fa-angle-right" /></Link></p> */}
+                                                </ListGroup.Item>))}
+                                            </ListGroup>
+                                        </Card.Body>
+                                    </Card>
+                                ))}
+                            </CardGroup>
+                        </Card.Body>
+                    ) : ("")}
+
+                </Card>
+                <ChapterAndtopicModal
+                    name={this.state.name}
+                    data={this.state.modaldata}
+                    show={this.state.modalShow}
+                    onHide={() => this.setState({ modalShow: false })}
+                />
+            </div>
+        )
+    }
+}
+
+
+export default withRouter(compose(
+
+    graphql(FETCH_SUBJECTANALYSIS
+        ,
+        {
+            options: props => ({
+                variables: {
+                    // mobile: props.mobile,
+                    // exam_type: props.stateData.exam_type,
+                    // class_id: props.stateData.class_id
+                    mobile: "7288877886", exam_type: "0,1", class_id: "1,2"
+                },
+                fetchPolicy: 'network-only'
+            }), name: "getSubjectAnalysisData"
+        }))(StrengthSection));

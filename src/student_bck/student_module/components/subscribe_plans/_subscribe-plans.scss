@@ -1,0 +1,82 @@
+.subscribe-plans {
+    position: relative;
+
+    .subscribe-lable {
+        position: absolute;
+        left: -26px;
+        top: 40%;
+        transform: rotate(-90deg);
+        border-bottom-left-radius: .2rem;
+        border-bottom-right-radius: 0.2rem;
+        padding: 0.01rem .4rem;
+        font-size: 12px;
+        color: #ffffff;
+    }
+
+    .price-block {
+        display: block;
+        width: 100px;
+        height: 80px;
+        border-radius: .4rem;
+
+        i {
+            font-size: 25px;
+        }
+    }
+
+    &.one-week {
+        border-color: #00d490;
+
+        .plan-description {
+            color: #00d490;
+        }
+
+        .subscribe-lable,
+        .price-block {
+            background: #00d490;
+        }
+    }
+
+    &.three-months {
+        border-color: #eb7a00;
+
+        .plan-description {
+            color: #eb7a00;
+        }
+
+        .subscribe-lable,
+        .price-block {
+            background: #eb7a00;
+        }
+    }
+
+    &.six-months {
+        border-color: #072084;
+
+        .plan-description {
+            color: #072084;
+        }
+
+        .subscribe-lable,
+        .price-block {
+            background: #072084;
+        }
+    }
+
+    &.one-year {
+        border-color: #006c81;
+
+        .plan-description {
+            color: #006c81;
+        }
+
+        .subscribe-lable,
+        .price-block {
+            background: #006c81;
+        }
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}

@@ -1,0 +1,201 @@
+import React, { Component } from 'react'
+import { Link } from "react-router-dom";
+import { Col, Card, Image, Modal } from 'react-bootstrap'
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+import { gql } from "@apollo/client";
+import { graphql } from "@apollo/client/react/hoc";
+import * as compose from 'lodash.flowright';
+import { withRouter } from "react-router-dom";
+import * as Cookies from "es-cookie";
+import './_studenthome.scss';
+import moment from 'moment';
+
+const FETCH_SCHEUDULE = gql` 
+query($mobile: String!) {
+    getScheduledExams(mobile: $mobile){
+        id
+        exam_name
+    exam_type
+    start_time
+    end_time
+    is_completed
+   }
+}
+
+`;
+class UpcomingAndCurrentExams extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+
+        }
+
+    }
+
+    examImage(examid) {
+
+        if (examid == "1") {
+            return (require('../../../images/Neet-Exam.png'));
+        } else if (examid == "2") {
+            return (require('../../../images/Jee(Mains)-Exam.png'));
+        }
+    }
+    asideCard(data) {
+        let getData = data[this.props.stateData.mainindex];
+        let classname = "";
+        if (getData.subject == "Botany") {
+            classname = "aside-card px-3 border-0 botany"
+        }
+        else if (getData.subject == "Physics") {
+            classname = "aside-card px-3 border-0 physics"
+        }
+        else if (getData.subject == "Chemistry") {
+            classname = "aside-card px-3 border-0"
+        }
+        else if (getData.subject == "Zoology") {
+            classname = "aside-card px-3 border-0 zoology"
+        }
+        else if (getData.subject == "Mathematics") {
+            classname = "aside-card px-3 border-0 maths"
+        }
+        return classname;
+
+    }
+    render() {
+        const getScheduledExams = this.props.getScheduledExams;
+        const loading1 = getScheduledExams.loading;
+        const error1 = getScheduledExams.error;
+
+        if (error1 !== undefined) {
+            alert("Server Error. " + error1.message);
+            return null;
+        }
+        if (loading1) {
+            return (
+                <Col xl={5} lg={12} md={12} sm={12}>
+                    <Card as={Card.Body} className={this.asideCard(this.props.getSubjects)}>
+
+                        <div className="d-flex justify-content-center align-items-center">
+                            <div class="spinner-border text-primary"></div>
+                        </div>
+
+                    </Card>
+                </Col>
+            )
+        }
+        else {
+            let now = moment().unix();
+            const upcommingexams = getScheduledExams.getScheduledExams.filter((data) => now < data.start_time && data.is_completed == false)
+            const currentexams = getScheduledExams.getScheduledExams.filter((data) => now > data.start_time && now <= data.end_time && data.is_completed == false)
+            return (
+                <Col xl={5} lg={12} md={12} sm={12}>
+                    <Card as={Card.Body} className={this.asideCard(this.props.getSubjects)}>
+                        <Card className="currentExams border-0 mb-4">
+                            <Card.Header className="bg-white border-0 d-flex align-items-center px-3">
+                                <div className="icon mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="27.588" height="30.653" viewBox="0 0 27.588 30.653"><defs><linearGradient id="b" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#55b5fe" /><stop offset="1" stop-color="#0060ce" /></linearGradient></defs><path fill="url(#b)" d="M2.071,26.92a1.563,1.563,0,0,1-.22-.49,2.17,2.17,0,0,1-.075-.565V10.85l7.77-5.914a.944.944,0,0,0,.186-.383.758.758,0,0,0-.038-.4.678.678,0,0,0-.22-.308L7.217,1.913h14.3a2.078,2.078,0,0,1,1.515.619,2.019,2.019,0,0,1,.628,1.494v6.69L25.21,9.223v-5.2A3.508,3.508,0,0,0,24.1,1.439a2.638,2.638,0,0,0-.222-.2,2.957,2.957,0,0,1-.22-.2L23.361.9A.55.55,0,0,0,23.1.75L22.807.6c-.1-.023-.2-.054-.314-.092a1.752,1.752,0,0,0-.314-.073c-.1-.011-.2-.025-.314-.034a2.9,2.9,0,0,0-.353-.021H5.065L4.99.42c-.084.023-.128.042-.165.054a.252.252,0,0,0-.094.057L4.548.748A.29.29,0,0,0,4.475.93L.3,11.116a.61.61,0,0,0-.075.291V25.864a3.465,3.465,0,0,0,1.09,2.565,3.576,3.576,0,0,0,2.6,1.079h4.1l.554-1.529H3.919A2.078,2.078,0,0,1,2.4,27.358c-.125-.149-.234-.293-.333-.439ZM5.95,12.645H18.962v1.533H5.95V12.645Zm9.889,3.577v1.531H5.95V16.222ZM12.2,19.8v1.533H5.95V19.8ZM5.95,9.07h15.1V10.6H5.95V9.07Zm7.514,13.949,9.728-9.355a1.8,1.8,0,0,1,.594-.374,1.841,1.841,0,0,1,.684-.134,1.8,1.8,0,0,1,.678.134,2.112,2.112,0,0,1,.6.377l1.538,1.485a1.717,1.717,0,0,1-.006,2.477l-9.751,9.38-4.065-3.991ZM12.345,24.1l-1.571,1.513L9.307,30.33l-.234.707L14.941,29.5l1.469-1.414L12.345,24.1ZM23.426,27.3a2.229,2.229,0,0,1-1.6.634H18.211l-.81,1.569h4.427a3.848,3.848,0,0,0,2.753-1.1,3.532,3.532,0,0,0,1.153-2.632V21.331l-1.64,1.531v2.912a2.059,2.059,0,0,1-.669,1.529Z" transform="translate(-0.224 -0.384)" /></svg>
+                                </div>
+                                <h6 className="mb-0">Current Exams</h6>
+                            </Card.Header>
+                            <Card.Body>
+                                <ul className="list-unstyled schedule_exams">
+                                    {
+                                        currentexams.map((item) => {
+                                            const examname = this.props.studentGlobals.exams.find((data) => data.id == item.exam_type)
+                                            return (
+                                                <li key={item.id} className="currentexam-lists NeetExam">
+                                                    <Card className="single-card h-100">
+                                                        <Card.Body className="p-2 single-card-body d-flex justify-content-between align-items-center">
+                                                            <div className="d-flex align-items-center text-left">
+                                                                <div className="examTypeImage">
+                                                                    <Image src={this.examImage(examname.id)} width="60" height="65" alt="logo" roundedCircle />
+                                                                </div>
+                                                                <div className="ml-xl-4 ml-lg-4 text">
+                                                                    <Card.Title className="mb-1 h6">{examname.exam}</Card.Title>
+                                                                    <Card.Text className="text-muted">{item.exam_name}
+                                                                        {/* <small className="text-dark font-weight-bold">23.5k</small> */}
+                                                                    </Card.Text>
+                                                                </div>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                {/* <p className="days font-weight-bold">10 Days Left</p> */}
+                                                                <Image className="my-1" src={require('../../../images/green-sticker.svg')} width="30" height="30" alt="logo" roundedCircle />
+                                                                {/* <p className="dicount">95%</p> */}
+                                                            </div>
+                                                        </Card.Body>
+                                                        <Card.Footer className="py-1 border-0 text-center">
+                                                            <Card.Link
+                                                                onClick={() => this.props.startexamFun(item, this.props.isuserValid.schedule_exam)}
+
+                                                            >Start Exam</Card.Link>
+                                                        </Card.Footer>
+                                                    </Card>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </Card.Body>
+                        </Card>
+
+                        <Card className="upcomingExams border-0">
+                            <Card.Header className="bg-white border-0 d-flex align-items-center px-3">
+                                <div className="icon mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="27.588" height="30.653" viewBox="0 0 27.588 30.653"><defs><linearGradient id="a" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#feaf55" /><stop offset="1" stop-color="#f05d70" /></linearGradient></defs><path fill="url(#a)" d="M2.071,26.92a1.563,1.563,0,0,1-.22-.49,2.17,2.17,0,0,1-.075-.565V10.85l7.77-5.914a.944.944,0,0,0,.186-.383.758.758,0,0,0-.038-.4.678.678,0,0,0-.22-.308L7.217,1.913h14.3a2.078,2.078,0,0,1,1.515.619,2.019,2.019,0,0,1,.628,1.494v6.69L25.21,9.223v-5.2A3.508,3.508,0,0,0,24.1,1.439a2.638,2.638,0,0,0-.222-.2,2.957,2.957,0,0,1-.22-.2L23.361.9A.55.55,0,0,0,23.1.75L22.807.6c-.1-.023-.2-.054-.314-.092a1.752,1.752,0,0,0-.314-.073c-.1-.011-.2-.025-.314-.034a2.9,2.9,0,0,0-.353-.021H5.065L4.99.42c-.084.023-.128.042-.165.054a.252.252,0,0,0-.094.057L4.548.748A.29.29,0,0,0,4.475.93L.3,11.116a.61.61,0,0,0-.075.291V25.864a3.465,3.465,0,0,0,1.09,2.565,3.576,3.576,0,0,0,2.6,1.079h4.1l.554-1.529H3.919A2.078,2.078,0,0,1,2.4,27.358c-.125-.149-.234-.293-.333-.439ZM5.95,12.645H18.962v1.533H5.95V12.645Zm9.889,3.577v1.531H5.95V16.222ZM12.2,19.8v1.533H5.95V19.8ZM5.95,9.07h15.1V10.6H5.95V9.07Zm7.514,13.949,9.728-9.355a1.8,1.8,0,0,1,.594-.374,1.841,1.841,0,0,1,.684-.134,1.8,1.8,0,0,1,.678.134,2.112,2.112,0,0,1,.6.377l1.538,1.485a1.717,1.717,0,0,1-.006,2.477l-9.751,9.38-4.065-3.991ZM12.345,24.1l-1.571,1.513L9.307,30.33l-.234.707L14.941,29.5l1.469-1.414L12.345,24.1ZM23.426,27.3a2.229,2.229,0,0,1-1.6.634H18.211l-.81,1.569h4.427a3.848,3.848,0,0,0,2.753-1.1,3.532,3.532,0,0,0,1.153-2.632V21.331l-1.64,1.531v2.912a2.059,2.059,0,0,1-.669,1.529Z" transform="translate(-0.224 -0.384)" /></svg>
+                                </div>
+                                <h6 className="mb-0">Up Coming Exams</h6>
+                            </Card.Header>
+                            <Card.Body>
+                                <ul className="list-unstyled schedule_exams">
+                                    {
+                                        upcommingexams.map((item) => {
+                                            const examname = this.props.studentGlobals.exams.find((data) => data.id == item.exam_type)
+                                            return (
+                                                <li key={item.id} className="upcomingexam-lists active NeetExam">
+                                                    <Card as={Link} to="#" className="single-card h-100">
+                                                        <Card.Body className="p-2 single-card-body d-flex justify-content-between align-items-center">
+                                                            <div className="d-flex align-items-center text-left">
+                                                                <div className="examTypeImage">
+                                                                    <Image src={this.examImage(examname.id)} width="60" height="65" alt="logo" roundedCircle />
+                                                                </div>
+                                                                <div className="ml-xl-4 ml-lg-4 text">
+                                                                    <Card.Title className="mb-1 h6">{examname.exam}</Card.Title>
+                                                                    <Card.Text className="text-dark">{item.exam_name}</Card.Text>
+                                                                    <Card.Text className="text-dark">{moment.unix(item.start_time).format("DD-MM-YYYY @ LT")}</Card.Text>
+                                                                </div>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                <span className="like-icon fa-3x fad fa-thumbs-up"></span>
+                                                                {/* <p className="likes">5.5k</p> */}
+                                                            </div>
+                                                        </Card.Body>
+                                                    </Card>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </Card.Body>
+                        </Card>
+                    </Card>
+                </Col>
+            )
+        }
+
+    }
+}
+
+export default withRouter(compose(
+    graphql(FETCH_SCHEUDULE,
+        {
+            options: props => ({
+                variables: {
+                    mobile: Cookies.get("mobile")
+                }
+                ,
+                fetchPolicy: '"cache-and-network"'
+            }), name: "getScheduledExams"
+        })
+)(UpcomingAndCurrentExams));

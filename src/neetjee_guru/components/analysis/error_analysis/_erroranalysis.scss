@@ -1,0 +1,345 @@
+@import '../../../../_config.scss';
+
+.erroranalysis-nav {
+    position: relative;
+    background: #E24055;
+
+    .header-top {
+        position: relative;
+        box-shadow: none;
+        z-index: 2;
+
+        .navbar-nav {
+            align-items: center;
+
+            .nav-link {
+                color: #ffffff;
+            }
+
+            .profile-img {
+                background: #ffffff2a;
+                border: 1px solid #ef939f;
+                border-radius: 21px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .text {
+                    .profile-name {
+                        font-size: 14px;
+                        line-height: 6px;
+                    }
+                }
+            }
+        }
+
+        .search .search-bar {
+            color: #ffffff;
+            background: #e240567e;
+            box-shadow: none;
+        }
+
+        .student-notification i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-bottom {
+        position: relative;
+        z-index: 1;
+
+        .title {
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: #ffffff;
+        }
+
+        .list-inline li {
+            margin-right: 35px;
+            position: relative;
+
+            &::before {
+                right: -25px;
+                bottom: 3px;
+                position: absolute;
+                color: #ffffff;
+                content: "\f30b";
+                font-family: "Font Awesome 5 Pro";
+                font-weight: 900;
+                display: inline-block;
+                font-style: normal;
+                font-variant: normal;
+                text-rendering: auto;
+                line-height: 1;
+            }
+
+            &:last-child {
+                margin-right: 0;
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+
+        .card {
+            border-radius: 10px;
+            background-color: #ffffff80;
+            border: 1px solid #e240567e;
+
+            img {
+                margin-top: -3rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .datePicker {
+            .calendar {
+                color: #ffffff;
+                position: absolute;
+                left: 15px;
+                top: 0;
+                font-size: 18px;
+                background: #ffffff3a;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .form-control {
+                padding-left: 40px;
+                border: 1px solid #e240567e;
+                background-color: #ffffff80;
+                color: #ffffff;
+
+                &::placeholder {
+                    color: #ffffff;
+                }
+            }
+
+            .rdtPicker {
+                right: 0;
+            }
+        }
+    }
+}
+
+.error-analysis {
+    .filter {
+        button {
+            padding: 0.45rem 1rem;
+            box-shadow: 0px 0px 10px #0000001A;
+        }
+    }
+
+    .error-status {
+        border-radius: 6px;
+
+        .single-status {
+            background: #EEEEEE;
+            border: none;
+
+            .card-header {
+                background-color: transparent;
+            }
+
+            .error-list-one {
+                margin: 0;
+                padding: 0;
+
+                li {
+                    margin-bottom: 20px;
+
+                    .title {
+                        width: 150px;
+                    }
+
+                    .coluns {
+                        width: 20px;
+                    }
+
+                    .count {
+                        width: 60px;
+                    }
+
+                    &:first-child,
+                    &:nth-child(2) {
+                        color: #E24055;
+                    }
+
+                    &:last-child {
+                        padding: .35rem;
+                        background: #00C59614;
+                        border-radius: 10px;
+                        color: #2FC84D;
+                        margin-top: 50px;
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .error-list-two,
+            .error-list-three {
+                margin: 0;
+                padding: 0;
+
+                li {
+                    margin-bottom: 10px;
+
+                    .title {
+                        width: 150px;
+                    }
+
+                    .count {
+                        font-weight: 600;
+                        width: 60px;
+
+                        span {
+                            font-weight: 400;
+                        }
+                    }
+
+                    &:last-child {
+                        padding: .35rem;
+                        background: #00C59614;
+                        border-radius: 10px;
+                        color: #2FC84D;
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .exam-wise {
+        .card-header {
+            background: #EEEEEE;
+
+            h6.title {
+                color: #33333369;
+            }
+        }
+
+        .card-body .card-group .card .table {
+            thead {
+                background: #EEEEEE;
+
+                th {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #707070;
+                }
+            }
+
+            tbody tr td {
+                padding: 0.9rem 0.75rem;
+
+                &:nth-child(2) {
+                    color: #077EE6;
+                }
+
+                &:nth-child(3) {
+                    color: #00C596;
+                }
+
+                &:nth-child(4) {
+                    color: #FEAF55;
+                }
+
+                &:last-child {
+                    color: #F05D70;
+                }
+            }
+        }
+    }
+
+    .syllabus-errors {
+        overflow: hidden;
+        border-radius: 6px;
+
+        .table {
+            @media (max-width:991px) {
+                tbody tr td {
+                    font-size: 14px;
+                    padding: 0.35rem
+                }
+            }
+
+            tbody tr:nth-child(3) td {
+                padding: 0;
+
+                &:first-child {
+                    margin-left: 10px;
+                    padding-left: 10px;
+
+                    .color-bg:first-child {
+                        padding-left: 10px;
+                        border-top-left-radius: 10px;
+                        border-bottom-left-radius: 10px;
+                    }
+                }
+
+                &:last-child {
+                    margin-right: 10px;
+                    padding-right: 10px;
+
+                    .color-bg:last-child {
+                        padding-right: 10px;
+                        border-top-right-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                    }
+                }
+
+                .color-bg {
+                    margin: 8px 0;
+                    padding: 8px 0;
+                    border-radius: 0px;
+                    background: #CCF2E9;
+
+                    &:first-child {
+                        padding-left: 20px;
+                    }
+
+                    &:last-child {
+                        padding-right: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    .syllabus-status {
+        .filter {
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+                margin-right: 6px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                a {
+                    color: #000000;
+                    text-decoration: none;
+                    padding: 0.25rem 0.65rem;
+                    border-radius: 10px;
+                    transition: ease-in-out all .3s;
+
+                    &:hover,
+                    &.active {
+                        color: #ffffff;
+                        background: #2FC84D;
+                        border-radius: 40px;
+                    }
+                }
+            }
+        }
+    }
+
+}

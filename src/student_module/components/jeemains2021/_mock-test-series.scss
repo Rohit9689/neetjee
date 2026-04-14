@@ -1,0 +1,383 @@
+.mock-test-series-section {
+    .mock-text-color {
+        color: #2b3b92;
+    }
+
+    .mock-text-color2 {
+        color: #014420;
+    }
+
+    .headertop {
+        position: relative;
+
+        .heading-title {
+            color: #ffffff;
+            display: inline-block;
+            font-weight: 400 !important;
+            padding: 0.6rem 1.5rem;
+            background: transparent linear-gradient(104deg, #001C8C 0%, #66A9FF 100%);
+            border-radius: 8px;
+        @media screen and (min-width: 992px) {
+            margin-left: 8rem 
+        }
+        }
+
+        .custom-link {
+            .btn-blue-outline {
+                border-radius: 0.4rem;
+            }
+        }
+    }
+
+    .free-mock {
+        background: #F6F6F6;
+        border: 2px solid #518CE757;
+        border-radius: 10px;
+        box-shadow: 0px 10px 10px #00000029;
+
+        .card-left .list-unstyled li {
+            &:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+
+            .single-card {
+                border-radius: 10px;
+                border: 2px solid #ffffff;
+                box-shadow: 0 0.125rem 0.25rem #00000013;
+                min-height: 105px;
+                justify-content: center;
+                transition: all 0.3s;
+
+                &:hover,
+                &.active {
+                    border: 2px solid #518CE7;
+                    box-shadow: 2px 10px 10px #00000029;
+                }
+
+                .mock-btn{
+                    font-size: 8px;
+                    padding: 0.4rem;
+                    text-transform: uppercase;
+                    line-height: 13px;
+                    border: none;
+                    background: linear-gradient(106deg, #001c8c 0%, #66A9FF 100%);
+                    box-shadow: 0px 6px 6px #518CE74F;
+                }
+                .mock-complated,
+                .mock-subscribe {
+                    font-size: 8px;
+                    padding: 0.4rem 1rem;
+                    text-transform: uppercase;
+                    line-height: 13px;
+                    border: none;
+                    background: linear-gradient(106deg, #ea6000 0%, #ea9c00 100%);
+                    box-shadow: 0px 6px 6px #ea620060;
+                }
+
+                .img-block .mock-btn {
+                    padding: 0.2rem;
+                }
+                .mock-registered {
+                    font-size: 8px;
+                    padding: 0.4rem;
+                    text-transform: uppercase;
+                    line-height: 13px;
+                    border: none;
+                    background: linear-gradient(104deg, #a3b0d4 0%, #cee3ff 100%);
+                    box-shadow: 0px 6px 6px #518CE74F;
+                }
+
+                .card-content {
+                    .title {
+                        color: #093378;
+                        font-size: 11px;
+
+                        span {
+                            font-size: 8px;
+                            color: #093378;
+                            background: #EABB00;
+                            border-radius: 23px;
+                            padding: 0.2rem .6rem;
+                        }
+                    }
+
+                    p {
+                        color: #093378;
+                        font-size: 12px;
+                    }
+                }
+
+                .date-block {
+                    text-align: center;
+                    border-radius: .4rem;
+                    background: #212B65;
+                    width: 40px;
+                    margin: 0 auto;
+
+                    .month,
+                    .date {
+                        font-size: 12px;
+                    }
+
+                    .divider {
+                        border: 1px solid #bbbece;
+                    }
+                }
+
+                .live-text {
+                    color: #153E8B;
+                    font-size: 1rem;
+
+                    i {
+                        font-size: 10px;
+                    }
+                }
+
+                .live-time {
+                    font-size: 13px;
+                    color: #153E8B;
+                    text-shadow: 0px 3px 6px #00000029;
+                }
+
+                .freemock-score-card,
+                .freemock-avgtime-card {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 8px;
+
+                    .status-title {
+                        font-size: 14px;
+                    }
+
+                    .status-subtitle {
+                        font-size: 9px;
+                    }
+
+                    .dot-circle {
+                        li {
+                            width: 0%;
+                            height: 1px;
+                            line-height: 1px !important;
+
+                            i {
+                                font-size: 3px;
+                            }
+                        }
+                    }
+
+                    small {
+                        font-size: 8px;
+                    }
+                }
+
+            }
+        }
+
+        .card-right {
+            .list-unstyled li {
+                &:not(:last-child) {
+                    margin-bottom: .4rem;
+                }
+
+                .single-card {
+                    border-radius: 10px;
+                    border: 2px solid #ffffff;
+                    box-shadow: 0 0.125rem 0.25rem #00000013;
+                    min-height: 105px;
+                    justify-content: center;
+                    transition: all 0.3s;
+
+                    &:hover,
+                    &.active {
+                        border: 2px solid #518CE7;
+                        box-shadow: 2px 10px 10px #00000029;
+                    }
+
+                    .mock-btn {
+                        font-size: 8px;
+                        padding: 0.4rem;
+                        text-transform: uppercase;
+                        line-height: 13px;
+                        border: none;
+                        background: linear-gradient(106deg, #001c8c 0%, #66A9FF 100%);
+                        box-shadow: 0px 6px 6px #518CE74F;
+                    }
+                    .mock-registered {
+                        font-size: 8px;
+                        padding: 0.4rem;
+                        text-transform: uppercase;
+                        line-height: 13px;
+                        border: none;
+                        background: linear-gradient(104deg, #a3b0d4 0%, #cee3ff 100%);
+                        box-shadow: 0px 6px 6px #518CE74F;
+                    }
+
+                    .card-content {
+                        .title {
+                            font-size: 11px;
+                            color: #093378;
+
+                            span {
+                                font-size: 8px;
+                                color: #093378;
+                                background: #EABB00;
+                                border-radius: 23px;
+                                padding: 0.2rem .6rem;
+                            }
+                        }
+
+                        p {
+                            color: #093378;
+                            font-size: 12px;
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .mockpackage_list {
+        .mockpackage_list_card {
+            background: #F8F8F8;
+            box-shadow: 0px 10px 10px #00000029;
+            border: 2px solid #518CE757;
+            border-radius: 10px;
+
+            .signle-mocktest {
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+                border: 2px solid #ffffff;
+                transition: all 0.3s;
+
+                &:hover,
+                &.active {
+                    border: 2px solid #518ce7;
+                    box-shadow: 0 1.5rem 2rem hsla(216, 76%, 61%, 0.66);
+                }
+
+                .planTitle {
+                    font-size: 12px;
+                    padding: 0.45rem 1rem;
+                    position: relative;
+                    margin-top: -2rem;
+                    background: #518ce7;
+                    box-shadow: none !important;
+                }
+
+                .mocktest-content {
+
+                    .mock,
+                    .test-series {
+                        font-size: 14px;
+                    }
+
+                    p {
+                        font-size: 12px;
+                    }
+
+                    .mockavgtime-card {
+                        width: 80px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 4px;
+                        color: #ffffff;
+                        margin: 0 auto;
+
+                        .status-title {
+                            font-size: 14px;
+                        }
+
+                        .status-subtitle {
+                            font-size: 10px;
+                        }
+
+                        .dot-circle {
+                            li {
+                                width: 0%;
+                                height: 1px;
+                                line-height: 1px !important;
+
+                                i {
+                                    font-size: 3px;
+                                }
+                            }
+                        }
+
+                        small {
+                            font-size: 8px;
+                        }
+                    }
+
+                    .mockavailable-card {
+                        width: 100px;
+                        margin: 0 auto;
+
+                        .mockavailable-title {
+                            font-size: 12px;
+                            color: #e4e4e4;
+                        }
+
+                        .date-block {
+                            text-align: center;
+                            border-radius: .4rem;
+                            background: #ffffff;
+                            width: 40px;
+                            margin: 0 auto;
+
+                            .month,
+                            .date {
+                                color: #212B65;
+                                font-size: 12px;
+                            }
+
+                            .divider {
+                                border: 1px solid #bbbece;
+                            }
+                        }
+                    }
+
+                    .mackTestSubscribe {
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            height: 100%;
+                            width: 100%;
+                            background: rgba(255, 255, 255, 0.685);
+                            backdrop-filter: blur(2px);
+                            transition: all 0.4s ease-in-out 0s;
+                            z-index: 1;
+                        }
+                    }
+                }
+
+                .mock-complated,
+                .mock-subscribe {
+                    font-size: 12px;
+                    padding: 0.6rem 1rem;
+                    text-transform: uppercase;
+                    line-height: 13px;
+                    border: none;
+                    background: linear-gradient(106deg, #ea6000 0%, #ea9c00 100%);
+                    box-shadow: 0px 6px 6px #ea620060;
+                }
+
+                .mock-teststart {
+                    font-size: 12px;
+                    padding: 0.6rem 1rem;
+                    text-transform: uppercase;
+                    line-height: 13px;
+                    border: none;
+                    background: linear-gradient(104deg, #001C8C 0%, #66A9FF 100%);
+                    box-shadow: 0px 6px 6px #518CE74F;
+                }
+            }
+        }
+    }
+}

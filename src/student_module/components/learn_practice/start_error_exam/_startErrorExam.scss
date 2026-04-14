@@ -1,0 +1,78 @@
+.start_error {
+    position: relative;
+
+    .btn-start-exam {
+        color: #CB3F3F;
+        border: 1px solid #CB3F3F;
+        background-color: #FFEFEF;
+    }
+
+    .bg_lightRed {
+        background-color: #FFDCDC;
+    }
+
+    .border_lightRed {
+        border: 1px solid #FFD6D6;
+        background-color: #FFFBFB;
+    }
+
+    .font_16 {
+        font-size: 16px;
+    }
+
+    .font_14 {
+        font-size: 14px;
+    }
+
+    .color_yash {
+        color: #707070;
+    }
+
+    .color_333 {
+        color: #333333;
+    }
+
+    .color_green {
+        color: #00C596;
+    }
+
+    .custom-cursor {
+        cursor: pointer;
+    }
+
+    .button_bg_lightgreen {
+        background-color: #E1FFF8;
+        border: 1px solid #8EFFE4;
+        padding: 10px;
+        margin-top: 25px;
+        font-weight: bold;
+        border-radius: 5px;
+        color: #00C596;
+    }
+
+    .bg_lightGreen {
+        background-color: #F2F5F8;
+        border-radius: 5px;
+        padding: 6px;
+    }
+
+    .bg_darkYash {
+        background-color: #D8D8D8;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .border_green {
+        border: 1px solid #00C596;
+        padding: 10px;
+        border-radius: 5px;
+        height: 15.9em;
+    }
+
+    .border_green img {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 2em;
+    }
+}

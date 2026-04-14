@@ -1,0 +1,236 @@
+@import './config';
+@import './studentmodule';
+
+// Typography
+
+body {
+  font-family: $font-family;
+  font-size: 14px !important;
+  font-weight: 400;
+  line-height: 1.5;
+  background: $white;
+
+  &.modal-open {
+    overflow-y: scroll !important;
+  }
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700 !important;
+  font-family: $font-family;
+}
+
+a {
+  -webkit-transition: color 0.25s ease-in-out;
+  transition: color 0.25s ease-in-out;
+  text-decoration: none;
+}
+
+a,
+a:hover {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a,
+button {
+  outline: none !important;
+}
+
+ul li {
+  line-height: 25px !important;
+  font-family: $font-family;
+}
+
+p {
+  line-height: 1.5 !important;
+  font-family: $font-family;
+}
+
+.btn-toolbar>*+* {
+  margin-left: .5em;
+}
+
+.showcase-component svg {
+  width: 100%;
+  height: auto;
+}
+
+hr.line-style {
+  border-top: 1px dashed #ced4da;
+}
+
+.css-1okebmr-indicatorSeparator {
+  display: none;
+}
+
+.modal-title {
+  @include fonts(600, 16px, 25px);
+}
+
+.dropdown-item {
+  font-size: 14px;
+}
+
+.form-control {
+  height: 38px !important;
+  font-size: 14px !important;
+}
+
+textarea.form-control {
+  height: auto !important;
+}
+
+.o-hidden {
+  overflow: hidden !important;
+}
+.react-bootstrap-table .table thead th {
+  outline: none;
+}
+
+//Custom CSS
+.no-arrow .dropdown-toggle {
+  position: relative;
+
+  &::after {
+    display: none !important;
+  }
+
+}
+
+.btn-circle {
+  border-radius: 100% !important;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.top-header {
+  margin-left: 250px;
+  transition: all 0.3s;
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  box-shadow: 0px 1px 15px hsla(0, 0%, 0%, 0.161);
+}
+
+.footer {
+  background: $white;
+  border-top: 1px solid hsla(200, 11%, 64%, 0.2);
+  color: #98a6ad;
+  padding: 19px 30px 20px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.left-side-menu {
+  width: 250px;
+  height: 100vh;
+  z-index: 10;
+  color: $white;
+  background: #213046;
+  bottom: 0;
+  position: fixed;
+  transition: all .2s ease-out;
+  top: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.content-page {
+  background: #f1f1f1;
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  transition: all 0.3s;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  transition: all 0.3s;
+
+  .main-content {
+    padding: 70px 20px 100px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .left-side-menu {
+    box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+    display: none;
+    z-index: 10 !important;
+  }
+
+  .sidebar-enable .left-side-menu {
+    display: block;
+  }
+
+  .content-page {
+    transition: all .2s ease;
+    // margin-left: 0 !important;
+    width: 100%;
+
+    .top-header {
+      margin-left: 0px;
+    }
+
+    .main-content {
+      padding-bottom: 110px;
+    }
+  }
+
+  .sidebar-enable .overlay {
+    position: absolute;
+    background: hsla(220, 13%, 18%, 0.8);
+    content: '';
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1020;
+  }
+
+  .footer {
+    left: 0 !important;
+    text-align: center;
+  }
+}
+
+// Page Not Found
+.page_not_found {
+  min-height: 100vh;
+
+  h1 {
+    animation: led .8s infinite;
+  }
+}
+
+@keyframes led {
+  from {
+    opacity: .2;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

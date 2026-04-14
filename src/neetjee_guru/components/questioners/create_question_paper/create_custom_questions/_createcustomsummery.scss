@@ -1,0 +1,64 @@
+.create_custom_summery {
+    position: relative;
+
+    .summery_card {
+        margin-bottom: 20px;
+
+        .card-header,
+        .card-footer {
+            background: #E5E5E5;
+            border-top: 0;
+            border-bottom: 0;
+
+            i {
+                color: hsla(0, 0%, 0%, 0.124);
+            }
+        }
+
+        .branch_sections {
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0.5rem;
+            background: hsla(0, 0%, 0%, 0.051);
+            height: 100%;
+
+            .title {
+                position: absolute;
+                font-weight: 600;
+                line-height: 25px;
+                color: #1B2430;
+                transform: rotate(-90deg);
+                width: 160px;
+                left: -65px;
+                top: 80px;
+
+                @media only screen and (max-width: 1199px) {
+                    & {
+                        left: -50px;
+                    }
+                }
+                @media (max-width: 991px) {
+                    & {
+                        left: -62px;
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    & {
+                        left: -62px;
+                    }
+                }
+                @media (max-width: 578px) {
+                    & {
+                        left: -60px;
+                    }
+                }
+            }
+        }
+
+        .content ul li {
+            color: #787878;
+        }
+    }
+}

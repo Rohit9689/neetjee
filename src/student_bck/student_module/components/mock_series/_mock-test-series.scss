@@ -1,0 +1,220 @@
+.mock-test-series-section {
+    .mock-text-color {
+        color: #2b3b92;
+    }
+
+    .mock-text-color2 {
+        color: #014420;
+    }
+
+    .nav-pills {
+        border: 1px solid #f1f1f1;
+        border-radius: 30px;
+        margin: 10px 0 !important;
+        padding: 4px;
+
+        .nav-item {
+            display: inline-block;
+            width: 32%;
+
+            @media screen and (max-width: 360.98px) {
+                width: 100%;
+                margin: 6px;
+            }
+
+            &:not(:last-child) {
+                margin-right: 4px;
+            }
+
+            .nav-link {
+                text-align: center;
+                color: #333333;
+                background: #eae9f5;
+                transition: all .2s linear;
+                padding: 0.35rem 1rem;
+                border-radius: 30px;
+
+                @media (max-width: 575.98px) {
+                    font-size: 9px;
+                }
+
+                &:hover,
+                &.active {
+                    background: #2b3b92;
+                    color: #ffffff;
+                    font-weight: 600;
+                    border-radius: 30px;
+                }
+            }
+        }
+    }
+
+    .btn-darkblue-outline {
+        @media screen and (max-width: 575.98px) {
+            font-size: 10px;
+        }
+    }
+
+    .signle-mocktest {
+        height: 350px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+
+        .mocktest-content {
+
+            .mocktest-fee {
+                position: relative;
+
+                h5 {
+                    position: relative;
+                    font-weight: 400 !important;
+                    z-index: 1;
+                }
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: -35px;
+                    height: 80px;
+                    width: 100%;
+                    background: #3533a0;
+                    border-radius: 55%;
+                }
+            }
+
+            .btn {
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+                padding: 0.35rem 0.75rem;
+                font-size: 13px !important;
+                text-transform: uppercase;
+                width: 92%;
+                border-color: #3533a0 !important;
+                background-color: #3533a0 !important;
+                display: inline-block;
+
+                &:hover,
+                &:active,
+                &:focus,
+                &:not(:disabled):not(.disabled):active:focus,
+                &:not(:disabled):not(.disabled).active:focus,
+                &:not(:disabled):not(.disabled):active {
+                    color: #ffffff;
+                    background-color: #3533a0;
+                    border: 1px solid #3533a0;
+                }
+            }
+        }
+
+        .overlay-mocktest {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 1;
+            background: #33333382;
+            backdrop-filter: blur(2px);
+            // transform: rotateY(90deg);
+            // transform-origin: 0 0;
+            transition: all 0.4s ease-in-out 0s;
+            z-index: 1;
+
+            .overlay-mocktest-content {
+                position: absolute;
+                bottom: 0;
+
+                .btn {
+                    padding: 0.35rem 0.75rem;
+                    font-size: 13px !important;
+                    text-transform: uppercase;
+                    border-color: #3533a0 !important;
+                    background-color: #3533a0 !important;
+                    display: inline-block;
+
+                    &:hover,
+                    &:active,
+                    &:focus,
+                    &:not(:disabled):not(.disabled):active:focus,
+                    &:not(:disabled):not(.disabled).active:focus,
+                    &:not(:disabled):not(.disabled):active {
+                        color: #ffffff;
+                        background-color: #3533a0;
+                        border: 1px solid #3533a0;
+                    }
+                }
+
+                .card {
+                    color: #202B63;
+                    text-align: center;
+                    margin: 4px;
+                    border-color: #ffffff;
+
+                    .card-title {
+                        font-weight: 700;
+                        font-size: 14px;
+                        margin-bottom: 0;
+                    }
+
+                    .card-text {
+                        font-weight: 500;
+                        font-size: 12px;
+                    }
+
+                    small {
+                        font-size: 10px;
+                    }
+
+                    &.score {
+                        background: #202B63;
+                    }
+
+                    &.avgtime {
+                        background: #ffd000;
+                    }
+                }
+            }
+        }
+
+        // &:hover {
+        //     .overlay-mocktest {
+        //         transform: rotateY(0);
+        //         opacity: 1;
+        //     }
+        // }
+
+        &.gredientOne {
+            background: linear-gradient(180deg, #fc54ef, #f7b124 100%);
+        }
+
+        &.gredientTwo {
+            background: linear-gradient(180deg, #00ffff, #f7b124 100%);
+        }
+
+        &.gredientThree {
+            background: linear-gradient(180deg, #ed572b, #f7b124 100%);
+        }
+
+        &.gredientFour {
+            background: linear-gradient(180deg, #3591fc, #f7b124 100%);
+        }
+
+        &.gredientFive {
+            background: linear-gradient(180deg, #988bf7, #f7b124 100%);
+        }
+
+        &.gredientSix {
+            background: linear-gradient(180deg, #e68bf7, #f7b124 100%);
+        }
+
+        &.gredientSeven {
+            background: linear-gradient(180deg, #8beff7, #f7b124 100%);
+        }
+
+        &.gredientEight {
+            background: linear-gradient(180deg, #f72465, #f7b124 100%);
+        }
+    }
+}

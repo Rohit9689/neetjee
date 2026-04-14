@@ -1,0 +1,469 @@
+@import "../../../../_config.scss";
+
+.result-analysis-nav {
+  position: relative;
+
+  // &::before {
+  //     content: '';
+  //     height: 100%;
+  //     width: 100%;
+  //     left: 0;
+  //     top: 0;
+  //     position: absolute;
+  //     background: url('../../../../images/result-analysis-bg.png');
+  //     background-repeat: no-repeat;
+  //     background-position: top center;
+  //     background-size: cover;
+  //     opacity: 1;
+  //     filter: blur(4px);
+  //     overflow: hidden;
+  // }
+
+  &::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: #077ee6;
+    opacity: 0.6;
+  }
+
+  .header-top {
+    position: relative;
+    box-shadow: none;
+    z-index: 2;
+
+    .navbar-nav {
+      align-items: center;
+
+      .nav-link {
+        color: #ffffff;
+      }
+
+      .profile-img {
+        background: #ffffff1f;
+        border: 1px solid #ffffff17;
+        border-radius: 21px;
+
+        img {
+          width: 35px;
+          height: 35px;
+        }
+
+        .text {
+          .profile-name {
+            font-size: 14px;
+            line-height: 6px;
+          }
+        }
+      }
+    }
+
+    .search .search-bar {
+      color: #ffffff;
+      background: #ffffff17;
+      box-shadow: none;
+    }
+
+    .student-notification i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .header-bottom {
+    position: relative;
+    z-index: 1;
+
+    .card {
+      background-color: hsla(0, 0%, 100%, 0.46);
+      border-radius: 10px;
+
+      img {
+        margin-top: -3rem;
+        margin-bottom: 10px;
+      }
+    }
+
+    .datePicker {
+      .calendar {
+        color: #ffffff;
+        position: absolute;
+        left: 15px;
+        top: 0;
+        font-size: 18px;
+        background: #ffffff75;
+        padding: 10px;
+        border-radius: 4px;
+      }
+
+      .form-control {
+        padding-left: 40px;
+        background-color: hsla(0, 0%, 100%, 0.46);
+        color: #ffffff;
+
+        &::placeholder {
+          color: #ffffff;
+        }
+      }
+
+      .rdtPicker {
+        right: 0;
+      }
+    }
+  }
+}
+
+.result-analysis {
+  .card.action {
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    .card-body {
+      .dot-status {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #f05d70 0% 0% no-repeat padding-box;
+        box-shadow: 0px 0px 20px #ff000045;
+      }
+
+      .icon svg {
+        position: relative;
+        margin-top: -3.5rem;
+      }
+
+      .nextstep {
+        color: #38d2ad;
+      }
+
+      .status .rotate-block p {
+        transform: matrix(0, -1, 1, 0, -15, 25);
+        text-align: center;
+        font: 400 14px/29px "Proxima Nova";
+        letter-spacing: 0px;
+        color: #a7a7a7;
+        text-transform: uppercase;
+        opacity: 0.5;
+        position: absolute;
+        left: 3px;
+      }
+    }
+
+    .card-footer {
+      border-radius: 6px;
+      box-shadow: 0px -10px 10px #0000001a;
+
+      .classXI {
+        .dot-status {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #f4a00b 0% 0% no-repeat padding-box;
+          box-shadow: 0px 0px 20px #ffaa0045;
+        }
+      }
+
+      .classXII {
+        .dot-status {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #f4a00b 0% 0% no-repeat padding-box;
+          box-shadow: 0px 0px 20px #ffaa0045;
+        }
+      }
+    }
+  }
+
+  .trending {
+    overflow: hidden;
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    .d-flex .css-2b097c-container {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+
+      .css-yk16xz-control {
+        border-radius: 0px;
+        margin-right: -1px;
+      }
+
+      &:first-child {
+        .css-yk16xz-control {
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+      }
+
+      &:last-child {
+        .css-yk16xz-control {
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .overall {
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    .card-header {
+      border: 1px solid #d8d8d88f;
+      border-radius: 6px;
+    }
+
+    .student {
+      p.txt {
+        transform: matrix(0, -1, 1, 0, -15, 25);
+        text-align: center;
+        font: 400 14px/29px "Proxima Nova";
+        letter-spacing: 0px;
+        color: #a7a7a7;
+        text-transform: uppercase;
+        opacity: 0.5;
+        position: absolute;
+        left: 3px;
+      }
+
+      img {
+        margin-left: 1.5rem;
+      }
+    }
+
+    .practice {
+      h6 {
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    .table {
+      overflow: hidden;
+      border-radius: 10px;
+      margin-bottom: 0;
+
+      .grayTxt {
+        color: #333333;
+        opacity: 0.8;
+      }
+
+      thead {
+        overflow: hidden;
+        background: #eeeeee;
+        border-radius: 10px;
+      }
+
+      tbody {
+        background: #f8f8f8;
+
+        h6,
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .subjectStength {
+    overflow: hidden;
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    .card-body .d-flex p {
+      transform: matrix(0, -1, 1, 0, -50, 80);
+      text-align: center;
+      font: 400 14px/29px "Proxima Nova";
+      letter-spacing: 0px;
+      color: #a7a7a7;
+      text-transform: uppercase;
+      opacity: 0.5;
+      position: absolute;
+      left: 4px;
+    }
+  }
+
+  .questionTypes {
+    overflow: hidden;
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    .card-header {
+      border: 1px solid #eeeeee;
+      border-radius: 6px;
+    }
+
+    .card-body {
+      .d-flex p.rotateTxt {
+        transform: matrix(0, -1, 1, 0, -50, 40);
+        text-align: center;
+        font: 400 14px/29px "Proxima Nova";
+        letter-spacing: 0px;
+        color: #a7a7a7;
+        text-transform: uppercase;
+        opacity: 0.5;
+        position: absolute;
+        left: 10px;
+      }
+
+      .content li {
+        background: #f6f6f6;
+        border-radius: 6px;
+        margin-bottom: 15px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        button {
+          padding: 4px 8px;
+          font-size: 12px;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  .timeAnalysis {
+    overflow: hidden;
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    .card-header {
+      border: 1px solid #eeeeee;
+      border-radius: 6px;
+    }
+
+    .card-body {
+      .d-flex {
+        img {
+          position: absolute;
+          top: 15px;
+          left: 10px;
+        }
+
+        p.rotateTxt {
+          transform: matrix(0, -1, 1, 0, -40, 0);
+          text-align: center;
+          font: 400 14px/29px "Proxima Nova";
+          letter-spacing: 0px;
+          color: #a7a7a7;
+          text-transform: uppercase;
+          opacity: 0.5;
+          position: absolute;
+          left: 10px;
+        }
+      }
+
+      .table {
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 0;
+
+        tbody {
+          td,
+          th {
+            padding: 0.65rem 0.75rem;
+          }
+        }
+      }
+    }
+  }
+
+  .questionTheory {
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    p.rotateTxt {
+      transform: matrix(0, -1, 1, 0, -50, 0);
+      text-align: center;
+      font: 400 14px/29px "Proxima Nova";
+      letter-spacing: 0px;
+      color: #a7a7a7;
+      text-transform: uppercase;
+      opacity: 0.5;
+      position: absolute;
+      left: 3px;
+      top: 50%;
+    }
+
+    .grayTxt {
+      color: #333333;
+      opacity: 0.8;
+    }
+  }
+
+  .complexityStrength {
+    overflow: hidden;
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    p.txt {
+      transform: matrix(0, -1, 1, 0, -55, 0);
+      text-align: center;
+      font: 400 14px/29px "Proxima Nova";
+      letter-spacing: 0px;
+      color: #a7a7a7;
+      text-transform: uppercase;
+      opacity: 0.5;
+      position: absolute;
+      left: 0;
+      top: 50%;
+    }
+  }
+
+  .errorsAnalysis {
+    overflow: hidden;
+    box-shadow: 0px 0px 20px #0000001a;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+
+    p.txt {
+      transform: matrix(0, -1, 1, 0, -35, 0);
+      text-align: center;
+      font: 400 14px/29px "Proxima Nova";
+      letter-spacing: 0px;
+      color: #a7a7a7;
+      text-transform: uppercase;
+      opacity: 0.5;
+      position: absolute;
+      left: 0;
+      top: 50%;
+    }
+
+    .errorsAnalysis-list {
+      margin: 0;
+      padding: 0;
+
+      li a {
+        padding: 0.25rem 0.75rem;
+        color: #a2a2b1;
+        cursor: pointer;
+        text-decoration: none;
+
+        &.active,
+        &:active,
+        &:hover {
+          color: #ffffff;
+          background: #077ee6;
+          border-radius: 40px;
+        }
+      }
+    }
+  }
+}

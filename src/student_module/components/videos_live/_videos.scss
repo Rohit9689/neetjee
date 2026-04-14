@@ -1,0 +1,143 @@
+.video_section {
+    .jumbotron {
+        background: #d3d3d3;
+
+        .owl-theme .owl-nav {
+            margin-top: 10px;
+
+
+            button.owl-prev,
+            button.owl-next {
+                background: none;
+                color: #000000;
+                font-size: 23px;
+                text-align: center;
+
+                span {
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #ffffff;
+                    border-radius: 50%;
+                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                    line-height: 25px;
+                }
+            }
+        }
+    }
+    .video_filter {
+        position: relative;
+        background: linear-gradient(180deg, #d10451, #eb6d7e);
+        
+        position: relative;
+    border-radius: 30px;
+    padding: 4px;
+@media screen and (min-width: 768px) {
+    top: -3rem;
+}
+        .nav-item {
+            display: inline-block;
+    width: 32%;
+
+            &:not(:last-child) {
+                margin-right: 6px;
+            }
+            .nav-link {
+                text-align: center;
+                color: #ffffff;
+                transition: all .2s linear;
+                padding: 0.65rem 0rem;
+                border-radius: 30px;
+    
+                &.active,
+                &:hover {
+                    color: #fff;
+                    background:#ffc107;
+                }
+            }
+        }
+        
+    }
+    .filter-list {
+        position: relative;
+
+        li {
+            margin-bottom: 0.5rem;
+
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+
+            .d-flex {
+                padding: 6px 20px;
+                border-radius: 25px;
+                border: 1px solid #d5d5d5;
+                background: #eeeeee;
+
+                i {
+                    cursor: pointer;
+                }
+            }
+
+        }
+    }
+
+    .single_video {
+        height: 325px;
+        img {
+            height: auto;
+            max-width: 100%;
+            width: 300px;
+        } 
+        .video_footer{
+            position: absolute;
+            bottom: 4px;
+            width: 96%;
+           }   
+    }
+
+    .liveclass-videos,
+    .recently-videos {
+        .header-titles {
+            position: relative;
+
+           @media screen and (max-width: 767px ) {
+            .scroll-more {
+                margin-left: 0 !important;
+            }
+           }
+        }
+        .owl-theme .owl-nav {
+            margin-top: 10px;
+            position: absolute;
+            left: 300px !important;
+            top: -54px;
+            @media screen and (max-width: 767px ) {
+                left: 100px !important;
+            }
+
+
+            button.owl-prev,
+            button.owl-next {
+                background: none;
+                color: #000000;
+                font-size: 23px;
+                text-align: center;
+
+                span {
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #ffffff;
+                    border-radius: 50%;
+                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                    line-height: 25px;
+                }
+            }
+        }
+    }
+}

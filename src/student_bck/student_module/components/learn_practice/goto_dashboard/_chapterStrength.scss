@@ -1,0 +1,164 @@
+.color_333 {
+    color: #333333;
+}
+
+.color_yash {
+    color: #707070;
+}
+
+.color_green {
+    color: #00C596;
+}
+
+.color_blue {
+    color: #077EE6;
+}
+
+.color_red {
+    color: #FF6B98;
+}
+
+.color_yellow {
+    color: #F4D50B;
+}
+
+.color_dark_red {
+    color: #CB3F3F
+}
+
+.color_dark_blue {
+    color: #00388D;
+}
+
+.font_14 {
+    font-size: 14px;
+}
+
+.font_16 {
+    font-size: 16px;
+}
+
+.font_18 {
+    font-size: 18px;
+}
+
+.font_12 {
+    font-size: 12px;
+}
+
+.goto_dashboard {
+    .card.Card_border {
+        overflow: hidden;
+    }
+}
+
+.start_practice_button {
+    background-color: #F2F9FF;
+    border: 1px solid#077EE6;
+    color: #077EE6;
+    border-radius: 5px;
+    opacity: 1;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.Card_border {
+    border: 1px solid #DFE8EF;
+    border-radius: 10px;
+}
+
+.header_bg {
+    background-color: #E5F5D4;
+    padding: 15px;
+    opacity: 1;
+}
+
+.hand_icon {
+    border: 1px solid#BECBB0;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 22px;
+    color: #71A53B;
+    opacity: 1;
+}
+
+.box-shadow {
+    box-shadow: 0 0px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.card_bg {
+    background-color: #F9F9FA;
+}
+
+.button_bg_green {
+    background-color: #99E8D5;
+}
+
+.button_bg_blue {
+    background-color: rgba(54, 161, 245, 0.3);
+}
+
+.button_bg_red {
+    background-color: #FFE9E9;
+}
+
+.table_custom_style thead tr th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 25px 8px;
+    background-color: #36A1F514;
+    font-size: 15px;
+}
+
+.table_custom_style tbody tr .secondTrCls {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    background-color: #F9F9FA;
+    font-size: 15px;
+
+    &:first-child {
+        text-align: left;
+    }
+}
+
+
+.table_custom_style tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.table_custom_style tbody tr td:first-child {
+    text-align: left !important;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.icon_WrongCorrected_up::after {
+    content: "";
+    position: relative;
+    top: -10px;
+    font-size: 10px;
+    left: -5px;
+    color: #00C596;
+}
+
+.icon_WrongPending_up::after {
+    content: "";
+    position: relative;
+    top: -10px;
+    font-size: 10px;
+    left: -5px;
+    color: #F4A00B;
+}
+
+.text-lightgrey {
+    color: #d4d4d4 !important;
+}

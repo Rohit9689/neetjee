@@ -1,0 +1,191 @@
+.register-form-block {
+    position: relative;
+
+    .step-wizard {
+        position: relative;
+
+        .step-indicator {
+            position: relative;
+            padding: 1.2rem;
+            background: #FFFFFF;
+            box-shadow: 0px 3px 20px #0000000D;
+            border-radius: 8px;
+            margin-top: -2rem;
+
+            .col-xl-3 {
+                position: relative;
+
+                &.active {
+                    .step {
+                        color: #00C596;
+
+                        i {
+                            color: #00C596;
+                        }
+                    }
+
+                    .caption {
+                        font-weight: 600;
+                        color: #212529;
+
+                    }
+                }
+
+                &.complete {
+                    .step {
+                        color: #00C596;
+
+                        i {
+                            color: #00C596;
+                        }
+                    }
+
+                    .caption {
+                        color: #212529;
+                    }
+                }
+            }
+
+            .step {
+                i {
+                    color: #D5D5D5;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .caption {
+                font-size: 1rem;
+                font-weight: 500;
+                color: #212529;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 12px;
+                    width: 100%;
+                    border: 1px dashed #213046;
+                    opacity: 0.5;
+                }
+
+                span {
+                    background: #FFFFFF;
+                    padding-right: 6px;
+                    position: relative;
+                }
+            }
+        }
+
+        .stepOne,
+        .stepTwo,
+        .stepThree,
+        .stepFour {
+            .card {
+                margin-bottom: 40px;
+                box-shadow: 0px 3px 20px #0000000D;
+                border-radius: 10px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            .stepFormOne,
+            .stepFormTwo,
+            .stepFormThree {
+                form i {
+                    color: #D5D5D5;
+
+                    &.active {
+                        color: #077EE6;
+                    }
+
+                    &.error {
+                        color: #e60719;
+                    }
+                }
+            }
+
+            .aside-status {
+                .nav-item {
+                    margin-bottom: 10px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .nav-link {
+                        font-size: 15px;
+                        color: #213046;
+
+                        i {
+                            font-size: 18px;
+                            color: #D5D5D5;
+                        }
+
+                        &.active i {
+                            color: #077EE6;
+                        }
+                    }
+                }
+            }
+        }
+
+        .stepTwo {
+            .stepFormOne .single-card {
+                margin-bottom: 20px;
+
+                .card {
+                    .fa-check-circle {
+                        font-size: 24px;
+                        color: #077EE6;
+                        position: absolute;
+                        right: -4px;
+                        top: -7px;
+                        visibility: hidden;
+                    }
+
+                    &:hover,
+                    &:active,
+                    &.active {
+                        box-shadow: 0px 0px 30px #00000029 !important;
+                        border: 2px solid #077EE6;
+
+                        .fa-check-circle {
+                            visibility: visible;
+                        }
+                    }
+                }
+            }
+        }
+
+        .stepThree {
+            .stepFormOne .order-summert-table {
+                position: relative;
+
+                li {
+                    padding: 12px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+                    &:first-child {
+                        margin-bottom: 15px;
+                        border-radius: 6px;
+                    }
+
+                    &:first-child,
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    &:nth-child(4),
+                    &:nth-child(6) {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,228 @@
+.student-package {
+    position: relative;
+
+    .breadcrumb-content {
+        background: linear-gradient(-60deg, #297ce6 0%, #002e7e 100%);
+    }
+
+    .student-package-content {
+        .single-plan {
+            @mixin free-trail-color($direction) {
+                background: linear-gradient(#{$direction}, #089408 0%, #19f805 100%);
+            }
+            @mixin freetrail-color {
+                color: #089408;
+            }
+
+            @mixin one-week-color($direction) {
+                background: linear-gradient(#{$direction}, #08946a 0%, #0acb90 100%);
+            }
+            @mixin oneweek-color {
+                color: #0acb90;
+            }
+
+            @mixin three-months-color($direction) {
+                background: linear-gradient(#{$direction}, #c46f01 0%, #df7e00 100%);
+            }
+
+            @mixin threemonths-color {
+                color: #df7e00;
+            }
+
+            @mixin six-months-color($direction) {
+                background: linear-gradient(#{$direction}, #297ce6 0%, #002e7e 100%);
+            }
+
+            @mixin sixmonths-color {
+                color: #002e7e;
+            }
+
+            @mixin one-year-color($direction) {
+                background: linear-gradient(#{$direction}, #014d5a 0%, #006b7e 100%);
+            }
+
+            @mixin oneyear-color {
+                color: #014d5a;
+            }
+
+            .planTitle {
+                position: relative;
+                margin-top: -2.5rem
+            }
+
+            ul li {
+                div {
+                    line-height: 20px;
+                }
+                
+                &:not(:last-child) {
+                    margin-bottom: 0.5rem;
+                }
+            }
+
+            .coupons {
+                p {
+                    font-size: 12px;
+                }
+
+                h5 {
+                    color: #f0ba74;
+                }
+            }
+
+            &.free-trail {
+                // box-shadow: 0 0.5rem 1rem rgba(8, 148, 8, 0.45);
+
+                &:hover,
+                &.active {
+                    box-shadow: 0 1.5rem 2rem rgba(8, 148, 8, 0.85);
+                }
+
+                @include free-trail-color(180deg);
+
+                .planTitle {
+                    @include free-trail-color(60deg);
+                }
+
+                h2,
+                .sub-title {
+                    @include freetrail-color;
+                }
+
+                .btn {
+                    @include free-trail-color(60deg);
+                    border: none;
+                    padding: .5rem 1.5rem;
+
+                    &:hover,
+                    &.active {
+                        @include free-trail-color(-60deg);
+                    }
+                }
+            }
+            
+            &.one-week {
+                // box-shadow: 0 0.5rem 1rem rgba(72, 219, 175, 0.45);
+
+                &:hover,
+                &.active {
+                    box-shadow: 0 1.5rem 2rem rgba(72, 219, 175, 0.85);
+                }
+
+                @include one-week-color(180deg);
+
+                .planTitle {
+                    @include one-week-color(60deg);
+                }
+
+                h2,
+                .sub-title {
+                    @include oneweek-color;
+                }
+
+                .btn {
+                    @include one-week-color(60deg);
+                    border: none;
+                    padding: .5rem 1.5rem;
+
+                    &:hover,
+                    &.active {
+                        @include one-week-color(-60deg);
+                    }
+                }
+            }
+
+            &.three-months {
+                // box-shadow: 0 0.5rem 1rem rgba(233, 132, 23, 0.45);
+
+                &:hover,
+                &.active {
+                    box-shadow: 0 1.5rem 2rem rgba(233, 132, 23, 0.85);
+                }
+
+                @include three-months-color(180deg);
+
+                .planTitle {
+                    @include three-months-color(60deg);
+                }
+
+                h2,
+                .sub-title {
+                    @include threemonths-color;
+                }
+
+                .btn {
+                    @include three-months-color(60deg);
+                    border: none;
+                    padding: .5rem 1.5rem;
+
+                    &:hover,
+                    &.active {
+                        @include three-months-color(-60deg);
+                    }
+                }
+            }
+
+            &.six-months {
+                // box-shadow: 0 0.5rem 1rem rgba(32, 43, 99, 0.45);
+
+                &:hover,
+                &.active {
+                    box-shadow: 0 1.5rem 2rem rgba(32, 43, 99, 0.85);
+                }
+
+                @include six-months-color(180deg);
+
+                .planTitle {
+                    @include six-months-color(60deg);
+                }
+
+                h2,
+                .sub-title {
+                    @include sixmonths-color;
+                }
+
+                .btn {
+                    @include six-months-color(60deg);
+                    border: none;
+                    padding: .5rem 1.5rem;
+
+                    &:hover,
+                    &.active {
+                        @include six-months-color(-60deg);
+                    }
+                }
+            }
+
+            &.one-year {
+                // box-shadow: 0 0.5rem 1rem rgba(27, 121, 138, 0.45);
+
+                &:hover,
+                &.active {
+                    box-shadow: 0 1.5rem 2rem rgba(27, 121, 138, 0.85);
+                }
+
+                @include one-year-color(180deg);
+
+                .planTitle {
+                    @include one-year-color(60deg);
+                }
+
+                h2,
+                .sub-title {
+                    @include oneyear-color;
+                }
+
+                .btn {
+                    @include one-year-color(60deg);
+                    border: none;
+                    padding: .5rem 1.5rem;
+
+                    &:hover {
+                        @include one-year-color(-60deg);
+                    }
+                }
+            }
+        }
+    }
+}

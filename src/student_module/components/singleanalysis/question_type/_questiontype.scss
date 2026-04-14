@@ -1,0 +1,202 @@
+@import '../../../../_config.scss';
+
+.questiontypeNavbar-nav {
+    position: relative;
+    background: #001832;
+
+    .header-top {
+        position: relative;
+        box-shadow: none;
+        z-index: 2;
+
+        .navbar-nav {
+            align-items: center;
+
+            .nav-link {
+                color: #ffffff;
+            }
+
+            .profile-img {
+                background: #ffffff2a;
+                border: 1px solid #5a5a5a;
+                border-radius: 21px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .text {
+                    .profile-name {
+                        font-size: 14px;
+                        line-height: 6px;
+                    }
+                }
+            }
+        }
+
+        .search .search-bar {
+            color: #ffffff;
+            background: #ffffff17;
+            box-shadow: none;
+        }
+
+        .student-notification i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-bottom {
+        position: relative;
+        z-index: 1;
+
+        .title {
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: #ffffff;
+        }
+
+        .list-inline li {
+            margin-right: 35px;
+            position: relative;
+
+            &::before {
+                right: -25px;
+                bottom: 3px;
+                position: absolute;
+                color: #ffffff;
+                content: "\f30b";
+                font-family: "Font Awesome 5 Pro";
+                font-weight: 900;
+                display: inline-block;
+                font-style: normal;
+                font-variant: normal;
+                text-rendering: auto;
+                line-height: 1;
+            }
+
+            &:last-child {
+                margin-right: 0;
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+
+        .top-img {
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+            border-radius: 50%;
+
+            img {
+                width: 150px;
+                height: 90px;
+                margin: -10px 0 0 -10px;
+            }
+        }
+
+        .card {
+            border-radius: 10px;
+            background-color: #ffffff80;
+            border: 1px solid #f2a6b080;
+
+            img {
+                margin-top: -3rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .datePicker {
+            .calendar {
+                color: #ffffff;
+                position: absolute;
+                left: 15px;
+                top: 0;
+                font-size: 18px;
+                background: #ffffff3a;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .form-control {
+                padding-left: 40px;
+                border: 1px solid #021a33;
+                background-color: #ffffff80;
+                color: #ffffff;
+
+                &::placeholder {
+                    color: #ffffff;
+                }
+            }
+
+            .rdtPicker {
+                right: 0;
+            }
+        }
+    }
+}
+
+.questiontype-analysis {
+    .filter {
+        button {
+            padding: 0.45rem 1rem;
+            box-shadow: 0px 0px 10px #0000001A;
+        }
+    }
+
+    .question-tab-one,
+    .question-tab-two {
+        overflow: hidden;
+        border-radius: 6px;
+
+        .nav-pills .nav-item {
+            margin-right: 4px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            .nav-link {
+                color: #A2A2B1;
+                font-size: 14px;
+                border-radius: 0.25rem;
+                padding: 0.25rem 0.75rem !important;
+                transition: ease-in all 0.2s;
+                border: none;
+
+                &.active,
+                &:hover {
+                    font-size: 14px;
+                    font-weight: 400;
+                    border-radius: 30px;
+                    color: #fff;
+                    padding: 0.25rem 0.75rem !important;
+                    background-color: #007bff !important;
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        .react-bootstrap-table,
+        .table {
+            border: none !important;
+
+            thead {
+                border-top: 1px solid #dee2e6;
+                border-bottom: 1px solid #dee2e6;
+                background-color: #ffffff;
+            }
+
+            th,
+            td {
+                padding: 0.95rem 0.85rem;
+                outline: none;
+            }
+        }
+    }
+}

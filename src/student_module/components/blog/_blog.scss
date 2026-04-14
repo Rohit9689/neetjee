@@ -1,0 +1,53 @@
+.blog {
+  .single-blog {
+    position: relative;
+    text-decoration: none;
+    color: #000000;
+    box-shadow: 0px 3px 4px #00000029;
+
+    &:hover {
+      background: #ffffff;
+    }
+
+    .card-img-top {
+      border-radius: 0.25rem;
+      box-shadow: 0px 3px 20px #00000029;
+    }
+
+    .blog-title {
+      font: normal normal normal 18px/20px "proxima-nova";
+      letter-spacing: 0px;
+      color: #142031;
+      @media screen and (min-width: 530px) {
+        min-height: 50px;
+      }
+    }
+
+    .blog-time {
+      position: absolute;
+      font: normal normal normal 13px/12px "Roboto", sans-serif;
+      letter-spacing: 0px;
+      color: #707070;
+      right: 8px;
+      bottom: 8px;
+    }
+    .content {
+      position: relative;
+      .post-time {
+        text-transform: uppercase;
+      }
+      .post-time,
+      p {
+        font: normal normal normal 14px/12px "Roboto", sans-serif;
+        letter-spacing: 0px;
+        color: #707070;
+      }
+      p {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  .pagination-block {
+    box-shadow: 0px 3px 4px #00000029;
+  }
+}

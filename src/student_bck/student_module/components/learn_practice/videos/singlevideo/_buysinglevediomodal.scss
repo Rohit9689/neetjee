@@ -1,0 +1,46 @@
+body.modal-open {
+    padding-right: 0 !important;
+}
+
+.buysinglevideo_modal .modal-content {
+    overflow: hidden;
+    border: none;
+    border-radius: 10px;
+
+    .modal-header {
+        position: relative;
+
+        .buysinglevideomodal-img {
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 130px;
+            content: '';
+            position: absolute;
+            backdrop-filter: blur(17px);
+            background: url('../../../../../images/nav-bg.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        .title-content {
+            color: #ffffff;
+            position: relative;
+            z-index: 3;
+        }
+    }
+
+    .modal-body {
+        .img-block {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background: transparent;
+            z-index: 2;
+        }
+    }
+}

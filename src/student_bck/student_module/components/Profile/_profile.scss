@@ -1,0 +1,69 @@
+.profile_section {
+    position: relative;
+
+    @media (min-width: 768px) {
+
+        .mt-md-4 {
+            margin-top: 1.8rem !important;
+        }
+    }
+
+    .card {
+        position: relative;
+        margin-bottom: 2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-header {
+            border-bottom: 1px solid #e3ebf6;
+        }
+
+        .card-img-top {
+            position: relative;
+        }
+
+        .profile_block {
+            display: block;
+            text-align: center;
+            position: relative;
+
+            .profile_img {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto;
+            }
+
+            .profile_img,
+            .file-text {
+                position: relative;
+
+                .upload_btn {
+                    text-align: center;
+                    cursor: pointer;
+                    position: absolute;
+                    right: 0;
+                    bottom: 30px;
+                    line-height: 35px;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    background: #0237ca;
+
+                    i {
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+    }
+
+    .syllabus,
+    .package {
+        .second_group {
+            margin-top: -1px;
+        }
+    }
+
+}

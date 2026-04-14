@@ -1,0 +1,655 @@
+.previous-paper-analysis.linkage {
+    
+    form {
+        .custom-control-inline {
+            padding: 0.45rem 0.65rem 0.45rem 2.25em;
+            background-color: #f1f1f1;
+            border-radius: .35rem;
+            border: 1px solid transparent;
+
+            &.active {
+                border: 1px solid #2F4099;
+            }
+        }
+    }
+
+    .nav-pills {
+        border: 1px solid #f1f1f1;
+        border-radius: 30px;
+        margin: 0;
+        padding: 4px;
+
+        .nav-item {
+            display: inline-block;
+            // width: 50%;
+
+            .nav-link {
+                text-align: center;
+                color: #333333;
+                transition: all .2s linear;
+                padding: 0.35rem 1rem;
+
+                &.active {
+                    background: #EEEEEE;
+                    color: #333333;
+                    font-weight: 600;
+                    border-radius: 30px;
+                }
+            }
+        }
+    }
+
+    .chapter-wise {
+        position: relative;
+       
+        .accordion {
+            .card.bg-light {
+                box-shadow: 0px 3px 10px #0000001A;
+
+                &:not(:first-of-type) {
+                    border-radius: 0.25rem;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+                }
+
+                &:not(:last-of-type) {
+                    margin-bottom: 10px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+                    border-radius: 0.25rem;
+                }
+            }
+           .reset-expansion-style .react-bootstrap-table .table th, 
+            .reset-expansion-style .react-bootstrap-table .table td {
+                width: 83.5% !important;
+            }
+            .card-header,
+            .react-bootstrap-table thead th:first-child ,
+            .react-bootstrap-table tbody td:first-child {
+                cursor: pointer;
+                width: auto !important;
+            }
+
+            .botany {
+                .title {
+                    color: #00B186;
+                }
+            }
+
+            .zoology {
+                .title {
+                    color: #8F4E02;
+                }
+            }
+
+            .physics {
+                .title {
+                    color: #EA9909;
+                }
+            }
+
+            .chemistry {
+                .title {
+                    color: #2A90E0;
+                }
+            }
+
+            .react-bootstrap-table {
+                border-top: 1px solid #dee2e6;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+
+                .table {
+                    th {
+                        text-align: left;
+                    }
+
+                    td {
+                        // padding: 0.75rem 0.25rem;
+                        text-align: left;
+                        border-top: 1px solid #ced4da;
+                    }
+                }
+
+                thead {
+                    background-color: #ffffff;
+                    box-shadow: 0px 3px 10px #0000001A;
+
+                    th {
+                        border-top: none !important;
+                        border-bottom: none !important;
+
+                        &:first-child {
+                            width: 3rem !important;
+                        }
+                    }
+                }
+
+                tbody td {
+                    &:first-child {
+                        width: 2rem !important;
+                    }
+                }
+
+                tfoot {
+                    background: #EBF9ED;
+                    box-shadow: 3px 0px 10px #0000001A;
+                }
+
+                .card {
+                    .react-bootstrap-table {
+                        border: 1px solid #dee2e6;
+
+                        .table {
+
+                            th,
+                            td {
+                                text-align: left;
+                            }
+                        }
+
+                        thead {
+                            box-shadow: none;
+                        }
+                    }
+                }
+            }
+        }
+        &.linkedTab {
+            .accordion {
+                .card.bg-light {
+                    box-shadow: 0px 3px 10px #0000001A;
+    
+                    &:not(:first-of-type) {
+                        border-radius: 0.25rem;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+                    }
+    
+                    &:not(:last-of-type) {
+                        margin-bottom: 10px;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+                        border-radius: 0.25rem;
+                    }
+                }
+               .reset-expansion-style .react-bootstrap-table .table th, 
+                .reset-expansion-style .react-bootstrap-table .table td {
+                    width: 89.5% !important;
+                }
+                .card-header,
+                .react-bootstrap-table thead th:first-child ,
+                .react-bootstrap-table tbody td:first-child {
+                    cursor: pointer;
+                }
+    
+                .botany {
+                    .title {
+                        color: #00B186;
+                    }
+                }
+    
+                .zoology {
+                    .title {
+                        color: #8F4E02;
+                    }
+                }
+    
+                .physics {
+                    .title {
+                        color: #EA9909;
+                    }
+                }
+    
+                .chemistry {
+                    .title {
+                        color: #2A90E0;
+                    }
+                }
+    
+                .react-bootstrap-table {
+                    border-top: 1px solid #dee2e6;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: none;
+    
+                    .table {
+                        th {
+                            text-align: left;
+                        }
+    
+                        td {
+                            // padding: 0.75rem 0.25rem;
+                            text-align: left;
+                        }
+                    }
+    
+                    thead {
+                        background-color: #ffffff;
+                        box-shadow: 0px 3px 10px #0000001A;
+    
+                        th {
+                            border-top: none !important;
+                            border-bottom: none !important;
+    
+                            &:first-child {
+                                width: auto !important;
+                            }
+                        }
+                    }
+    
+                    tbody td {
+                        &:first-child {
+                            width: auto !important;
+                        }
+                    }
+    
+                    tfoot {
+                        background: #EBF9ED;
+                        box-shadow: 3px 0px 10px #0000001A;
+                    }
+    
+                    .card {
+                        .react-bootstrap-table {
+                            border: 1px solid #dee2e6;
+    
+                            .table {
+    
+                                th,
+                                td {
+                                    text-align: left;
+                                }
+                            }
+    
+                            thead {
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+            } 
+        }
+    }
+    // .previous_complexity_wise {
+    //     position: relative;
+    //     .react-bootstrap-table .table thead th {
+    //         background-color: #ffffff;
+    //     }
+    //     .easy {
+    //         background: #EBF9ED;
+    //     }
+    //     .moderate {
+    //         background: #FEF5E6;
+    //     }
+    //     .difficult {
+    //         background: #FEE6E6;
+    //     }
+    //     .vdifficult {
+    //         background: #FFB1B1;
+    //     }
+    // }
+    .previous_complexity_wise {
+        position: relative;
+        .react-bootstrap-table .table thead th {
+            background-color: #ffffff;
+        }
+        .react-bootstrap-table .table tbody tr {
+            &:nth-child(1) {
+                background: #EBF9ED;
+            }
+            &:nth-child(2) {
+                background: #FEF5E6;
+            }
+            &:nth-child(3) {
+                background: #FEE6E6;
+            }
+            &:nth-child(4) {
+                background: #FFB1B1;
+            }
+        }
+       
+    }
+    .questiontype-wise {
+        position: relative;
+
+        .card-body.lock {
+
+            .react-bs-table-container .react-bs-table .table {
+                position: relative;
+                filter: blur(3px);
+                overflow: hidden;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    background-color: #ffffff;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    opacity: 0.7;
+                }
+            }
+
+            .lock-content {
+                position: absolute;
+                top: 45%;
+                left: 40%;
+                margin: 0 auto;
+                z-index: 2;
+            }
+        }
+    }
+
+    .complexity,
+    .question-theory {
+        position: relative;
+
+        .single-complexity {
+            margin-bottom: 1rem;
+
+            &.easy.card {
+                background: #EBF9ED;
+                box-shadow: 0px 2px 10px #0000000D;
+                border: 1px solid #CECECE;
+                border-radius: 5px;
+
+                .card-header {
+                    background: #EBF9ED;
+                    box-shadow: 0px 2px 10px #0000000D;
+                    border: 1px solid #F1F1F1;
+                    border-radius: 5px;
+
+                    .card-title {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            &.moderate.card {
+                background: #FEF5E6;
+                box-shadow: 0px 2px 10px #0000000D;
+                border: 1px solid #CECECE;
+                border-radius: 5px;
+
+                .card-header {
+                    background: #FEF5E6;
+                    box-shadow: 0px 2px 10px #0000000D;
+                    border: 1px solid #F1F1F1;
+                    border-radius: 5px;
+
+                    .card-title {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            &.difficulty.card {
+                background: #FEE6E6;
+                box-shadow: 0px 2px 10px #0000000D;
+                border: 1px solid #CECECE;
+                border-radius: 5px;
+
+                .card-header {
+                    background: #FEE6E6;
+                    box-shadow: 0px 2px 10px #0000000D;
+                    border: 1px solid #F1F1F1;
+                    border-radius: 5px;
+
+                    .card-title {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            &.vdifficulty.card {
+                background: #FFB1B1;
+                box-shadow: 0px 2px 10px #0000000D;
+                border: 1px solid #CECECE;
+
+                .card-header {
+                    background: #FFB1B1;
+                    box-shadow: 0px 2px 10px #0000000D;
+                    border: 1px solid #F1F1F1;
+                    border-radius: 5px;
+
+                    .card-title {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            &.application-type.card {
+                background: #EBF9ED;
+                box-shadow: 0px 2px 10px #0000000D;
+                border: none;
+                border-radius: 5px;
+
+                .card-header {
+                    background: #EBF9ED;
+
+                    .card-title {
+                        font-size: 14px;
+                    }
+                }
+
+                .card-body {
+                    .table {
+                        box-shadow: 0px 2px 10px #0000000D;
+                    }
+                }
+            }
+
+            &.theory-type.card {
+                background: #FEF5E6;
+                box-shadow: 0px 2px 10px #0000000D;
+                border-radius: 5px;
+                border: none;
+
+                .card-header {
+                    background: #FEF5E6;
+
+                    .card-title {
+                        font-size: 14px;
+                    }
+                }
+
+                .card-body {
+                    .table {
+                        box-shadow: 0px 2px 10px #0000000D;
+                    }
+                }
+            }
+        }
+    }
+
+    .subject-wise {
+        position: relative;
+
+        .single-subject {
+            position: relative;
+            background: #F8F8F8;
+            padding: .2rem;
+            box-shadow: 0px 3px 10px #0000001A;
+            border: 1px solid #F1F1F1;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+
+            .react-bootstrap-table {
+                border: none;
+                border-radius: 0;
+
+                .table {
+
+                    thead {
+                        background-color: #ffffff;
+                        box-shadow: 0px 2px 10px #0000000D;
+
+                        th {
+                            border: none !important;
+                        }
+                    }
+
+                    th,
+                    td {
+                        text-align: left;
+                    }
+                }
+            }
+
+            .card-body.lock {
+                position: relative;
+                overflow: hidden;
+
+                .react-bootstrap-table .table {
+                    tbody {
+                        position: relative;
+                        overflow: hidden;
+                        filter: blur(3px);
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            background-color: #ffffff;
+                            width: 100%;
+                            height: 100%;
+                            left: 0;
+                            top: 0;
+                            opacity: 0.7;
+                        }
+                    }
+                }
+
+                .lock-content {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 45%;
+                    left: 45%;
+                    margin: 0 auto;
+                }
+            }
+
+            &.botany {
+                .title {
+                    color: #00B186;
+                }
+
+                .react-bootstrap-table {
+                    .table tfoot {
+                        background: #EBF9ED;
+                    }
+                }
+            }
+
+            &.zoology {
+                .title {
+                    color: #8F4E02;
+                }
+
+                .react-bootstrap-table {
+                    .table tfoot {
+                        background: #F5F0EB;
+                    }
+                }
+            }
+
+            &.physics {
+                .title {
+                    color: #EA9909;
+                }
+
+                .react-bootstrap-table {
+                    .table tfoot {
+                        background: #FEF5E6;
+                    }
+                }
+            }
+
+            &.chemistry {
+                .title {
+                    color: #2A90E0;
+                }
+
+                .react-bootstrap-table {
+                    .table tfoot {
+                        background: #E9F5FF;
+                    }
+                }
+            }
+        }
+    }
+
+    .react-bs-table-container {
+        .react-bs-container-header {
+
+            .dropup .caret,
+            .navbar-fixed-bottom .dropdown .caret {
+                color: #5b5b5f;
+                border-top: 0;
+                border-bottom: 4px dashed;
+                content: "";
+            }
+
+            .caret {
+                display: inline-block;
+                width: 0;
+                height: 0;
+                margin-left: 2px;
+                vertical-align: middle;
+                border-top: 4px dashed;
+                border-right: 4px solid transparent;
+                border-left: 4px solid transparent;
+            }
+
+            thead {
+
+                th {
+                    border-bottom: 1px solid #dee2e6 !important;
+                }
+
+                .sort-column {
+                    border: 0;
+
+                    // &:nth-of-type(5),
+                    // &:nth-of-type(10),
+                    // &:nth-of-type(15),
+                    // &:nth-of-type(20) {
+                    //     border-right: 1px solid #dee2e6;
+                    // }
+                }
+            }
+        }
+
+        .react-bs-table table {
+            margin-bottom: 0;
+            table-layout: fixed;
+            //width: 10868px;
+            width: 1868px;
+        }
+
+        .react-bs-table table td,
+        .react-bs-table table th {
+            white-space: pre-line;
+            text-overflow: unset;
+            overflow-wrap: break-word;
+        }
+
+        .react-bs-table-pagination {
+            margin-left: 1rem;
+            margin-right: 1rem;
+
+            @media (max-width: 1198.99px) {
+                text-align: center;
+
+                .row .col-md-6 {
+                    float: inherit;
+                    display: flex !important;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+.error_exam_block .q_options .single_card {
+    padding: 1rem !important;
+}

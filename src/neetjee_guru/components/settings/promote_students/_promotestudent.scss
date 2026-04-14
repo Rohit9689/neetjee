@@ -1,0 +1,64 @@
+.promote_student {
+    position: relative;
+
+    a {
+        text-decoration: none;
+        color: #202020;
+
+        .card .icon {
+            height: 60px;
+            width: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            text-align: center;
+            background: #dedede;
+        }
+    }
+
+    .Custom_Exam_Syllabus {
+        .card-group {
+            .card {
+
+                .branch-list li:hover,
+                .branch-list li.active,
+                .section-list li:hover,
+                .section-list li.active {
+                    cursor: pointer;
+                    border-radius: 2px;
+                    background: #EFEFEF;
+                }
+
+                .list-unstyled li {
+                    padding: 0.2rem 0.5rem;
+                    text-transform: uppercase;
+                }
+
+                .group-list li {
+                    font-size: 13px;
+                    padding: 0.2rem 0;
+                    margin: 0;
+                    text-transform: capitalize;
+                }
+            }
+        }
+
+        @media (max-width: 1199.98px) {
+            .card-group .card+.card {
+                border: 1px solid rgba(0, 0, 0, 0.125) !important;
+            }
+        }
+
+        @media (max-width: 1199.98px) {
+            .card-group {
+                display: flex;
+                flex-flow: column wrap;
+
+                .card {
+                    flex-direction: inherit;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}

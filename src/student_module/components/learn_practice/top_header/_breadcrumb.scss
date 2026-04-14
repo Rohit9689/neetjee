@@ -1,0 +1,46 @@
+.custom-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.45rem 0rem;
+    margin-bottom: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+}
+
+.custom-breadcrumb-item {
+    color: #dbdee0;
+
+    &.active {
+        color: #ffffff;
+    }
+
+    +.custom-breadcrumb-item {
+        padding-left: 2.5rem;
+        position: relative;
+
+        &:before {
+            display: block;
+            position: absolute;
+            padding-right: .5rem;
+            color: #ffffff;
+            left: 20px;
+            top: 30px;
+            content: "\f178";
+            font-family: "Font Awesome 5 Pro";
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+        background-color: transparent;
+        outline: none !important;
+    }
+}

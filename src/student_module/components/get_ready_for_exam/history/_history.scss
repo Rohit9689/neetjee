@@ -1,0 +1,25 @@
+@import "../../../../config";
+
+.getready_exam_history {
+  .getready_exam_cards .card {
+    margin-bottom: 15px;
+
+    .getready_exam_name {
+      @include fonts(400, 14px, 25px);
+      color: #1b2430;
+      text-transform: capitalize;
+    }
+
+    .counts {
+      @include fonts(600, 35px, 25px);
+    }
+  }
+}
+.action_btns button {
+  padding: 0.275rem 0.75rem;
+  font-size: 12px;
+  margin-left: 10px;
+}
+.table td.EditRow {
+  width: 10px !important;
+}

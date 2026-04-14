@@ -1,0 +1,10 @@
+.user-create-form {
+    .custom-control-label {
+        margin-top: 6px;
+
+        &::before,
+        &::after {
+            top: 0.15rem;
+        }
+    }
+}

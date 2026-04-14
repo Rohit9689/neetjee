@@ -1,0 +1,150 @@
+.error_exam_block {
+    position: relative;
+
+    .question_area {
+        .q_Name {
+            position: relative;
+            padding-left: 30px;
+            font: 400 15px/25px 'proxima-nova', sans-serif;
+    
+            .q_No {
+                font: 600 16px/25px 'proxima-nova', sans-serif;
+                position: absolute;
+                left: 0;
+                color: #00C596;
+            }
+        }
+        img {
+            margin: 0 6px;
+            max-width: 450px;
+        }
+    }
+
+    .q_options {
+        position: relative;
+
+        .single_card {
+            position: relative;
+            cursor: pointer;
+
+            &.active {
+                box-shadow: 0px 3px 20px hsla(0, 0%, 0%, 0.051);
+                border: 1px solid #00C5963D;
+
+                .option_name .option_No {
+                    background: #C2F1E6;
+                }
+
+                .option_selected {
+                    position: relative;
+
+                    i {
+                        color: #00c596;
+                        font-size: 16px;
+                        position: relative;
+
+                        &::after {
+                            color: #00c596;
+                            content: "\f00c";
+                            font-family: "Font Awesome 5 Pro";
+                            font-weight: 900;
+                            background-image: none;
+                            border-radius: 0.46rem;
+                            text-align: center;
+                            line-height: 16px;
+                            font-size: 8px;
+                            position: absolute;
+                            left: 4px;
+                            top: 0;
+                        }
+
+                    }
+                }
+            }
+
+
+            .option_name {
+                position: relative;
+                padding-left: 30px;
+
+                .option_No {
+                    position: absolute;
+                    left: 0;
+                    width: 20px;
+                    height: 20px;
+                    line-height: 20px;
+                    text-align: center;
+                    border-radius: 4px;
+                    color: #707070;
+                    background: #EEEEEE;
+                }
+            }
+
+            .option_selected {
+                position: relative;
+
+                i {
+                    font-size: 16px;
+                }
+            }
+
+            &.incorrect {
+                box-shadow: 0px 3px 20px hsla(0, 0%, 0%, 0.051);
+                border: 1px solid hsla(14, 100%, 50%, 0.239);
+
+                .option_name .option_No {
+                    background: #F1C2C2;
+                }
+
+                .option_selected {
+                    position: relative;
+
+                    i {
+                        color: #c52e00;
+                        font-size: 16px;
+                        position: relative;
+
+                        &::after {
+                            color: #c52e00;
+                            content: "\f00c";
+                            font-family: "Font Awesome 5 Pro";
+                            font-weight: 900;
+                            background-image: none;
+                            border-radius: 0.46rem;
+                            text-align: center;
+                            line-height: 16px;
+                            font-size: 8px;
+                            position: absolute;
+                            left: 4px;
+                            top: 0;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .instruction {
+        button {
+            font-size: 13px;
+            border-radius: 25px;
+        }
+
+        .helpTags li i {
+            cursor: pointer;
+        }
+    }
+}
+.wrapper{
+    .error_exam_block .fixed-bottom {
+        width: 100%; 
+        margin-left: 150px; 
+      }
+    &.sidebar-enable {
+        .error_exam_block .fixed-bottom {
+            width: 100%;  
+            margin-left: 0;
+          }
+    }
+}

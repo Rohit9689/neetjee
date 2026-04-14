@@ -1,0 +1,105 @@
+.modal-open .modal {
+    padding-right: 0px !important;
+}
+
+.Example {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 0;
+        padding: 10px;
+
+        &__load {
+            margin-top: 1em;
+            color: white;
+        }
+
+        &__document {
+            // margin: 1em 0;
+
+            .react-pdf {
+                &__Document {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                &__Page {
+                    max-width: calc(100% - 2em);
+                    border-radius: 8px;
+                    overflow: hidden;
+
+                    &__svg {
+                        @media (max-width:1199.98px) {
+                            width: 600px !important;
+                            height: auto !important;
+                        }
+
+                        @media (max-width:767.98px) {
+                            width: 400px !important;
+                            height: auto !important;
+                        }
+                       
+
+                        svg {
+                            max-width: 100%;
+                            height: auto !important;
+                        }
+                    }
+                }
+
+                &__message {
+                    padding: 20px;
+                    color: #ff9900;
+                }
+            }
+
+            &:hover .page-controls {
+                opacity: 1;
+            }
+
+            .page-controls {
+                position: absolute;
+                bottom: 6%;
+                left: 50%;
+                background: white;
+                opacity: 0;
+                transform: translateX(-50%);
+                transition: opacity ease-in-out 0.2s;
+                box-shadow: 0 10px 20px 0 rgba(16, 36, 94, 0.2);
+                border-radius: 4px;
+
+                @media (max-width:1199.98px) {
+                    bottom: 15%;
+                }
+
+                span {
+                    font: inherit;
+                    font-size: 0.8em;
+                    padding: 0 0.5em;
+                }
+
+                button {
+                    width: 35px;
+                    height: 35px;
+                    background: white;
+                    border: 0;
+                    font: inherit;
+                    font-size: 0.8em;
+                    border-radius: 4px;
+
+                    &:first-child {
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+
+                    &:last-child {
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                    }
+                }
+            }
+        }
+    }
+}

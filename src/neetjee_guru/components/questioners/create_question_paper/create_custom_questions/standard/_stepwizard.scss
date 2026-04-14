@@ -1,0 +1,283 @@
+@import '../../../../../../config';
+
+.create_question_pattern {
+    position: relative;
+    padding-bottom: 4rem;
+
+    .create-question-step-wizard {
+        position: relative;
+
+        .stepOne,
+        .stepTwo {
+            position: relative;
+
+            .list-unstyled li {
+                position: relative;
+                margin-bottom: 30px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .form-group>.card:not(:last-child) {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                .form-group>.card:not(:first-child) {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+
+                .form-group>.card+.card {
+                    margin-left: 0;
+                    border-left: 0;
+                }
+            }
+
+            .custom_setup {
+                position: relative;
+
+                .chapter-list li,
+                .subject-list li,
+                .chap-topic-list li {
+                    margin-bottom: 0;
+                    padding: 0.2rem 0.5rem;
+                }
+
+                .subject-list li:hover,
+                .subject-list li.active,
+                .chapter-list li:hover,
+                .chapter-list li.active {
+                    cursor: pointer;
+                    border-radius: 2px;
+                    background: #EFEFEF;
+                    padding: 0.2rem 0.5rem;
+                }
+
+                .card-body {
+                    @media (min-width: 992px) {
+                        .no-gutters>[class*="col-"]:not(:last-child) {
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                        }
+
+                        .no-gutters>[class*="col-"]:not(:first-child) {
+                            border-top-left-radius: 0;
+                            border-bottom-left-radius: 0;
+                        }
+
+                        .no-gutters>[class*="col-"]+[class*="col-"] {
+                            margin-left: 0;
+                            border-left: 0;
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+        a {
+            color: $blue;
+            font-weight: 500;
+        }
+
+        button.addbutton {
+            color: $blue;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            outline: none;
+
+            &.active,
+            &:focus,
+            &:hover {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        button.remove {
+            color: #ff1100;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+
+            &.active,
+            &:focus,
+            &:hover {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .btn-group {
+            position: relative;
+
+            button {
+                font-weight: 400 !important;
+                border: 1px solid $gray;
+                background: $white;
+                color: #212529;
+
+                &.active,
+                &:hover {
+                    color: #212529;
+                    background: $gray;
+                    border-color: $gray;
+                }
+            }
+        }
+
+        .step-indicator {
+            border-collapse: separate;
+            display: table;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0px;
+            padding: 0;
+
+            li {
+                display: table-cell;
+                position: relative;
+                float: none;
+                padding: 0;
+                width: 1%;
+
+                &:after {
+                    background: $gray;
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    height: 12px;
+                    border-radius: 4px;
+                    top: 15px;
+                    left: 50%;
+                    z-index: 1;
+                }
+
+                &:last-child {
+                    &:before {
+                        background: $gray;
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        width: 100%;
+                        height: 12px;
+                        border-radius: 4px;
+                        top: 15px;
+                        right: 30%;
+                    }
+
+                    &:after {
+                        display: none;
+                    }
+                }
+
+                &:first-child {
+                    &:before {
+                        background: linear-gradient(90deg, $green 0%, $two 100%);
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        height: 12px;
+                        width: 100%;
+                        border-radius: 4px;
+                        top: 15px;
+                        right: -30%;
+                    }
+                }
+
+                &.active {
+                    .step {
+                        background: $two;
+                        color: #212529;
+                    }
+
+                    .caption {
+                        color: $blue;
+                    }
+
+                    &:last-child {
+                        &:before {
+                            background: $two;
+                            content: "";
+                            display: block;
+                            position: absolute;
+                            width: 100%;
+                            height: 12px;
+                            border-radius: 4px;
+                            top: 15px;
+                            right: 30%;
+                        }
+
+                        &:after {
+                            display: none;
+                        }
+                    }
+                }
+
+                &.complete {
+
+                    &:after {
+                        background: linear-gradient(90deg, $green 0%, $two 100%);
+                    }
+
+                    .step {
+                        background: $green;
+                        color: $white;
+                    }
+
+                    .caption {
+                        color: $green;
+                    }
+                }
+            }
+
+            li:nth-child(2).complete {
+                &:before {
+                    background: $green;
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    height: 12px;
+                    border-radius: 4px;
+                    top: 15px;
+                    right: 50%;
+                    z-index: 1;
+                }
+            }
+
+            .step {
+                background: $gray;
+                border-radius: 50%;
+                color: $blue;
+                font-size: 20px;
+                height: 40px;
+                width: 40px;
+                line-height: 40px;
+                margin: 0 auto;
+                position: relative;
+                box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+                z-index: 2;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .caption {
+                font-size: 1rem;
+                font-weight: 500;
+                color: $gray;
+                padding: 11px 16px 0;
+            }
+        }
+    }
+}

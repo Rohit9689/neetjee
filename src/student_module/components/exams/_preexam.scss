@@ -1,0 +1,145 @@
+.exam_test,
+.error_exam_block {
+  position: relative;
+
+  .question_block .question_Name {
+    position: relative;
+    padding-left: 30px;
+    font: 400 15px/25px "Ubuntu", sans-serif;
+
+    .question_No {
+      font: 600 16px/25px "Ubuntu", sans-serif;
+      position: absolute;
+      left: 0;
+      color: #00c596;
+    }
+  }
+
+  .question_options {
+    position: relative;
+
+    .single_card {
+      position: relative;
+
+      &:hover,
+      &:focus,
+      &:active,
+      &.active {
+        box-shadow: 0px 3px 20px hsla(0, 0%, 0%, 0.051);
+        border: 1px solid #00c5963d;
+
+        .option_name .option_No {
+          background: #c2f1e6;
+        }
+      }
+
+      &.incorrect {
+        box-shadow: 0px 3px 20px hsla(0, 0%, 0%, 0.051);
+        border: 1px solid hsla(14, 100%, 50%, 0.239);
+
+        .option_name .option_No {
+          background: #f1c2c2;
+        }
+      }
+
+      .option_name {
+        position: relative;
+        padding-left: 30px;
+
+        .option_No {
+          position: absolute;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          border-radius: 4px;
+          color: #707070;
+          background: #eeeeee;
+        }
+      }
+
+      .custom-radio
+        .custom-control-input:checked
+        ~ .custom-control-label::after {
+        color: #fff;
+        content: "\f00c";
+        font-family: "Font Awesome 5 Pro";
+        font-weight: 900;
+        background-image: none;
+        border-radius: 0.46rem;
+        text-align: center;
+        line-height: 16px;
+        font-size: 8px;
+      }
+
+      .custom-control-input:checked ~ .custom-control-label {
+        color: #00c596;
+      }
+
+      .custom-checkbox .custom-control-label::before {
+        border-radius: 0.45rem;
+      }
+
+      .custom-control-input:checked ~ .custom-control-label::before {
+        color: #fff;
+        background: #00c596;
+        border: 1px solid #00a881;
+      }
+
+      .custom-control-input:focus ~ .custom-control-label::before {
+        box-shadow: 0 0 0 0.2rem rgba(0, 168, 129, 0.25);
+      }
+
+      .correct {
+        color: #00c596;
+      }
+
+      .incorrect {
+        color: #ff0000;
+      }
+    }
+
+    .incorrect .custom-checkbox {
+      // .custom-control-label::before {
+      //     border-radius: 0.45rem;
+      // }
+
+      // .custom-control-label::after {
+      //     position: absolute;
+      //     top: 0.25rem;
+      //     left: -1.5rem;
+      //     display: block;
+      //     width: 1rem;
+      //     height: 1rem;
+      //     content: "";
+      //     background: no-repeat 50% / 50% 50%;
+      // }
+
+      .custom-control-input:checked ~ .custom-control-label::after {
+        color: #fff;
+        background: #ff0000;
+        border: 1px solid #f00101;
+        content: "\f00d";
+        font-weight: 900;
+        font-family: "Font Awesome 5 Pro";
+        background-image: none;
+        border-radius: 0.46rem;
+        text-align: center;
+        line-height: 15px;
+        font-size: 10px;
+      }
+    }
+  }
+
+  .instruction {
+    button {
+      font-size: 13px;
+      border-radius: 25px;
+    }
+
+    .helpTags li i {
+      cursor: pointer;
+    }
+  }
+}

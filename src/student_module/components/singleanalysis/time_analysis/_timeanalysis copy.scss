@@ -1,0 +1,320 @@
+@import '../../../../_config.scss';
+
+.timeanalysis-nav {
+    position: relative;
+    background: #EEEEEE;
+
+    .header-top {
+        position: relative;
+        box-shadow: none;
+        z-index: 2;
+
+        .navbar-nav {
+            align-items: center;
+
+            .nav-link {
+                color: #000000;
+            }
+
+            .profile-img {
+                background: #ffffff1f;
+                border: 1px solid #DEDEDE;
+                border-radius: 21px;
+
+                img {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .text {
+                    .profile-name {
+                        font-size: 14px;
+                        line-height: 6px;
+                    }
+                }
+            }
+        }
+
+        .search .search-bar {
+            color: #000000;
+            background: #ffffff4d;
+            box-shadow: none;
+        }
+
+        .student-notification i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .header-bottom {
+        position: relative;
+        z-index: 1;
+
+        .title {
+            color: #000000;
+        }
+
+        .subtitle {
+            color: #000000;
+        }
+
+        .card {
+            border-radius: 10px;
+            background-color: #ffffff80;
+            border: 1px solid #dbd8d8;
+
+            img {
+                margin-top: -3rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .datePicker {
+            .calendar {
+                color: #000000;
+                position: absolute;
+                left: 15px;
+                top: 0;
+                font-size: 18px;
+                background: #ffffff3a;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .form-control {
+                padding-left: 40px;
+                border: 1px solid #dbd8d8;
+                background-color: #ffffff80;
+                color: #000000;
+
+                &::placeholder {
+                    color: #000000;
+                }
+            }
+
+            .rdtPicker {
+                right: 0;
+            }
+        }
+    }
+}
+
+.time-analysis {
+    .filter {
+        button {
+            padding: 0.45rem 1rem;
+            box-shadow: 0px 0px 10px #0000001A;
+        }
+    }
+
+    .time-error {
+        border-radius: 6px !important;
+        overflow: hidden;
+    }
+
+    .time-complexity {
+        border-radius: 6px !important;
+        background: #EEEEEE;
+
+        .card-header {
+            border-radius: 6px !important;
+        }
+
+        .card-body {
+            background: #EEEEEE;
+
+            .complexity-question {
+                position: relative;
+                margin-top: 5px;
+                border-radius: 6px !important;
+
+                .react-bootstrap-table,
+                .table {
+                    border: none !important;
+
+                    th,
+                    td {
+                        padding: 0.9rem 0.45rem;
+                        outline: none;
+                    }
+
+                    thead {
+                        background-color: #ffffff;
+                        border-bottom: 1px solid #dee2e6;
+
+                        th {
+                            border-right: 1px solid #dee2e6;
+
+                            &:nth-child(2n) {
+                                border-right: 1px solid #dee2e6;
+                            }
+
+                            &:last-child,
+                            &:nth-child(2),
+                            &:nth-child(4),
+                            &:nth-child(6) {
+                                border-right: 0;
+                            }
+                        }
+                    }
+
+                    tbody {
+                        td {
+                            border-right: 1px solid #dee2e6;
+
+                            &:last-child,
+                            &:nth-child(2),
+                            &:nth-child(4),
+                            &:nth-child(6) {
+                                font-weight: 600 !important;
+                                border-right: 0;
+                            }
+
+                            &:nth-child(3),
+                            &:nth-child(5),
+                            &:nth-child(7) {
+                                font-weight: 400 !important;
+                                color: #F05D70;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .time-question-type {
+        overflow: hidden;
+        border-radius: 6px !important;
+
+        .card-body {
+
+            .react-bootstrap-table,
+            .table {
+                border: none !important;
+
+                th,
+                td {
+                    padding: 0.95rem 0.45rem;
+                    outline: none;
+                }
+
+                thead {
+                    background-color: #ffffff;
+                    border-top: 1px solid #dee2e6;
+                    border-bottom: 1px solid #dee2e6;
+
+                    th {
+                        border-right: 1px solid #dee2e6;
+
+                        &:nth-child(2n) {
+                            border-right: 1px solid #dee2e6;
+                        }
+
+                        &:last-child,
+                        &:nth-child(2),
+                        &:nth-child(4),
+                        &:nth-child(6) {
+                            border-right: 0;
+                        }
+                    }
+                }
+
+                tbody {
+                    td {
+                        border-right: 1px solid #dee2e6;
+
+                        &:last-child,
+                        &:nth-child(2),
+                        &:nth-child(4),
+                        &:nth-child(6) {
+                            font-weight: 600 !important;
+                            border-right: 0;
+                        }
+
+                        &:nth-child(3),
+                        &:nth-child(5),
+                        &:nth-child(7) {
+                            font-weight: 400 !important;
+                            color: #F05D70;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .time-subject {
+        border-radius: 6px !important;
+
+        .card-header {
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 6px !important;
+            margin-bottom: -5px;
+            border-bottom: 0;
+        }
+
+        .card-body {
+            background: #EEEEEE;
+
+            .complexity-question {
+                position: relative;
+                margin-top: 5px;
+                border-radius: 6px !important;
+
+                .react-bootstrap-table,
+                .table {
+                    border: none !important;
+
+                    th,
+                    td {
+                        padding: 0.9rem 0.45rem;
+                        outline: none;
+                    }
+
+                    thead {
+                        background-color: #ffffff;
+                        border-bottom: 1px solid #dee2e6;
+
+                        th {
+                            border-right: 1px solid #dee2e6;
+
+                            &:nth-child(2n) {
+                                border-right: 1px solid #dee2e6;
+                            }
+
+                            &:last-child,
+                            &:nth-child(2),
+                            &:nth-child(4),
+                            &:nth-child(6) {
+                                border-right: 0;
+                            }
+                        }
+                    }
+
+                    tbody {
+                        td {
+                            border-right: 1px solid #dee2e6;
+
+                            &:last-child,
+                            &:nth-child(2),
+                            &:nth-child(4),
+                            &:nth-child(6) {
+                                font-weight: 600 !important;
+                                border-right: 0;
+                            }
+
+                            &:nth-child(3),
+                            &:nth-child(5),
+                            &:nth-child(7) {
+                                font-weight: 400 !important;
+                                color: #F05D70;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
