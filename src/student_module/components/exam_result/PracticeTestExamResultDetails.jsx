@@ -270,8 +270,8 @@ class PracticeTestExamResultDetails extends Component {
         const Data = getStudentExamSessions.getStudentExamSessions[0].subject_report.map((a) => {
             sampleArray.push(parseInt(a.accuracy));
         });
-        const lowcount = Math.min(...sampleArray);
-        const lowAccuracy = getStudentExamSessions.getStudentExamSessions[0].subject_report.find((a) => a.accuracy == lowcount);
+        const lowcount = sampleArray.length > 0 ? Math.min(...sampleArray) : 0;
+        const lowAccuracy = sampleArray.length > 0 ? getStudentExamSessions.getStudentExamSessions[0].subject_report.find((a) => a.accuracy == lowcount) : undefined;
         let chapter_report = [];
         console.log("this.state.searchSubject", this.state.searchSubject);
         if (this.state.searchSubject != "0") {
@@ -308,8 +308,8 @@ class PracticeTestExamResultDetails extends Component {
                     avg = "0";
                 }
             }
-            
-            let Wrong_Marks=(parseInt(item.wrong) - parseInt(item.noNegativeCount)) * parseInt(item.nMarks)
+
+            let Wrong_Marks = (parseInt(item.wrong) - parseInt(item.noNegativeCount)) * parseInt(item.nMarks)
             return {
                 id: item.id,
                 subject: item.subject,
@@ -319,7 +319,7 @@ class PracticeTestExamResultDetails extends Component {
                 Correct: item.correct,
                 Wrong: item.wrong,
                 Correct_Marks: parseInt(item.correct) * parseInt(item.pMarks),
-                Wrong_Marks: !isNaN(Wrong_Marks)?Wrong_Marks:0,
+                Wrong_Marks: !isNaN(Wrong_Marks) ? Wrong_Marks : 0,
                 // Wrong_Marks: parseInt(item.wrong) * parseInt(item.nMarks),
                 Accuracy: item.accuracy,
                 Total_Time: this.minutesTimer(item.total_time),
@@ -337,65 +337,53 @@ class PracticeTestExamResultDetails extends Component {
                 <QuestionTypeTable
                     QuestionTypeTableData={qtype_report_array}
                 />
-                <Col xl={12} lg={12} md={12}>
-                    <Card className="examquestion-table my-3 shadow overflow-hidden">
-                        <Table className="mb-0 borderless" responsive>
-                            <thead>
-                                <tr>
-                                    <th className="text-left" rowSpan="2" colSpan="1">Exam Questions<br /> Type</th>
-                                    <th className="text-center text-success" rowSpan="1" colSpan={getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.length.toString()}><i className="fas fa-check-circle" /> Correct</th>
-                                    <th className="text-center text-danger" rowSpan="1" colSpan={getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.length.toString()}><i className="fas fa-times-circle" /> wrong</th>
-                                    <th className="text-center theme-purple" rowSpan="1" colSpan={getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.length.toString()}><i className="fas fa-align-slash" /> Not Ans</th>
-                                </tr>
-                                <tr>
-                                    {/* <th>Grand</th> */}
-                                    {getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.map((subjectmap) => {
-
-                                        return (<th>{subjectmap.subject}</th>)
-
+                {getStudentExamSessions.getStudentExamSessions[0].qtype_report &&
+                    getStudentExamSessions.getStudentExamSessions[0].qtype_report.length > 0 &&
+                    getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report ? (
+                    <Col xl={12} lg={12} md={12}>
+                        <Card className="examquestion-table my-3 shadow overflow-hidden">
+                            <Table className="mb-0 borderless" responsive>
+                                <thead>
+                                    <tr>
+                                        <th className="text-left" rowSpan="2" colSpan="1">Exam Questions<br /> Type</th>
+                                        <th className="text-center text-success" rowSpan="1" colSpan={getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.length.toString()}><i className="fas fa-check-circle" /> Correct</th>
+                                        <th className="text-center text-danger" rowSpan="1" colSpan={getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.length.toString()}><i className="fas fa-times-circle" /> wrong</th>
+                                        <th className="text-center theme-purple" rowSpan="1" colSpan={getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.length.toString()}><i className="fas fa-align-slash" /> Not Ans</th>
+                                    </tr>
+                                    <tr>
+                                        {getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_correct_report.map((subjectmap) => {
+                                            return (<th>{subjectmap.subject}</th>)
+                                        })}
+                                        {getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_wrong_report.map((subjectmap) => {
+                                            return (<th>{subjectmap.subject}</th>)
+                                        })}
+                                        {getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_skipped_report.map((subjectmap) => {
+                                            return (<th>{subjectmap.subject}</th>)
+                                        })}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {getStudentExamSessions.getStudentExamSessions[0].qtype_report.map((qmap) => {
+                                        return (
+                                            <tr>
+                                                <td>{qmap.question_type_name}</td>
+                                                {(qmap.qtype_correct_report || []).map((qtype) => {
+                                                    return (<td>{qtype.count}</td>)
+                                                })}
+                                                {(qmap.qtype_wrong_report || []).map((qtype) => {
+                                                    return (<td>{qtype.count}</td>)
+                                                })}
+                                                {(qmap.qtype_skipped_report || []).map((qtype) => {
+                                                    return (<td>{qtype.count}</td>)
+                                                })}
+                                            </tr>
+                                        )
                                     })}
-                                    {/* <th>Grand</th> */}
-                                    {getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_wrong_report.map((subjectmap) => {
-
-                                        return (<th>{subjectmap.subject}</th>)
-
-                                    })}
-
-                                    {/* <th>Grand</th> */}
-
-                                    {getStudentExamSessions.getStudentExamSessions[0].qtype_report[0].qtype_skipped_report.map((subjectmap) => {
-
-                                        return (<th>{subjectmap.subject}</th>)
-
-                                    })}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {getStudentExamSessions.getStudentExamSessions[0].qtype_report.map((qmap) => {
-                                    return (
-                                        <tr>
-                                            <td>{qmap.question_type_name}</td>
-                                            {qmap.qtype_correct_report.map((qtype) => {
-                                                return (<td>{qtype.count}</td>)
-
-                                            })}
-                                            {qmap.qtype_wrong_report.map((qtype) => {
-                                                return (<td>{qtype.count}</td>)
-
-                                            })}
-                                            {qmap.qtype_skipped_report.map((qtype) => {
-                                                return (<td>{qtype.count}</td>)
-
-                                            })}
-                                        </tr>
-                                    )
-
-                                })}
-                            </tbody>
-
-                        </Table>
-                    </Card>
-                </Col>
+                                </tbody>
+                            </Table>
+                        </Card>
+                    </Col>
+                ) : null}
 
 
                 {getStudentExamSessions.getStudentExamSessions[0].error_report.length > 0 ? (<Col xl={12} lg={12} md={12}>
@@ -454,7 +442,7 @@ class PracticeTestExamResultDetails extends Component {
                         <Card.Body className="p-3">
                             <div className="observation-list" style={{ height: 150, overflowY: "scroll" }}>
                                 <ul className="m-0 p-0 list-unstyled">
-                                    {lowAccuracy.subject != "" ? (<li>You need to work to improve your overall performance in <strong>{lowAccuracy.subject}</strong></li>) : ("")}
+                                    {lowAccuracy && lowAccuracy.subject != "" ? (<li>You need to work to improve your overall performance in <strong>{lowAccuracy.subject}</strong></li>) : ("")}
                                     {getStudentExamSessions.getStudentExamSessions[0].subject_report.map((item) => {
                                         return (
                                             <React.Fragment>

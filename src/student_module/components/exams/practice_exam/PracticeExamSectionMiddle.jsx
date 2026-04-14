@@ -309,7 +309,7 @@ class PracticeExamSectionMiddle extends Component {
     };
 
     handleFormSubmit = e => {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         //console.log("handleFormSubmit", this.state.questions);
 
         let valid = this.state.questions.filter((a) => a.status != "");
@@ -948,8 +948,7 @@ class PracticeExamSectionMiddle extends Component {
         }
     }
     cancelFunction = () => {
-        //localStorage.clear();
-        window.close();
+        this.props.history.push("/student/learn-practice");
     }
 
     selecthandleInputChange = (ename, evalue) => {

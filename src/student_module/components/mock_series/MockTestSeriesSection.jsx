@@ -47,15 +47,9 @@ class MockTestSeriesSection extends Component {
                                         : ("")}
                             </Col>
                             <Col lg={3} md={12} className="custom-link text-center pt-2">
-                                <Link
-                                    // to={{
-                                    //     pathname: "/student/subject/exam-history",
-                                    //     state: {
-                                    //         examtype: "test_series",
-                                    //     }
-                                    // }}
+                                <button
                                     onClick={() => this.liveMockHistory("historyview")}
-                                    className="btn-blue-outline text-capitalize text-decoration-none">Live Mock Test History</Link>
+                                    className="btn-blue-outline text-capitalize text-decoration-none">Live Mock Test History</button>
                             </Col>
                         </Row>
                         <FreeMockTestSection type="normal" />
@@ -68,9 +62,9 @@ class MockTestSeriesSection extends Component {
                                 <h1 className="heading-title h6 mock-text-color text-uppercase">Live Mock Test History</h1>
                             </Col>
                             <Col lg={3} md={12} className="custom-link text-center pt-2">
-                                <Link
+            <button
                                     onClick={() => this.liveMockHistory("normalview")}
-                                    className="btn-blue-outline text-capitalize text-decoration-none">Go To Mock Tests</Link>
+                                    className="btn-blue-outline text-capitalize text-decoration-none">Go To Mock Tests</button>
                             </Col>
                         </Row>
                         <FreeMockTestSection type="history" />

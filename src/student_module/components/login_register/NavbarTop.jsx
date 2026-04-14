@@ -85,7 +85,7 @@ class NavbarTop extends Component {
               </svg>
             </Navbar.Brand> */}
             <Navbar.Brand >
-              <img loading='lazy' width="150" height="43" className='mt-2' src='https://entrolabs.com/assets/logo/logo-black.png' alt='logo '/>
+              <img loading='lazy' width="150" height="43" className='mt-2' src='https://entrolabs.com/assets/logo/logo-black.png' alt='logo ' />
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -94,13 +94,13 @@ class NavbarTop extends Component {
                 <Nav.Link href="https://entrolabs.com/">Home</Nav.Link>
                 <Nav.Link href="https://entrolabs.com/technologies/"> Features</Nav.Link>
                 <Nav.Link href="https://entrolabs.com/about-us/">Support</Nav.Link>
-                <Nav.Link 
+                <Nav.Link
                 // href="https://rizee.in/blog"
                 >Blog</Nav.Link>
-                <Nav.Link 
+                <Nav.Link
                 // href="https://rizee.in/Registration/?src=website"
                 >
-                Registration</Nav.Link>
+                  Registration</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
