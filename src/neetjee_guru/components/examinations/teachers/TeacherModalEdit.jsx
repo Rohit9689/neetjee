@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select';
 import { components } from 'react-select'
-import { Modal, Form, Col, Button } from 'react-bootstrap';
+import { Modal, Form, Col, Button, Row } from 'react-bootstrap';
 import SelectDropDown from '../../selectdropdown/SelectDropDown';
 import { MultiSelect } from "react-multi-select-component";
 const DropdownIndicator = props => {
@@ -28,7 +28,7 @@ class TeacherModalEdit extends Component {
         return newArray;
     }
     getClassValues(vals) {
-       let classes = Array();
+        let classes = Array();
         for (let i = 0; i < vals.length; i++) {
             const classval = vals[i];
             classes.push({ label: classval.class, value: classval.id });
@@ -126,14 +126,14 @@ class TeacherModalEdit extends Component {
                 </Modal.Header>
                 <Modal.Body className="p-4">
                     {this.props.stateData.currentStep == 5 ? (
-                        <Form.Text className="form-text text-danger">
+                        <Form.Text className="form-text text-success">
                             Faculty Updated successfully
                         </Form.Text>
                     ) : (
-                            <Form.Text className="form-text text-danger">
-                                {this.props.stateData.submitError}
-                            </Form.Text>
-                        )}
+                        <Form.Text className="form-text text-danger">
+                            {this.props.stateData.submitError}
+                        </Form.Text>
+                    )}
                     <Form>
                         <Row>
                             <Form.Group as={Col} lg={6} md={12} sm={12} controlId="SelectTeacherName">
@@ -260,7 +260,7 @@ class TeacherModalEdit extends Component {
                                     {this.props.stateData.formErrors.branch}
                                 </Form.Text>
                             </Form.Group>
-                        
+
                             <Form.Group as={Col} lg={6} md={12} sm={12} controlId="SelectSection">
                                 <Form.Label className="text-uppercase">Section{this.props.stateData.userlevel == "3" ? (<span className="text-danger">*</span>) : ("")}</Form.Label>
                                 <MultiSelect
@@ -280,13 +280,13 @@ class TeacherModalEdit extends Component {
                                     {this.props.stateData.formErrors.section}
                                 </Form.Text>
                             </Form.Group>
-                         </Row>
+                        </Row>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer variant="white" className="px-4">
-                    <Button onClick={this.props.handleFormSubmit} className="btn btn-success text-uppercase" >
-
-                        Save</Button>
+                    <Button onClick={this.props.handleFormSubmit} className="btn btn-success text-uppercase" disabled={this.props.loading}>
+                        {this.props.loading ? "Updating..." : "Save"}
+                    </Button>
                 </Modal.Footer>
             </Modal>
         )

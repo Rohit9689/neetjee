@@ -213,14 +213,14 @@ class BranchModal extends Component {
                 </Modal.Header>
                 <Modal.Body className="p-4">
                     {this.props.stateData.currentStep == 5 ? (
-                        <Form.Text className="form-text text-danger">
+                        <Form.Text className="form-text text-success">
                             User Saved successfully
-            </Form.Text>
+                        </Form.Text>
                     ) : (
-                            <Form.Text className="form-text text-danger">
-                                {this.props.stateData.submitError}
-                            </Form.Text>
-                        )}
+                        <Form.Text className="form-text text-danger">
+                            {this.props.stateData.submitError}
+                        </Form.Text>
+                    )}
                     <Form className="user-create-form">
                         <Row>
                             <Col xl={6} lg={6} md={12} sm={12}>
@@ -436,7 +436,8 @@ class BranchModal extends Component {
                                 <Button
                                     className="btn btn-green px-5"
                                     onClick={this.props.parenthandleFormSubmit}
-                                >Save</Button>
+                                    disabled={this.props.loading}
+                                >{this.props.loading ? "Saving..." : "Save"}</Button>
                             </Col>
                         </Row>
                     </Form>

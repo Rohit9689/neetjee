@@ -169,6 +169,7 @@ class UserCreationSection extends Component {
             subjectValid: true,
             class11Valid: true,
             class12Valid: false,
+            loading: false,
             status: 1,
         });
     };
@@ -228,6 +229,7 @@ class UserCreationSection extends Component {
         this.setState({ status: 1 });
     };
     edithandleFormSubmit = e => {
+        this.setState({ loading: true });
         e.preventDefault();
         console.log("Form submitted");
         console.log("Cookies2", Cookies.get("username"));
@@ -301,7 +303,8 @@ class UserCreationSection extends Component {
                 console.log("catch if error");
                 console.log(error);
                 this.setState({
-                    submitError: error.graphQLErrors.map(x => x.message)
+                    submitError: error.graphQLErrors.map(x => x.message),
+                    loading: false
                 });
                 console.error(
                     "ERR =>",
@@ -469,6 +472,7 @@ class UserCreationSection extends Component {
                     this.setState({
                         formValid: false,
                         currentStep: "5",
+                        loading: false,
                         submitError: "",
                         userid: "",
                         fullname: "",
@@ -505,9 +509,7 @@ class UserCreationSection extends Component {
                         subjectValid: false
                     });
 
-                    setTimeout(() => {
-                        this.SetpageLoad1();
-                    }, 1500);
+                    this.SetpageLoad1();
                 }
             }
         });
@@ -517,6 +519,7 @@ class UserCreationSection extends Component {
         this.setState({ currentStep: 1, modalShow1: false });
     };
     handleFormSubmit = e => {
+        this.setState({ loading: true });
         e.preventDefault();
 
         console.log("Cookies2", this.state);
@@ -589,7 +592,8 @@ class UserCreationSection extends Component {
                 console.log("catch if error");
                 console.log(error);
                 this.setState({
-                    submitError: error.graphQLErrors.map(x => x.message)
+                    submitError: error.graphQLErrors.map(x => x.message),
+                    loading: false
                 });
                 console.error(
                     "ERR =>",
@@ -757,6 +761,7 @@ class UserCreationSection extends Component {
                     this.setState({
                         formValid: false,
                         currentStep: "5",
+                        loading: false,
                         submitError: "",
                         userid: "",
                         fullname: "",
@@ -793,9 +798,7 @@ class UserCreationSection extends Component {
                         subjectValid: false
                     });
 
-                    setTimeout(() => {
-                        this.SetpageLoad();
-                    }, 1500);
+                    this.SetpageLoad();
                 }
             }
         });
@@ -1429,6 +1432,7 @@ class UserCreationSection extends Component {
                     show={this.state.modalShow}
                     onHide1={this.onHideFun}
                     stateData={this.state}
+                    loading={this.state.loading}
                 />
                 <UserModalEdit
                     phandleMultipleSelectInputChange={this.handleMultipleSelectInputChange}
@@ -1439,6 +1443,7 @@ class UserCreationSection extends Component {
                     show={this.state.modalShow1}
                     onHide2={this.onHideFunEdit}
                     stateData={this.state}
+                    loading={this.state.loading}
                 /></React.Fragment>
         )
     }

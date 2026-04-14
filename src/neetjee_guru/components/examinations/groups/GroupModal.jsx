@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import { Modal, Form, Col, Card, Button } from "react-bootstrap";
+import { Modal, Form, Col, Card, Button, Row } from "react-bootstrap";
 import BranchData from "./BranchData";
 import SectionData from "./SectionData";
 import ClassesData from "./ClassesData";

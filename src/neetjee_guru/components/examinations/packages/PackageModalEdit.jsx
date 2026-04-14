@@ -50,7 +50,7 @@ class PackageModalEdit extends Component {
       },
       package_nameValid: false,
       examsValid: false,
-
+      loading: false,
       formValid: false
     };
   }
@@ -92,10 +92,12 @@ class PackageModalEdit extends Component {
         username: Cookies.get("username")
       };
 
+      this.setState({ loading: true });
       this.editdata(data).catch(error => {
         console.log("error", error);
         this.setState({
-          submitError: error.graphQLErrors.map(x => x.message)
+          submitError: error.graphQLErrors.map(x => x.message),
+          loading: false
         });
         console.error(
           "ERR =>",
@@ -153,12 +155,11 @@ class PackageModalEdit extends Component {
             },
             package_nameValid: false,
             examsValid: false,
+            loading: false,
             formValid: false
           });
 
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
+          this.SetpageLoad();
         }
       }
     });
@@ -306,7 +307,7 @@ class PackageModalEdit extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
-          <Form.Text className="form-text text-danger">
+          <Form.Text className={`form-text ${this.state.submitError === "Data Updated Successfully!" ? "text-success" : "text-danger"}`}>
             {this.state.submitError}
           </Form.Text>
           <Form>
@@ -358,8 +359,9 @@ class PackageModalEdit extends Component {
           <Button
             className="btn btn-success text-uppercase px-5"
             onClick={this.handleFormSubmit}
+            disabled={this.state.loading}
           >
-            Save
+            {this.state.loading ? "Updating..." : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>

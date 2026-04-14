@@ -61,7 +61,7 @@ class PackageModal extends Component {
       },
       package_nameValid: false,
       examsValid: false,
-
+      loading: false,
       formValid: false
     };
   }
@@ -70,6 +70,7 @@ class PackageModal extends Component {
     console.log("formsubmit", this.state);
     e.preventDefault();
     if (this.state.formValid) {
+      this.setState({ loading: true });
       let data = {
         package_name: this.state.package_name,
         exams_covered: this.state.exams,
@@ -80,7 +81,8 @@ class PackageModal extends Component {
       this.adddata(data).catch(error => {
         console.log("error", error);
         this.setState({
-          submitError: error.graphQLErrors.map(x => x.message)
+          submitError: error.graphQLErrors.map(x => x.message),
+          loading: false
         });
         console.error(
           "ERR =>",
@@ -143,12 +145,11 @@ class PackageModal extends Component {
             },
             package_nameValid: false,
             examsValid: false,
+            loading: false,
             formValid: false
           });
 
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
+          this.SetpageLoad();
         }
       }
     });
@@ -261,7 +262,7 @@ class PackageModal extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
-          <Form.Text className="form-text text-danger">
+          <Form.Text className={`form-text ${this.state.submitError === "Data Inserted Successfully!" ? "text-success" : "text-danger"}`}>
             {this.state.submitError}
           </Form.Text>
           <Form>
@@ -313,8 +314,9 @@ class PackageModal extends Component {
           <Button
             className="btn btn-success text-uppercase px-5"
             onClick={this.handleFormSubmit}
+            disabled={this.state.loading}
           >
-            Save
+            {this.state.loading ? "Saving..." : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>

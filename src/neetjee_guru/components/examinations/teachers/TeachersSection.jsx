@@ -129,6 +129,7 @@ class TeachersSection extends Component {
       },
       modalShow: false,
       modalShow1: false,
+      loading: false,
       status: 1,
     };
   }
@@ -214,7 +215,7 @@ class TeachersSection extends Component {
             class: item.class,
             userval: userval,
             userlevel: item.userlevel,
-            username:item.username
+            username: item.username
 
           });
 
@@ -328,6 +329,7 @@ class TeachersSection extends Component {
   };
 
   handleFormSubmit = (e) => {
+    this.setState({ loading: true });
     e.preventDefault();
     console.log("Form submitted");
     console.log("Cookies2", Cookies.get("username"));
@@ -343,9 +345,9 @@ class TeachersSection extends Component {
       else {
         classval = this.state.class.toString()
       }
-      let updateFaculityobj="";
-      if(this.state.password!=""){
-         updateFaculityobj = {
+      let updateFaculityobj = "";
+      if (this.state.password != "") {
+        updateFaculityobj = {
           name: this.state.teacher_name,
           mobile: this.state.contact_no,
           subject: this.state.subject.toString(),
@@ -356,11 +358,11 @@ class TeachersSection extends Component {
           username: this.state.teacherid,
           email: this.state.email,
           userlevel: parseInt(this.state.userlevel),
-          password:this.state.password
+          password: this.state.password
         };
       }
-      else{
-         updateFaculityobj = {
+      else {
+        updateFaculityobj = {
           name: this.state.teacher_name,
           mobile: this.state.contact_no,
           subject: this.state.subject.toString(),
@@ -371,16 +373,17 @@ class TeachersSection extends Component {
           username: this.state.teacherid,
           email: this.state.email,
           userlevel: parseInt(this.state.userlevel),
-          
+
         };
       }
-     
+
       console.log("updateFaculityobj", updateFaculityobj);
       this.updateFaculity(updateFaculityobj).catch((error) => {
         console.log("catch if error");
         console.log(error);
         this.setState({
           submitError: error.graphQLErrors.map((x) => x.message),
+          loading: false,
         });
         console.error(
           "ERR =>",
@@ -483,11 +486,10 @@ class TeachersSection extends Component {
             },
             modalShow: false,
             modalShow1: false,
+            loading: false,
             status: 1,
           });
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 5000);
+          this.SetpageLoad();
         }
       },
     });
@@ -557,7 +559,7 @@ class TeachersSection extends Component {
         }
         this.setState({
           section: [],
-      sectionvalue: [],
+          sectionvalue: [],
           branch: branch,
           branchvalue: branchvalue
         }, () => { this.validateField(name, "1") });
@@ -719,14 +721,14 @@ class TeachersSection extends Component {
         classValid: classValid,
         branchValid: branchValid,
         userlevelValid: userlevelValid
-       
+
       },
       this.validateForm
     );
   }
 
   validateForm() {
-    console.log("pvalidateForm",this.state);
+    console.log("pvalidateForm", this.state);
     if (this.state.userlevel == "3") {
       this.setState({
         formValid: this.state.teacher_nameValid &&
@@ -761,7 +763,7 @@ class TeachersSection extends Component {
     let classv = "";
     let classvalue = "";
     let arraylen = rowIndex.class.split(",");
-    if (rowIndex.class=="1,2") {
+    if (rowIndex.class == "1,2") {
       classv = "0";
       classvalue = { value: "0", label: "ALL" }
     }
@@ -769,7 +771,7 @@ class TeachersSection extends Component {
       classv = rowIndex.class;
       classvalue = { value: rowIndex.class, label: rowIndex.classval }
     }
-    if(rowIndex.userlevel=="3"){
+    if (rowIndex.userlevel == "3") {
       this.setState({
         modalShow1: true,
         teacherid: rowIndex.username,
@@ -798,7 +800,7 @@ class TeachersSection extends Component {
         formValid: true,
       });
     }
-    else{
+    else {
       this.setState({
         modalShow1: true,
         teacherid: rowIndex.username,
@@ -827,7 +829,7 @@ class TeachersSection extends Component {
         formValid: true,
       });
     }
-    
+
   };
 
   handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
@@ -1028,7 +1030,7 @@ class TeachersSection extends Component {
     });
   }
   render() {
-    console.log("teachercurrentstate", this.state,Cookies.get("institutionid"), Cookies.get("userlevel"));
+    console.log("teachercurrentstate", this.state, Cookies.get("institutionid"), Cookies.get("userlevel"));
     console.log("propsdatr", this.props);
     // console.log("Globalsssss",this.props.globals.globals)
 
@@ -1083,6 +1085,7 @@ class TeachersSection extends Component {
             handleFormSubmit={this.handleFormSubmit}
             parenthandleInputChange={this.handleInputChange}
             stateData={this.state}
+            loading={this.state.loading}
             globals={globals.globals}
             show={this.state.modalShow1}
             onHide={() => this.setState({ modalShow1: false })}
@@ -1106,7 +1109,7 @@ export default withRouter(
       options: (props) => ({
         variables: {
           institution_id: parseInt(Cookies.get("institutionid")),
-          userlevel:parseInt(Cookies.get("userlevel"))
+          userlevel: parseInt(Cookies.get("userlevel"))
         },
         fetchPolicy: "cache-and-network",
       }),

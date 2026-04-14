@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select';
 import { components } from 'react-select'
-import { Modal, Form, Col, Button } from 'react-bootstrap';
+import { Modal, Form, Col, Button, Row } from 'react-bootstrap';
 import BranchData from '../groups/BranchData'
 import SectionData from '../groups/SectionData'
 import ClassesData from '../groups/ClassesData'
@@ -97,6 +97,7 @@ class TeacherModal extends Component {
             passwordValid: false,
             emailValid: false,
             userlevelValid: false,
+            loading: false,
             formValid: false
         };
     }
@@ -331,7 +332,7 @@ class TeacherModal extends Component {
     }
 
     validateForm() {
-        console.log("validateForm",this.state);
+        console.log("validateForm", this.state);
         if (this.state.userlevel == "3") {
             this.setState({
                 formValid: this.state.teacher_nameValid &&
@@ -361,6 +362,7 @@ class TeacherModal extends Component {
         }
     }
     handleFormSubmit = e => {
+        this.setState({ loading: true });
         e.preventDefault();
         console.log("Form submitted");
         console.log("Cookies2", Cookies.get("username"));
@@ -395,7 +397,8 @@ class TeacherModal extends Component {
                 console.log("catch if error");
                 console.log(error);
                 this.setState({
-                    submitError: error.graphQLErrors.map(x => x.message)
+                    submitError: error.graphQLErrors.map(x => x.message),
+                    loading: false
                 });
                 console.error("ERR =>", error.graphQLErrors.map(x => x.message));
             });
@@ -415,7 +418,7 @@ class TeacherModal extends Component {
                     query: FETCH_TEACHERS,
                     variables: {
                         institution_id: parseInt(Cookies.get("institutionid")),
-                        userlevel:parseInt(Cookies.get("userlevel"))
+                        userlevel: parseInt(Cookies.get("userlevel"))
                     }
                 });
 
@@ -429,7 +432,7 @@ class TeacherModal extends Component {
                     section: this.state.section.toString(),
                     email: this.state.email,
                     userlevel: parseInt(this.state.userlevel),
-                    username:this.state.email,
+                    username: this.state.email,
                     __typename: "Teachers1"
                 };
 
@@ -440,7 +443,7 @@ class TeacherModal extends Component {
                         query: FETCH_TEACHERS,
                         variables: {
                             institution_id: parseInt(Cookies.get("institutionid")),
-                            userlevel:parseInt(Cookies.get("userlevel"))
+                            userlevel: parseInt(Cookies.get("userlevel"))
                         },
                         data: data1
                     });
@@ -455,8 +458,8 @@ class TeacherModal extends Component {
                         currentStep: 5,
                         teacher_name: "",
                         contact_no: "",
-                        userlevel:"",
-                        userlevelvalue:"",
+                        userlevel: "",
+                        userlevelvalue: "",
                         subject: [],
                         subjectvalue: [],
                         branch: [],
@@ -477,7 +480,7 @@ class TeacherModal extends Component {
                             section: "",
                             password: "",
                             email: "",
-                            userlevel:""
+                            userlevel: ""
                         },
                         teacher_nameValid: false,
                         contact_noValid: false,
@@ -488,10 +491,11 @@ class TeacherModal extends Component {
                         passwordValid: false,
                         emailValid: false,
                         userlevelValid: false,
+                        loading: false,
                         formValid: false
                     });
 
-                    setTimeout(() => { this.SetpageLoad() }, 1500);
+                    this.SetpageLoad();
                 }
             }
         });
@@ -648,14 +652,14 @@ class TeacherModal extends Component {
                 </Modal.Header>
                 <Modal.Body className="p-4">
                     {this.state.currentStep == 5 ? (
-                        <Form.Text className="form-text text-danger">
+                        <Form.Text className="form-text text-success">
                             Faculty Saved successfully
                         </Form.Text>
                     ) : (
-                            <Form.Text className="form-text text-danger">
-                                {this.state.submitError}
-                            </Form.Text>
-                        )}
+                        <Form.Text className="form-text text-danger">
+                            {this.state.submitError}
+                        </Form.Text>
+                    )}
                     <Form>
                         <Row>
                             <Form.Group as={Col} lg={6} md={12} sm={12} controlId="SelectTeacherName">
@@ -807,9 +811,9 @@ class TeacherModal extends Component {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer variant="white" className="px-4">
-                    <Button onClick={this.handleFormSubmit} className="btn btn-success text-uppercase" >
-                        {/* onClick={() => { this.props.onHide() }} */}
-                        Save</Button>
+                    <Button onClick={this.handleFormSubmit} className="btn btn-success text-uppercase" disabled={this.state.loading}>
+                        {this.state.loading ? "Saving..." : "Save"}
+                    </Button>
                 </Modal.Footer>
             </Modal>
         )

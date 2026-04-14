@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { components } from "react-select";
-import { Modal, Form, Col, Button } from "react-bootstrap";
+import { Modal, Form, Col, Button, Row } from "react-bootstrap";
 import BranchData from "../groups/BranchData";
 import SectionData from "../groups/SectionData";
 import ClassesData from "../groups/ClassesData";
@@ -79,7 +79,8 @@ class StudentModal extends Component {
       student_nameValid: false,
       contact_noValid: false,
       packageValid: false,
-      category: false,
+      categoryValid: false,
+      loading: false,
       formValid: false
     };
   }
@@ -229,6 +230,7 @@ class StudentModal extends Component {
   }
 
   handleFormSubmit = e => {
+    this.setState({ loading: true });
     e.preventDefault();
     console.log("Form submitted");
 
@@ -249,7 +251,8 @@ class StudentModal extends Component {
         console.log("catch if error");
         console.log(error);
         this.setState({
-          submitError: error.graphQLErrors.map(x => x.message)
+          submitError: error.graphQLErrors.map(x => x.message),
+          loading: false
         });
         console.error(
           "ERR =>",
@@ -324,19 +327,12 @@ class StudentModal extends Component {
               contact_no: "",
               package: ""
             },
-            branchValid: false,
-            sectionValid: false,
-            classValid: false,
-            student_nameValid: false,
-            contact_noValid: false,
-            packageValid: false,
             categoryValid: false,
+            loading: false,
             formValid: false
           });
 
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
+          this.SetpageLoad();
         }
       }
     });
@@ -377,14 +373,14 @@ class StudentModal extends Component {
         </Modal.Header>
         <Modal.Body className="p-4">
           {this.state.currentStep == 5 ? (
-            <Form.Text className="form-text text-danger">
+            <Form.Text className="form-text text-success">
               Student Data Saved successfully
             </Form.Text>
           ) : (
-              <Form.Text className="form-text text-danger">
-                {this.state.submitError}
-              </Form.Text>
-            )}
+            <Form.Text className="form-text text-danger">
+              {this.state.submitError}
+            </Form.Text>
+          )}
           <Form>
             <Row>
               <Form.Group
@@ -403,8 +399,6 @@ class StudentModal extends Component {
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Name"
-                  name="student_name"
                   placeholder="Student name"
                   value={this.state.student_name}
                   onChange={this.handleInputChange}
@@ -570,8 +564,9 @@ class StudentModal extends Component {
           <Button
             className="btn btn-success text-uppercase"
             onClick={this.handleFormSubmit}
+            disabled={this.state.loading}
           >
-            Save
+            {this.state.loading ? "Saving..." : "Save"}
           </Button>
         </Modal.Footer>
       </Modal>

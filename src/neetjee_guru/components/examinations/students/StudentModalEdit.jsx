@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { components } from "react-select";
-import { Modal, Form, Col, Button } from "react-bootstrap";
+import { Modal, Form, Col, Button, Row } from "react-bootstrap";
 import BranchData from "../groups/BranchData";
 import SectionData from "../groups/SectionData";
 import ClassesData from "../groups/ClassesData";
@@ -91,7 +91,7 @@ class StudentModalEdit extends Component {
         </Modal.Header>
         <Modal.Body className="p-4">
           {this.props.stateData.currentStep == 5 ? (
-            <Form.Text className="form-text text-danger">
+            <Form.Text className="form-text text-success">
               Update Student Data successfully
             </Form.Text>
           ) : (
@@ -114,7 +114,6 @@ class StudentModalEdit extends Component {
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Name"
                   name="student_name"
                   placeholder="Student name"
                   value={this.props.stateData.student_name}

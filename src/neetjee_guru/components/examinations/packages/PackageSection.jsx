@@ -364,7 +364,7 @@ export default withRouter(
           institution_id: parseInt(Cookies.get("institutionid"))
         }
         ,
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'cache-and-network'
       }),
       name: "getPackages"
     }),
@@ -375,7 +375,7 @@ export default withRouter(
           variables: {
             institution_id: parseInt(Cookies.get("institutionid"))
           },
-          fetchPolicy: 'network-only'
+          fetchPolicy: 'cache-and-network'
         }),
         name: "globals"
       }
