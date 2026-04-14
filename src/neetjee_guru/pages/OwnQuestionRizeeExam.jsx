@@ -128,8 +128,8 @@ class OwnQuestionRizeeExam extends Component {
             searchchaptervalue: "",
             questionbankpercentage: "0",
             ownaddedpercentage: "0",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             formErrors: {
@@ -163,21 +163,21 @@ class OwnQuestionRizeeExam extends Component {
             modalShow: false,
             modalShowTwo: false,
             counttype: "ocount",
-            oquestionscount:0,
-            oquestions:"",
+            oquestionscount: 0,
+            oquestions: "",
 
         }
     }
     menuToggler = () => {
         const toggled = Cookies.get("toggle");
-         if (toggled === "wrapper") {
-             this.setState({toggled:"wrapper sidebar-enable"});
-             Cookies.set("toggle", "wrapper sidebar-enable");
-         } else {
-             this.setState({toggled:"wrapper"});
-             Cookies.set("toggle", "wrapper");
-         }
-     };
+        if (toggled === "wrapper") {
+            this.setState({ toggled: "wrapper sidebar-enable" });
+            Cookies.set("toggle", "wrapper sidebar-enable");
+        } else {
+            this.setState({ toggled: "wrapper" });
+            Cookies.set("toggle", "wrapper");
+        }
+    };
     generateQuestionPaper = (e) => {
         let status = false;
         for (const item of this.state.subjects) {
@@ -409,8 +409,8 @@ class OwnQuestionRizeeExam extends Component {
                         searchchaptervalue: "",
                         questionbankpercentage: "0",
                         ownaddedpercentage: "0",
-                        questiontypes: "",
-                        questiontypesvalue: "",
+                        questiontypes: [],
+                        questiontypesvalue: [],
                         applicationtheory: "",
                         applicationtheoryvalue: "",
                         formErrors: {
@@ -579,7 +579,7 @@ class OwnQuestionRizeeExam extends Component {
 
     }
     handleInputChange = (e) => {
-        console.log("handleInputChange",e.target.name);
+        console.log("handleInputChange", e.target.name);
         if (e.target.name == "counttype") {
             let sData = [];
             if (e.target.value != "ocount") {
@@ -607,13 +607,13 @@ class OwnQuestionRizeeExam extends Component {
 
         }
 
-        
-            const name = e.target.name;
-            const value = e.target.value;
-            this.setState({ [name]: value }, () => {
-                this.validateField(name, value);
-            });
-        
+
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({ [name]: value }, () => {
+            this.validateField(name, value);
+        });
+
 
     }
     validateField(fieldName, value) {
@@ -1001,7 +1001,7 @@ class OwnQuestionRizeeExam extends Component {
                                         parentpdatefunctionend={this.datefunctionend}
                                         ParenthandleFormSubmit={this.handleFormSubmit}
                                         spinnerStatus={this.spinnerStatus}
-                                        
+
                                     />
                                 </div>
                                 <Footer />

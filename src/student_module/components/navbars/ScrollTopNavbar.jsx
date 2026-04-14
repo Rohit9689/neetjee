@@ -75,7 +75,7 @@ class ScrollTopNavbar extends Component {
                     localStorage.removeItem('studentglobals');
                     localStorage.removeItem('globalsubjects');
                     localStorage.removeItem("packageplan");
-                    
+
                     Cookies.remove("toggle");
                     this.setState({
                         loader: 0
@@ -146,7 +146,7 @@ class ScrollTopNavbar extends Component {
                                     {isuserValid.ins_feedback_tab == true ? ("") : (<NavDropdown.Item as={Link} to="/student/feedback"><i className="far fa-comment-alt-lines mr-2" /> Feedback</NavDropdown.Item>)}
 
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item as={Link} onClick={this.logout}><i className="far fa-sign-out mr-2" /> Logout</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={this.logout}><i className="far fa-sign-out mr-2" /> Logout</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                         </Navbar.Collapse>

@@ -42,8 +42,13 @@ class PractiseModal extends Component {
 
                                         </Row>
                                         <Row>
-                                            <Col sm={5}>
-                                                <Image className="" src={require('../../../../images/helpSystemImages/execute_LP.png')} alt="img" />
+                                            <Col sm={6} className="text-center">
+                                                <Image
+                                                    src={require('../../../../images/helpSystemImages/ellogo.png')}
+                                                    alt="Entro Labs Logo"
+                                                    fluid
+                                                    style={{ maxHeight: '150px', objectFit: 'contain' }}
+                                                />
                                             </Col>
                                             <Col sm={3}>
                                                 <p className="mt-80">

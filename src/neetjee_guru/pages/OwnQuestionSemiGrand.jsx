@@ -139,8 +139,8 @@ class OwnQuestionSemiGrand extends Component {
             searchchaptervalue: "",
             questionbankpercentage: "100",
             ownaddedpercentage: "0",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             timeduration: 80,
@@ -181,14 +181,14 @@ class OwnQuestionSemiGrand extends Component {
     }
     menuToggler = () => {
         const toggled = Cookies.get("toggle");
-         if (toggled === "wrapper") {
-             this.setState({toggled:"wrapper sidebar-enable"});
-             Cookies.set("toggle", "wrapper sidebar-enable");
-         } else {
-             this.setState({toggled:"wrapper"});
-             Cookies.set("toggle", "wrapper");
-         }
-     };
+        if (toggled === "wrapper") {
+            this.setState({ toggled: "wrapper sidebar-enable" });
+            Cookies.set("toggle", "wrapper sidebar-enable");
+        } else {
+            this.setState({ toggled: "wrapper" });
+            Cookies.set("toggle", "wrapper");
+        }
+    };
     componentDidMount() {
         console.log("componentDidMount", this.props.history.location.state);
         let examsData = this.props.history.location.state.getGroupData.globals.exams.find((a) => a.id == this.props.history.location.state.getGroupData.categoryfindData.exams_covered);
@@ -406,10 +406,10 @@ class OwnQuestionSemiGrand extends Component {
             username: Cookies.get("username")
 
         }
-        let question_count=[];
+        let question_count = [];
         console.log('creategeneralpaper', creategeneralpaper,
-        parseInt(this.state.timeduration),
-        question_count);
+            parseInt(this.state.timeduration),
+            question_count);
         this.creategroupsemigrandgeneralpaperfun(
             creategeneralpaper,
             parseInt(this.state.timeduration),
@@ -424,28 +424,28 @@ class OwnQuestionSemiGrand extends Component {
         });
     };
     creategroupsemigrandgeneralpaperfun = async (
-        params,time_duration,
+        params, time_duration,
         question_count) => {
         await this.props.creategroupsemigrandgeneralpaperfun({
             variables: {
-                params,time_duration,
+                params, time_duration,
                 question_count
             },
             update: (store, { data }) => {
                 //console.log("createGeneralPaperdata", data);
                 //if (data.createGroupSemiGrandPaper) {
-                    let tcq = 160;
-                    let totalExamCount3 = "";
+                let tcq = 160;
+                let totalExamCount3 = "";
 
-                    if (this.state.examtype == "3" || this.state.examtype == "6" || this.state.examtype == "7" || this.state.examtype == "8") {
+                if (this.state.examtype == "3" || this.state.examtype == "6" || this.state.examtype == "7" || this.state.examtype == "8") {
 
-                        let eduration = this.props.globals.globals.exams.find((a) => a.id == this.state.examtype);
-                        console.log("eduration", eduration);
+                    let eduration = this.props.globals.globals.exams.find((a) => a.id == this.state.examtype);
+                    console.log("eduration", eduration);
 
-                        if (eduration != undefined) {
-                            totalExamCount3 = parseFloat(eduration.avg_question_time) * parseFloat(tcq);
-                        }
+                    if (eduration != undefined) {
+                        totalExamCount3 = parseFloat(eduration.avg_question_time) * parseFloat(tcq);
                     }
+                }
                 this.setState({
                     currentStep: 5,
                     exam_name: "",
@@ -468,8 +468,8 @@ class OwnQuestionSemiGrand extends Component {
                     searchchaptervalue: "",
                     questionbankpercentage: "0",
                     ownaddedpercentage: "0",
-                    questiontypes: "",
-                    questiontypesvalue: "",
+                    questiontypes: [],
+                    questiontypesvalue: [],
                     applicationtheory: "",
                     applicationtheoryvalue: "",
                     formErrors: {

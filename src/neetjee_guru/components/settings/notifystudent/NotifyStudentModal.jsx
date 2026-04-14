@@ -6,6 +6,7 @@ import { Row, Col, Card, Form, Button, Image } from 'react-bootstrap';
 import SelectDropDown from '../../selectdropdown/SelectDropDown';
 import { MultiSelect } from "react-multi-select-component";
 import TextEditor from '../../text_editor/TextEditor';
+import { Editor } from '@tinymce/tinymce-react';
 // userTypes
 const userTypes = [
 
@@ -228,12 +229,12 @@ class BranchModal extends Component {
 
         return (
             <Card>
-               <Card.Body>
-                {this.props.stateData.currentStep == 5 ? (
-                    <Form.Text className="form-text text-danger">
-                        Notification Saved successfully
-                    </Form.Text>
-                ) : (
+                <Card.Body>
+                    {this.props.stateData.currentStep == 5 ? (
+                        <Form.Text className="form-text text-danger">
+                            Notification Saved successfully
+                        </Form.Text>
+                    ) : (
                         <Form.Text className="form-text text-danger">
                             {this.props.stateData.submitError}
                         </Form.Text>
@@ -432,7 +433,19 @@ class BranchModal extends Component {
                                 <Form.Label >
                                     Long Description <span className="text-danger">*</span>
                                 </Form.Label>
-                                <TextEditor handleEditorChange={this.props.handleEditorChange} />
+                                <Editor
+                                    apiKey="ut485rqztceb1tnd6rspw082hitkot6md8mbj8pctjbwshbn"
+                                    init={{
+                                        height: 300,
+                                        menubar: false,
+                                        plugins: 'lists link image code',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+                                    }}
+                                    onEditorChange={(content) => {
+                                        this.props.handleEditorChange(content);
+                                    }}
+                                />
+
                                 <Form.Text className="form-text text-danger">
                                     {this.props.stateData.formErrors.ldescription}
                                 </Form.Text>
@@ -458,7 +471,7 @@ class BranchModal extends Component {
                 </Card.Body>
 
             </Card>
-         );
+        );
     }
 }
 

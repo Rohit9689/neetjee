@@ -114,8 +114,8 @@ class QuestionsPreview extends Component {
       searchsubjectvalue: "",
       searchchapter: "0",
       searchchaptervalue: "",
-      questiontypes: "",
-      questiontypesvalue: "",
+      questiontypes: [],
+      questiontypesvalue: [],
       applicationtheory: "",
       applicationtheoryvalue: "",
       examquestionsArray: examquestionsArray,
@@ -131,14 +131,14 @@ class QuestionsPreview extends Component {
   }
   menuToggler = () => {
     const toggled = Cookies.get("toggle");
-     if (toggled === "wrapper") {
-         this.setState({toggled:"wrapper sidebar-enable"});
-         Cookies.set("toggle", "wrapper sidebar-enable");
-     } else {
-         this.setState({toggled:"wrapper"});
-         Cookies.set("toggle", "wrapper");
-     }
- };
+    if (toggled === "wrapper") {
+      this.setState({ toggled: "wrapper sidebar-enable" });
+      Cookies.set("toggle", "wrapper sidebar-enable");
+    } else {
+      this.setState({ toggled: "wrapper" });
+      Cookies.set("toggle", "wrapper");
+    }
+  };
   replaceQuestions = (e) => {
     let status = false;
     let dataArray = [];
@@ -312,8 +312,8 @@ class QuestionsPreview extends Component {
             searchsubjectvalue: "",
             searchchapter: "0",
             searchchaptervalue: "",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             examquestionsArray: examquestionsArray1,

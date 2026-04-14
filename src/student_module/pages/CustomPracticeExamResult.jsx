@@ -303,7 +303,7 @@ class CustomPracticeExamResult extends Component {
                                                 type: this.props.history.location.state.type,
                                                 getData: this.props.history.location.state.getData,
                                                 stype: this.props.history.location.state.stype,
-                                                ntype:"customp"
+                                                ntype: "customp"
                                             }
                                         }}
                                         className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2" style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }}> Q&A Views</Link>
@@ -454,7 +454,7 @@ class CustomPracticeExamResult extends Component {
                                             type: this.props.history.location.state.type,
                                             getData: this.props.history.location.state.getData,
                                             stype: this.props.history.location.state.stype,
-                                            ntype:"customp"
+                                            ntype: "customp"
                                         }
                                     }}
                                     className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2" style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }}> Q&A Views</Link>
@@ -624,17 +624,17 @@ class CustomPracticeExamResult extends Component {
 }
 
 export default
-withRouter(
-    compose(graphql(FETCH_SESSION_DATA,
-        {
-            options: props => ({
-                variables: {
-                    mobile: Cookies.get("mobile"),
-                    session_id: parseInt(props.history.location.state.sessionid),
-                    chapter_id: 0
+    withRouter(
+        compose(graphql(FETCH_SESSION_DATA,
+            {
+                options: props => ({
+                    variables: {
+                        mobile: Cookies.get("mobile"),
+                        session_id: parseInt(props.history.location.state.sessionid),
+                        chapter_id: 0
 
-                }
-                ,
-                fetchPolicy: "no-cache"
-            }), name: "getStudentSessions"
-        }))(CustomPracticeExamResult));
+                    }
+                    ,
+                    fetchPolicy: "no-cache"
+                }), name: "getStudentSessions"
+            }))(CustomPracticeExamResult));

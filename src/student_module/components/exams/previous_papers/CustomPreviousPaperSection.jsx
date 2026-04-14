@@ -57,22 +57,22 @@ export class CustomPreviousPaperSection extends Component {
         const key = 'year';
         let pyears = [...new Map(pyears1.map(item =>
             [item[key], item])).values()];
-        console.log("pyears",pyears);
+        console.log("pyears", pyears);
 
-        pyears= pyears.sort((a, b) => {
+        pyears = pyears.sort((a, b) => {
             let nameA = a.year
             let nameB = b.year
-            console.log("sort",nameA,nameB);
+            console.log("sort", nameA, nameB);
             if (nameB < nameA) {
-               return -1;
+                return -1;
             }
             if (nameB > nameA) {
-               return 1;
+                return 1;
             } // names must be equal
             return 0;
-         })
+        })
 
-       
+
 
         const tqstions = props.getData.globals.questionTypes.map(item => {
             return { ...item, percentage: "", inerror: "" }
@@ -198,7 +198,7 @@ export class CustomPreviousPaperSection extends Component {
             console.log("catch if error");
             console.log(error);
             this.setState({
-                submitError: error.graphQLErrors.map(x => x.message),loadbutton: 0
+                submitError: error.graphQLErrors.map(x => x.message), loadbutton: 0
             });
             console.error("ERR =>", error.graphQLErrors.map(x => x.message));
         });
@@ -214,7 +214,7 @@ export class CustomPreviousPaperSection extends Component {
                 console.log("updatedata", data);
                 if (data.studentPreviousPaperExam) {
                     console.log("updatedatadataID", data.studentPreviousPaperExam)
-                    this.setState({loadbutton: 0,submitError:""});
+                    this.setState({ loadbutton: 0, submitError: "" });
                     localStorage.setItem("sessionid", data.studentPreviousPaperExam);
                     localStorage.setItem("type", "Previous Paper Exam");
                     localStorage.setItem("stype", "");
@@ -599,42 +599,42 @@ export class CustomPreviousPaperSection extends Component {
                                             <th>: {examname.exam} </th>
                                         </tr>
                                         {Cookies.get("examid") == "1" ? (
-                                                <React.Fragment>
-                                                    <tr>
-                                                        <th> Duration </th>
-                                                        <th>: 180min </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>No Of Questions </th>
-                                                        <th>: 180</th>
-                                                    </tr>
-                                                </React.Fragment>
-                                            ) : (
+                                            <React.Fragment>
+                                                <tr>
+                                                    <th> Duration </th>
+                                                    <th>: 180min </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>No Of Questions </th>
+                                                    <th>: 180</th>
+                                                </tr>
+                                            </React.Fragment>
+                                        ) : (
+                                            <React.Fragment>
+                                                {this.state.examtype == "1" ? (
                                                     <React.Fragment>
-                                                        {this.state.examtype == "1" ? (
-                                                            <React.Fragment>
-                                                                <tr>
-                                                                    <th> Duration </th>
-                                                                    <th>: 180min </th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>No Of Questions </th>
-                                                                    <th>: 75</th>
-                                                                </tr>
-                                                            </React.Fragment>) : (
-                                                                <React.Fragment>
-                                                                    <tr>
-                                                                        <th> Duration </th>
-                                                                        <th>: 180min </th>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>No Of Questions </th>
-                                                                        <th>: 75</th>
-                                                                    </tr>
-                                                                </React.Fragment>)}
+                                                        <tr>
+                                                            <th> Duration </th>
+                                                            <th>: 180min </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>No Of Questions </th>
+                                                            <th>: 75</th>
+                                                        </tr>
+                                                    </React.Fragment>) : (
+                                                    <React.Fragment>
+                                                        <tr>
+                                                            <th> Duration </th>
+                                                            <th>: 180min </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>No Of Questions </th>
+                                                            <th>: 75</th>
+                                                        </tr>
+                                                    </React.Fragment>)}
 
-                                                    </React.Fragment>
-                                                )}
+                                            </React.Fragment>
+                                        )}
                                     </tbody>
                                 </Table>
                             </Card.Header>
@@ -661,9 +661,9 @@ export class CustomPreviousPaperSection extends Component {
                                 </Card>
                             </Card.Body>
                             <Card.Footer className="border-0 bg-white text-center">
-                            {this.state.loadbutton == 0 ? ( <Link onClick={this.handleFormSubmit} className="px-4 px-5 btn btn-green text-white">Start Exam</Link>)
-                            :( <Link className="px-4 px-5 btn btn-green text-white"><span className="spinner-border spinner-border-sm"></span>loading..</Link>)}
-                               
+                                {this.state.loadbutton == 0 ? (<Link onClick={this.handleFormSubmit} className="px-4 px-5 btn btn-green text-white">Start Exam</Link>)
+                                    : (<Link className="px-4 px-5 btn btn-green text-white"><span className="spinner-border spinner-border-sm"></span>loading..</Link>)}
+
                             </Card.Footer>
                         </Card>
                     </Col>

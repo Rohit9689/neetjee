@@ -184,8 +184,8 @@ class CustomInstructions extends Component {
 
                                         <Image src={`http://neetjeeguru.com/files/${Cookies.get("profile_pic")}`} roundedCircle alt="profile-img" />
                                     ) : (
-                                            <Image src={require('../../images/businessman.png')} roundedCircle alt="profile-img" />
-                                        )}
+                                        <Image src={require('../../images/businessman.png')} roundedCircle alt="profile-img" />
+                                    )}
 
                                     <div className="text mx-2 mt-2">
                                         <div className="profile-name">{Cookies.get("studentusername")}</div>
@@ -200,7 +200,7 @@ class CustomInstructions extends Component {
                                 <NavDropdown.Item onClick={() => this.setState({ modalShow: true })}><i className="far fa-key mr-2" /> Change Password</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="#"><i className="far fa-comment-alt-lines mr-2" /> Feedback</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item as={Link} onClick={this.logout}><i className="far fa-sign-out mr-2" /> Logout</NavDropdown.Item>
+                                <NavDropdown.Item onClick={this.logout}><i className="far fa-sign-out mr-2" /> Logout</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Container>
@@ -223,11 +223,11 @@ class CustomInstructions extends Component {
                                         pathname: "/student/practice-exam-analysis"
                                     }}
                                     className="my-0 font-weight-normal text-light"><i className="fal fa-arrow-left" /> Back</Link>) : (
-                                    <Link to={this.backPathFunction()} className="my-0 font-weight-normal text-light">
-                                        <i className="fal fa-arrow-left" />
-                                        Back
+                                <Link to={this.backPathFunction()} className="my-0 font-weight-normal text-light">
+                                    <i className="fal fa-arrow-left" />
+                                    Back
                                 </Link>
-                                )}
+                            )}
                         <div className="my-2 my-md-0 text-center">
                             <h6 className="title mb-0 mr-4 text-white">Instruction</h6>
                         </div>
@@ -260,22 +260,22 @@ class CustomInstructions extends Component {
                                 || this.props.history.location.state.etype == "customtable"
                                 || this.props.history.location.state.etype == "customgetready" ? (
 
-                                    <Link
-                                        to={{
-                                            pathname: "/student/subject/exam",
-                                            state: {
-                                                sessionid: this.props.history.location.state.sessionid,
-                                                type: this.props.history.location.state.type,
-                                                stype: "",
-                                                exam_paper_id: "0",
-                                                etype: this.props.history.location.state.etype
+                                <Link
+                                    to={{
+                                        pathname: "/student/subject/exam",
+                                        state: {
+                                            sessionid: this.props.history.location.state.sessionid,
+                                            type: this.props.history.location.state.type,
+                                            stype: "",
+                                            exam_paper_id: "0",
+                                            etype: this.props.history.location.state.etype
 
-                                            }
-                                        }}
-                                        className="btn btn-outline-primary px-5"
-                                    >
-                                        Start Exam
-                            </Link>) : (this.props.history.location.state.etype == "schedulehome" || this.props.history.location.state.etype == "schedule") ? (
+                                        }
+                                    }}
+                                    className="btn btn-outline-primary px-5"
+                                >
+                                    Start Exam
+                                </Link>) : (this.props.history.location.state.etype == "schedulehome" || this.props.history.location.state.etype == "schedule") ? (
                                     <Link
                                         to={{
                                             pathname: "/student/subject/exam",
@@ -290,7 +290,7 @@ class CustomInstructions extends Component {
                                         className="btn btn-outline-primary px-5"
                                     >
                                         Start Exam
-                            </Link>) : ("")}
+                                    </Link>) : ("")}
 
                         </Col>
                         </Row>

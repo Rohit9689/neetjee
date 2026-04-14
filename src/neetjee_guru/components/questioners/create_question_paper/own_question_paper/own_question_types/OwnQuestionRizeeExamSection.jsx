@@ -126,7 +126,7 @@ class OwnQuestionRizeeExamSection extends Component {
 
             BreadcrumbCustomQuestionsSection: {
                 img: require('../../../../../../images/Neet-Exam.png'),
-                Title: 'Rizee Question Paper',
+                Title: 'ElAPP Question Paper',
                 //SubTitle: 'Rizee',
                 ClassSectionTotalStudents: "",
                 complexity: "",

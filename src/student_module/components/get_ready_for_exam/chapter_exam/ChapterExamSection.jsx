@@ -570,8 +570,8 @@ class ChapterExamSection extends Component {
 
         let currentTime = moment().unix();
         let trailRestriction = this.props.getSubjects.find((a) => a.id == "2");
-        let clength = trailRestriction.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab==false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
-        console.log("this.props.isStudentUserValid.isTrialUser",this.props.isStudentUserValid.isTrialUser,clength);
+        let clength = trailRestriction.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab == false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
+        console.log("this.props.isStudentUserValid.isTrialUser", this.props.isStudentUserValid.isTrialUser, clength);
 
         return (
             <section className="get_ready_for_exam_types px-xl-4 px-lg-4">
@@ -655,9 +655,9 @@ class ChapterExamSection extends Component {
                                                     autoHideDuration={200}>
                                                     <ul className="list-unstyled topic-list m-0 pl-1">
                                                         {this.state.subjectArray.map((chData) => {
-                                                            let filterData = chData.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab==false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
+                                                            let filterData = chData.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab == false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
                                                             if (this.state.class != '0') {
-                                                                filterData = chData.studentChapters.filter((a) => a.class == this.state.class && (a.enabled == true && moduleValid.ready_exam_tab==false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
+                                                                filterData = chData.studentChapters.filter((a) => a.class == this.state.class && (a.enabled == true && moduleValid.ready_exam_tab == false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
                                                             }
                                                             console.log("filterData", filterData);
 
@@ -766,19 +766,17 @@ class ChapterExamSection extends Component {
                                                         <Form.Group as={Col} xl={6} lg={6} md={6} sm={12} controlId="SelectExamDate" className="selectExamDate">
                                                             <Form.Label className="text-uppercase">Date & Time</Form.Label>
                                                             <InputGroup>
-                                                                <InputGroup.Prepend>
-                                                                    <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-calendar-day" /></InputGroup.Text>
-                                                                </InputGroup.Prepend>
+                                                                <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-calendar-day" /></InputGroup.Text>
                                                                 <div className="up-datedirection w-100">
-                                                                <DateTime
-                                                                //timeFormat={moment().format("MMM DD YYYY hh:mm:ss")}
-                                                                direction="up"
-                                                                    dateFormat="DD-MM-YYYY"
-                                                                    inputProps={{ placeholder: '29-05-2020' }}
-                                                                    name="sdate"
-                                                                    onChange={this.datefunction}
-                                                                    isValidDate={valid}
-                                                                />
+                                                                    <DateTime
+                                                                        //timeFormat={moment().format("MMM DD YYYY hh:mm:ss")}
+                                                                        direction="up"
+                                                                        dateFormat="DD-MM-YYYY"
+                                                                        inputProps={{ placeholder: '29-05-2020' }}
+                                                                        name="sdate"
+                                                                        onChange={this.datefunction}
+                                                                        isValidDate={valid}
+                                                                    />
                                                                 </div>
                                                             </InputGroup>
                                                         </Form.Group>
@@ -870,7 +868,7 @@ class ChapterExamSection extends Component {
                             <Card.Footer className="border-0 bg-white text-center">
                                 {this.state.choiceforexam == 2 ? (
                                     <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white">Save &amp; Continue</Button>) : (
-                                        <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white">Start Exam</Button>)}
+                                    <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white">Start Exam</Button>)}
 
                             </Card.Footer>
                         </Card>

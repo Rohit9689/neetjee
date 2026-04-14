@@ -220,7 +220,7 @@ class SinglePracticeTestExamResult extends Component {
             return "Custom Exam";
         }
     }
-    windowClose=()=>{
+    windowClose = () => {
         window.close();
     }
     render() {
@@ -251,7 +251,7 @@ class SinglePracticeTestExamResult extends Component {
 
                                 <div className="right-content d-flex align-items-center">
                                     <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2" style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }} onClick={() => this.windowClose()}> Close</Link>
-                                    
+
 
 
                                 </div>
@@ -282,7 +282,7 @@ class SinglePracticeTestExamResult extends Component {
             ctott = ctott + (parseInt(cmap.in_total_time) + parseInt(cmap.less_total_time) + parseInt(cmap.over_total_time))
 
         })
-        console.log("tyttytyt",ctotq,ctott);
+        console.log("tyttytyt", ctotq, ctott);
 
         let wtotq = 0;
         getStudentExamSessions.getStudentExamSessions[0].wrong_vs_complexity.map((cmap) => {
@@ -329,7 +329,7 @@ class SinglePracticeTestExamResult extends Component {
                                 <p className="text-gray4"><i className="fas fa-star text-warning"></i> {this.examNameFun()}</p>
                             </div>
                             <div className="right-content d-flex align-items-center">
-                            <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2" style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }} onClick={() => this.windowClose()}> Close</Link>
+                                <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2" style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }} onClick={() => this.windowClose()}> Close</Link>
 
 
                             </div>
@@ -433,7 +433,7 @@ class SinglePracticeTestExamResult extends Component {
                                         <tr className="text-success">
                                             <th><i className="fas fa-check-circle text-success" /> Right</th>
                                             <td>{ctotq}</td>
-                                            <td>{!isNaN(Math.round(parseInt(ctott) / parseInt(ctotq)))?(Math.round(parseInt(ctott) / parseInt(ctotq))):('0')}</td>
+                                            <td>{!isNaN(Math.round(parseInt(ctott) / parseInt(ctotq))) ? (Math.round(parseInt(ctott) / parseInt(ctotq))) : ('0')}</td>
                                             {getStudentExamSessions.getStudentExamSessions[0].correct_vs_complexity.map((cmap) => {
                                                 return (<td>{parseInt(cmap.in_time) + parseInt(cmap.less_time) + parseInt(cmap.over_time)}</td>)
                                             })}
@@ -441,7 +441,7 @@ class SinglePracticeTestExamResult extends Component {
                                         <tr className="theme-red">
                                             <th><i className="fas fa-times-circle text-danger" /> Wrong</th>
                                             <td>{wtotq}</td>
-                                            <td>{!isNaN(Math.round(parseInt(wtott) / parseInt(wtotq)))?(Math.round(parseInt(wtott) / parseInt(wtotq))):('0')}</td>
+                                            <td>{!isNaN(Math.round(parseInt(wtott) / parseInt(wtotq))) ? (Math.round(parseInt(wtott) / parseInt(wtotq))) : ('0')}</td>
                                             {getStudentExamSessions.getStudentExamSessions[0].wrong_vs_complexity.map((wmap) => {
                                                 return (<td>{parseInt(wmap.in_time) + parseInt(wmap.less_time) + parseInt(wmap.over_time)}</td>)
                                             })}
@@ -449,7 +449,7 @@ class SinglePracticeTestExamResult extends Component {
                                         <tr className="theme-purple">
                                             <th><i className="fas fa-times-circle theme-purple" /> Un-Answered</th>
                                             <td>{stotq}</td>
-                                            <td>{!isNaN(Math.round(parseInt(stott) / parseInt(stotq)))?(Math.round(parseInt(stott) / parseInt(stotq))):('0')}</td>
+                                            <td>{!isNaN(Math.round(parseInt(stott) / parseInt(stotq))) ? (Math.round(parseInt(stott) / parseInt(stotq))) : ('0')}</td>
                                             {getStudentExamSessions.getStudentExamSessions[0].skipped_vs_complexity.map((smap) => {
                                                 return (<td>{parseInt(smap.in_time) + parseInt(smap.less_time) + parseInt(smap.over_time)}</td>)
                                             })}
@@ -472,8 +472,8 @@ class SinglePracticeTestExamResult extends Component {
                         {
                             this.state.depethreportShow ? null :
                                 <SinglePracticeTestExamResultDetails
-                                mobile={localStorage.getItem("mobile")} 
-                                exam_session_id={localStorage.getItem("sessionid")} />
+                                    mobile={localStorage.getItem("mobile")}
+                                    exam_session_id={localStorage.getItem("sessionid")} />
 
                         }
                     </Row>

@@ -102,7 +102,7 @@ class ErrorExamSection extends Component {
                 let idata = examsubjectData[i];
                 //console.log("idata", idata);
                 if (idata != undefined) {
-                    let someData = this.props.getSubjects.find((a) => a.id == idata.subject_id);
+                    let someData = JSON.parse(JSON.stringify(this.props.getSubjects.find((a) => a.id == idata.subject_id)));
                     const newarr1 = {
                         ...someData,
                         classActive1: "",
@@ -130,7 +130,7 @@ class ErrorExamSection extends Component {
         else {
             let sampleArray = [];
             for (let i = 0; i < this.props.getSubjects.length; i++) {
-                let someData = this.props.getSubjects[i];
+                let someData = JSON.parse(JSON.stringify(this.props.getSubjects[i]));
                 const newarr1 = {
                     ...someData,
                     classActive1: "",
@@ -775,7 +775,7 @@ class ErrorExamSection extends Component {
                 let idata = examsubjectData[i];
                 //console.log("idata", idata);
                 if (idata != undefined) {
-                    let someData = this.props.getSubjects.find((a) => a.id == idata.subject_id);
+                    let someData = JSON.parse(JSON.stringify(this.props.getSubjects.find((a) => a.id == idata.subject_id)));
                     const newarr1 = {
                         ...someData,
                         classActive1: "",
@@ -1028,7 +1028,7 @@ class ErrorExamSection extends Component {
                 let idata = examsubjectData[i];
                 //console.log("idata", idata);
                 if (idata != undefined) {
-                    let someData = this.props.getSubjects.find((a) => a.id == idata.subject_id);
+                    let someData = JSON.parse(JSON.stringify(this.props.getSubjects.find((a) => a.id == idata.subject_id)));
                     const newarr1 = {
                         ...someData,
                         classActive1: "",
@@ -1082,7 +1082,7 @@ class ErrorExamSection extends Component {
         else {
             let msampleArray = [];
             for (let i = 0; i < this.props.getSubjects.length; i++) {
-                let someData = this.props.getSubjects[i];
+                let someData = JSON.parse(JSON.stringify(this.props.getSubjects[i]));
                 const newarr1 = {
                     ...someData,
                     classActive1: "",
@@ -1183,15 +1183,15 @@ class ErrorExamSection extends Component {
         let currentTime = moment().unix();
         let trailRestriction = this.props.getSubjects.find((a) => a.id == "2");
         //console.log("currentstate", this.state.eventKey);
-        let title ="";
-        if(this.state.eventKey=="first"){
+        let title = "";
+        if (this.state.eventKey == "first") {
             title = GoogleAnalyticsArray[0].Error_Chapter_Exam;
         }
-        else if(this.state.eventKey=="second"){
+        else if (this.state.eventKey == "second") {
             title = GoogleAnalyticsArray[0].Error_Cumulative_Exam;
         }
-         
-        
+
+
         ReactGA.pageview('/student/exams/error-exam', title);
         let clength = trailRestriction.studentChapters.filter((a) => (a.enabled == true && moduleValid.exam_tab == false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
         return (
@@ -1211,7 +1211,7 @@ class ErrorExamSection extends Component {
                                     }
                                 }}
                                 className="btn btn-outline-primary">Exam History
-                        </Link>
+                            </Link>
                         </div>
 
 
@@ -1251,10 +1251,10 @@ class ErrorExamSection extends Component {
                                             <div style={{ color: "#f81201" }}>
                                                 {Cookies.get("student_userlevel") == "1" ? (
                                                     <small>*Note:
-                                                Now you have limited Access.</small>
+                                                        Now you have limited Access.</small>
                                                 ) : (
-                                                        <small>*Note: To access full syllabus <span style={{ color: '#f81201 !important', fontWeight: "bold" }}><Link to={"/student/package"}>upgrade to Paid Plan</Link></span> </small>
-                                                    )}
+                                                    <small>*Note: To access full syllabus <span style={{ color: '#f81201 !important', fontWeight: "bold" }}><Link to={"/student/package"}>upgrade to Paid Plan</Link></span> </small>
+                                                )}
 
                                             </div>
                                         ) : ("")}
@@ -1431,11 +1431,11 @@ class ErrorExamSection extends Component {
 
                                                                                     </React.Fragment>
                                                                                 ) : (
-                                                                                        <div className="text-danger text-center">
-                                                                                            {index1 == 0 ? ("No error questions are available") : ("")}
+                                                                                    <div className="text-danger text-center">
+                                                                                        {index1 == 0 ? ("No error questions are available") : ("")}
 
-                                                                                        </div>
-                                                                                    )}
+                                                                                    </div>
+                                                                                )}
 
 
                                                                                 {/* </div>
@@ -1536,10 +1536,10 @@ class ErrorExamSection extends Component {
                                             <div style={{ color: "#f81201" }}>
                                                 {Cookies.get("student_userlevel") == "1" ? (
                                                     <small>*Note:
-                                                Now you have limited Access.</small>
+                                                        Now you have limited Access.</small>
                                                 ) : (
-                                                        <small>*Note: To access all Previous Papers <span style={{ color: '#f81201 !important', fontWeight: "bold" }}><Link to={"/student/package"}>upgrade to Paid Plan</Link></span> </small>
-                                                    )}
+                                                    <small>*Note: To access all Previous Papers <span style={{ color: '#f81201 !important', fontWeight: "bold" }}><Link to={"/student/package"}>upgrade to Paid Plan</Link></span> </small>
+                                                )}
 
                                             </div>) : ("")}
                                         <Card>
@@ -1701,11 +1701,11 @@ class ErrorExamSection extends Component {
                                                                                                                     </Form.Check>
                                                                                                                 </li>
                                                                                                             ) : (
-                                                                                                                    <li style={{ cursor: "pointer" }} onClick={() => this.setState({ userRestionModalShow: true })} className={cData.active}>
-                                                                                                                        <Image src={require('../../../../images/locked.png')} className="mr-2" width="13" alt="locked image" />
-                                                                                                                        {getsinglechap.chapter}
-                                                                                                                    </li>
-                                                                                                                )}
+                                                                                                                <li style={{ cursor: "pointer" }} onClick={() => this.setState({ userRestionModalShow: true })} className={cData.active}>
+                                                                                                                    <Image src={require('../../../../images/locked.png')} className="mr-2" width="13" alt="locked image" />
+                                                                                                                    {getsinglechap.chapter}
+                                                                                                                </li>
+                                                                                                            )}
 
                                                                                                         </div>
                                                                                                     )
@@ -1715,10 +1715,10 @@ class ErrorExamSection extends Component {
                                                                                     ) : ("")
                                                                                     }
                                                                                 </React.Fragment>) : (
-                                                                                        <div className="text-danger text-center">
-                                                                                            {index1 == 0 ? ("No error questions are available") : ("")}
+                                                                                    <div className="text-danger text-center">
+                                                                                        {index1 == 0 ? ("No error questions are available") : ("")}
 
-                                                                                        </div>)}
+                                                                                    </div>)}
 
 
                                                                                 {/* </div>
@@ -1795,15 +1795,15 @@ class ErrorExamSection extends Component {
                                         </Card>
                                     </Tab.Pane>
                                 ) : (
-                                        <Tab.Pane eventKey="second">
-                                            <Card>
-                                                <div className="text-center">
-                                                    <i className="fal fa-exclamation-triangle fa-3x mb-3 text-danger" />
-                                                    <h5 className="text-danger">Cumulative feature is not available for your package</h5>
-                                                </div>
-                                            </Card>
-                                        </Tab.Pane>
-                                    )}
+                                    <Tab.Pane eventKey="second">
+                                        <Card>
+                                            <div className="text-center">
+                                                <i className="fal fa-exclamation-triangle fa-3x mb-3 text-danger" />
+                                                <h5 className="text-danger">Cumulative feature is not available for your package</h5>
+                                            </div>
+                                        </Card>
+                                    </Tab.Pane>
+                                )}
 
 
                             </Tab.Content>
@@ -1819,8 +1819,8 @@ class ErrorExamSection extends Component {
                                             {this.state.eventKey == "first" ? (
                                                 <th>: {this.state.class != 0 ? (classname != undefined ? (classname.class) : ("")) : ("ALL")}</th>
                                             ) : (
-                                                    <th>: {this.state.class != 0 ? (classname1 != undefined ? (classname1.class) : ("")) : ("ALL")}</th>
-                                                )}
+                                                <th>: {this.state.class != 0 ? (classname1 != undefined ? (classname1.class) : ("")) : ("ALL")}</th>
+                                            )}
                                         </tr>
                                         <tr>
                                             <th>Exam </th>
@@ -1878,39 +1878,39 @@ class ErrorExamSection extends Component {
                                             })}
                                         </React.Fragment>
                                     ) : (
-                                            <React.Fragment>
-                                                {this.state.subjectArraycu.map((data) => {
-                                                    const getsinglesub = locsubjects.find((a) => a.id == data.id);
-                                                    return (
+                                        <React.Fragment>
+                                            {this.state.subjectArraycu.map((data) => {
+                                                const getsinglesub = locsubjects.find((a) => a.id == data.id);
+                                                return (
 
-                                                        <Card className="border-0 bg-light">
-                                                            <Card.Header className="bg-secondary">
-                                                                <Card.Title className="mb-0 text-white">{getsinglesub.subject}</Card.Title>
-                                                            </Card.Header>
-                                                            <Card.Body className="p-1">
-                                                                <Card>
-                                                                    <ListGroup variant="flush">
-                                                                        {data.studentChapters.map((data1) => {
-                                                                            const singlechapter = getsinglesub.studentChapters.find((b) => b.id == data1.id)
-                                                                            if (data1.error_questions > 0) {
-                                                                                return (
-                                                                                    <React.Fragment>{data1.checked == true ? (
-                                                                                        <ListGroup.Item>{singlechapter.chapter} - {data1.error_questions}</ListGroup.Item>) : ("")}</React.Fragment>
+                                                    <Card className="border-0 bg-light">
+                                                        <Card.Header className="bg-secondary">
+                                                            <Card.Title className="mb-0 text-white">{getsinglesub.subject}</Card.Title>
+                                                        </Card.Header>
+                                                        <Card.Body className="p-1">
+                                                            <Card>
+                                                                <ListGroup variant="flush">
+                                                                    {data.studentChapters.map((data1) => {
+                                                                        const singlechapter = getsinglesub.studentChapters.find((b) => b.id == data1.id)
+                                                                        if (data1.error_questions > 0) {
+                                                                            return (
+                                                                                <React.Fragment>{data1.checked == true ? (
+                                                                                    <ListGroup.Item>{singlechapter.chapter} - {data1.error_questions}</ListGroup.Item>) : ("")}</React.Fragment>
 
-                                                                                )
-                                                                            }
-                                                                        })}
+                                                                            )
+                                                                        }
+                                                                    })}
 
 
-                                                                    </ListGroup>
-                                                                </Card>
-                                                            </Card.Body>
-                                                        </Card>
+                                                                </ListGroup>
+                                                            </Card>
+                                                        </Card.Body>
+                                                    </Card>
 
-                                                    )
-                                                })}
-                                            </React.Fragment>
-                                        )}
+                                                )
+                                            })}
+                                        </React.Fragment>
+                                    )}
                                 </Scrollbars>
                             </Card.Body>
                             <Card.Footer className="border-0 text-center">

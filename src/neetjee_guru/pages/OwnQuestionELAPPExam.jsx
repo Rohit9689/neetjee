@@ -128,8 +128,8 @@ class OwnQuestionELAPPExam extends Component {
             searchchaptervalue: "",
             questionbankpercentage: "0",
             ownaddedpercentage: "0",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             formErrors: {
@@ -409,8 +409,8 @@ class OwnQuestionELAPPExam extends Component {
                         searchchaptervalue: "",
                         questionbankpercentage: "0",
                         ownaddedpercentage: "0",
-                        questiontypes: "",
-                        questiontypesvalue: "",
+                        questiontypes: [],
+                        questiontypesvalue: [],
                         applicationtheory: "",
                         applicationtheoryvalue: "",
                         formErrors: {

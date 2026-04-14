@@ -88,7 +88,7 @@ class ParentQuestionComponent extends Component {
         //     return { ...item, checked: true }
         // })
         console.log("ParentQuestionComponent", props);
-        let clsdata = props.globals.globals.classes.map((item) => {
+        let clsdata = (props.globals?.globals?.classes || []).map((item) => {
             if (item.id == "1") {
                 return { ...item, active: "outline-secondary active" }
             }
@@ -101,7 +101,7 @@ class ParentQuestionComponent extends Component {
             owedqfilterclass: "1",
             searchsubject: "",
             page: 1
-            
+
         }
     }
     decodefun(data, id) {
@@ -131,7 +131,7 @@ class ParentQuestionComponent extends Component {
     // }
     ownedquestionClassFun1 = (e, data) => {
         console.log("owedqfilterclass", data);
-        let classArray = this.state.classData1.map((item) => {
+        let classArray = (this.state.classData1 || []).map((item) => {
             if (item.id == data) {
                 return { ...item, active: "outline-secondary active" }
             }
@@ -144,7 +144,7 @@ class ParentQuestionComponent extends Component {
     }
     getquestiontypes() {
         let getArray = [];
-        this.props.globals.globals.questionTypes.map((questionData) => {
+        (this.props.globals?.globals?.questionTypes || []).map((questionData) => {
             const newObj = {
                 value: questionData.id,
                 label: questionData.questiontype
@@ -155,8 +155,8 @@ class ParentQuestionComponent extends Component {
     }
     applicationtheory() {
         let getArray = [];
-        if (this.props.globals.globals.questionTheory.length > 0) {
-            this.props.globals.globals.questionTheory.map((theoryData) => {
+        if ((this.props.globals?.globals?.questionTheory?.length || 0) > 0) {
+            (this.props.globals?.globals?.questionTheory || []).map((theoryData) => {
                 const newObj = {
                     value: theoryData.id,
                     label: theoryData.question_theory
@@ -175,8 +175,8 @@ class ParentQuestionComponent extends Component {
     }
     complexity() {
         let getArray = [];
-        if (this.props.globals.globals.complexity.length > 0) {
-            this.props.globals.globals.complexity.map((complexityData) => {
+        if ((this.props.globals?.globals?.complexity?.length || 0) > 0) {
+            (this.props.globals?.globals?.complexity || []).map((complexityData) => {
                 const newObj = {
                     value: complexityData.id,
                     label: complexityData.complexity
@@ -195,44 +195,34 @@ class ParentQuestionComponent extends Component {
     }
     getSubjects() {
         let getArray = [];
-        for (let i = 0; i <= this.props.stateData.subjects.length; i++) {
-            let idata = this.props.stateData.subjects[i];
-            if (idata != undefined) {
-                const newObj = {
-                    value: idata.id,
-                    label: idata.subject
-                }
-                getArray.push(newObj);
-
+        const subjects = this.props.stateData?.subjects || [];
+        for (let i = 0; i < subjects.length; i++) {
+            let idata = subjects[i];
+            const newObj = {
+                value: idata.id,
+                label: idata.subject
             }
-
+            getArray.push(newObj);
         }
         return getArray;
     }
-    getChapters = () => {
+    getChapters() {
         let getArray = [];
-        for (let i = 0; i <= this.props.stateData.subjects.length; i++) {
-            let idata = this.props.stateData.subjects[i];
-            if (idata != undefined) {
-                if (idata.id == this.props.stateData.searchsubject) {
-                    let chData = "";
-                    if (this.state.owedqfilterclass != "0") {
-                        chData = idata.chapters.filter((a) => a.class == this.state.owedqfilterclass);
-                    }
-                    else {
-                        chData = idata.chapters;
-                    }
-                    chData.map((chmapData) => {
+        const subjects = this.props.stateData?.subjects || [];
+        if (subjects.length > 0) {
+            subjects.map((submap) => {
+                if (submap.id == this.props.sid) {
+                    const chapters = submap.chapters || [];
+                    for (let i = 0; i < chapters.length; i++) {
+                        let idata = chapters[i];
                         const newObj = {
-                            value: chmapData.id,
-                            label: chmapData.chapter
+                            value: idata.id,
+                            label: idata.chapter
                         }
                         getArray.push(newObj);
-                    })
-
+                    }
                 }
-            }
-
+            })
         }
         return getArray;
     }
@@ -268,9 +258,9 @@ class ParentQuestionComponent extends Component {
         const loading3 = getInstituteQuestions.loading;
         const error3 = getInstituteQuestions.error;
         let qcountarr = [];
-        this.props.stateData.subjects.map((smap) => {
-            smap.chapters.map((cmap) => {
-                if (cmap.ownedarray.length > 0) {
+        (this.props.stateData?.subjects || []).map((smap) => {
+            (smap.chapters || []).map((cmap) => {
+                if (cmap.ownedarray && cmap.ownedarray.length > 0) {
                     qcountarr.push(...cmap.ownedarray);
                 }
 
@@ -279,7 +269,7 @@ class ParentQuestionComponent extends Component {
         })
         //start question type data
         let qtypenewArray = [];
-        this.props.globals.globals.questionTypes.map((questionData) => {
+        (this.props.globals?.globals?.questionTypes || []).map((questionData) => {
             const newObj = {
                 value: questionData.id,
                 label: questionData.questiontype
@@ -323,7 +313,7 @@ class ParentQuestionComponent extends Component {
                                     <div className="d-flex align-items-center">
                                         <div className="mr-2">Class:</div>
                                         <ButtonGroup aria-label="Basic example">
-                                            {this.state.classData1.map((classmapData) => (
+                                            {(this.state.classData1 || []).map((classmapData) => (
                                                 <Button onClick={(e) => this.ownedquestionClassFun1(e, classmapData.id)} variant={classmapData.active}>{classmapData.class}
                                                 </Button>))}
                                             {/* <Button variant="outline-secondary">XII</Button> */}
@@ -417,7 +407,7 @@ class ParentQuestionComponent extends Component {
         }
         return (
             <QuestionComponent
-            page={this.state.page}
+                page={this.state.page}
                 getInstituteQuestions={getInstituteQuestions.getInstituteQuestions}
                 globals={this.props.globals}
                 stateData={this.props.stateData}

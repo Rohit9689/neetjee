@@ -113,8 +113,8 @@ class OwnQuestionCustompresent extends Component {
             searchchaptervalue: "",
             questionbankpercentage: "100",
             ownaddedpercentage: "0",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             formErrors: {
@@ -146,14 +146,14 @@ class OwnQuestionCustompresent extends Component {
     }
     menuToggler = () => {
         const toggled = Cookies.get("toggle");
-         if (toggled === "wrapper") {
-             this.setState({toggled:"wrapper sidebar-enable"});
-             Cookies.set("toggle", "wrapper sidebar-enable");
-         } else {
-             this.setState({toggled:"wrapper"});
-             Cookies.set("toggle", "wrapper");
-         }
-     };
+        if (toggled === "wrapper") {
+            this.setState({ toggled: "wrapper sidebar-enable" });
+            Cookies.set("toggle", "wrapper sidebar-enable");
+        } else {
+            this.setState({ toggled: "wrapper" });
+            Cookies.set("toggle", "wrapper");
+        }
+    };
     generateQuestionPaper = (e) => {
         let status = false;
         for (const item of this.state.subjects) {
@@ -359,8 +359,8 @@ class OwnQuestionCustompresent extends Component {
                         searchchaptervalue: "",
                         questionbankpercentage: "0",
                         ownaddedpercentage: "0",
-                        questiontypes: "",
-                        questiontypesvalue: "",
+                        questiontypes: [],
+                        questiontypesvalue: [],
                         applicationtheory: "",
                         applicationtheoryvalue: "",
                         formErrors: {

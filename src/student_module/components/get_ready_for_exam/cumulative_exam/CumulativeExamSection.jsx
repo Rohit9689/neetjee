@@ -576,25 +576,25 @@ class CumulativeExamSection extends Component {
             examtime = subcount * 60;
         }
         console.log("subcount", subcount);
-        let currentTime  = moment().unix();
-        let trailRestriction=this.props.getSubjects.find((a)=>a.id=="2");
-        let clength=trailRestriction.studentChapters.filter((a)=>(a.enabled==true && moduleValid.ready_exam_tab==false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
+        let currentTime = moment().unix();
+        let trailRestriction = this.props.getSubjects.find((a) => a.id == "2");
+        let clength = trailRestriction.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab == false) || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString()));
         return (
             <section className="get_ready_for_exam_types px-xl-4 px-lg-4">
                 <Row>
                     <Col xl={9} lg={9} md={12} sm={12}>
                         <h5 className="mb-4 title">Cumulative Exam</h5>
-                        {(this.props.isStudentUserValid.isTrialUser==true && clength.length<20)|| ( currentTime > this.props.isStudentUserValid.expiry_date && clength.length < 20)?(
-                                            
-                                            <small>
-                                                    <span style={{color:"#f81201"}}>*Note: To access full syllabus </span>
-                                                    <span style={{fontWeight:"bold"}}><Link style={{color:'#007bff'}} to={"/student/package"}>upgrade to Paid Plan</Link></span> 
-                                                    </small>):("")}
+                        {(this.props.isStudentUserValid.isTrialUser == true && clength.length < 20) || (currentTime > this.props.isStudentUserValid.expiry_date && clength.length < 20) ? (
+
+                            <small>
+                                <span style={{ color: "#f81201" }}>*Note: To access full syllabus </span>
+                                <span style={{ fontWeight: "bold" }}><Link style={{ color: '#007bff' }} to={"/student/package"}>upgrade to Paid Plan</Link></span>
+                            </small>) : ("")}
                         <div className="mt-4 get_ready_for_exam_syllabus">
                             <Card className="border-0 shadow-sm">
                                 <Card.Header className="bg-white border-0 d-md-flex justify-content-between align-items-center">
                                     <h6 className="mb-0 text-uppercase">Syllabus</h6>
-                                    
+
                                     <div className="" style={{ width: 200 }}>
                                         <SelectDropDown
                                             stateData={this.state.classvalue}
@@ -657,9 +657,9 @@ class CumulativeExamSection extends Component {
                                                     autoHideDuration={200}>
                                                     <ul className="list-unstyled topic-list m-0 pl-1">
                                                         {this.state.subjectArray.map((chData) => {
-                                                            let filterData = chData.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab==false || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString())));
+                                                            let filterData = chData.studentChapters.filter((a) => (a.enabled == true && moduleValid.ready_exam_tab == false || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString())));
                                                             if (this.state.class != '0') {
-                                                                filterData = chData.studentChapters.filter((a) => a.class == this.state.class && (a.enabled == true && moduleValid.ready_exam_tab==false || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString())));
+                                                                filterData = chData.studentChapters.filter((a) => a.class == this.state.class && (a.enabled == true && moduleValid.ready_exam_tab == false || isStudentUserValid.chapter_ids.split(",").includes(a.id.toString())));
                                                             }
                                                             console.log("filterData", filterData);
 
@@ -781,17 +781,15 @@ class CumulativeExamSection extends Component {
                                                         <Form.Group as={Col} xl={6} lg={6} md={6} sm={12} controlId="SelectExamDate" className="selectExamDate">
                                                             <Form.Label className="text-uppercase">Date & Time</Form.Label>
                                                             <InputGroup>
-                                                                <InputGroup.Prepend>
-                                                                    <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-calendar-day" /></InputGroup.Text>
-                                                                </InputGroup.Prepend>
+                                                                <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-calendar-day" /></InputGroup.Text>
                                                                 <div className="up-datedirection w-100">
-                                                                <DateTime
-                                                                    dateFormat="DD-MM-YYYY"
-                                                                    inputProps={{ placeholder: '29-05-2020' }}
-                                                                    name="sdate"
-                                                                    onChange={this.datefunction}
-                                                                    isValidDate={valid}
-                                                                />
+                                                                    <DateTime
+                                                                        dateFormat="DD-MM-YYYY"
+                                                                        inputProps={{ placeholder: '29-05-2020' }}
+                                                                        name="sdate"
+                                                                        onChange={this.datefunction}
+                                                                        isValidDate={valid}
+                                                                    />
                                                                 </div>
                                                             </InputGroup>
                                                         </Form.Group>
@@ -886,7 +884,7 @@ class CumulativeExamSection extends Component {
                                 {/* <Link className="px-5 btn btn-success text-uppercase text-white" to="#">Prepare</Link> */}
                                 {this.state.choiceforexam == 2 ? (
                                     <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white">Save &amp; Continue</Button>) : (
-                                        <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white">Start Exam</Button>)}
+                                    <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white">Start Exam</Button>)}
 
                             </Card.Footer>
                         </Card>

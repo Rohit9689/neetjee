@@ -65,7 +65,7 @@ class ManageQuestionPaperSection extends Component {
     actionsFormatter12(cell, row, rowIndex, formatExtraData) {
         return (
             <div className="text-link">
-                <Link className="text-dark" to={{}}>{row['exam_name']}</Link>
+                <span className="text-dark cursor-pointer">{row['exam_name']}</span>
             </div>
         );
     }

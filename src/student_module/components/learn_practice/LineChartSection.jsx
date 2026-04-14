@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
+import {
+    Chart as ChartJS,
+    registerables
+} from 'chart.js';
 import { Line } from 'react-chartjs-2'
+
+ChartJS.register(...registerables);
 
 const chartData = {
     labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -58,7 +64,7 @@ const chartData = {
             borderDashOffset: 0.0,
             borderJoinStyle: "miter",
             pointBorderColor: "rgba(80, 182, 12,1)",
-            
+
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,

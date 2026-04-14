@@ -300,7 +300,7 @@ class NavbarOne extends Component {
                 </li>
                 <li>
                   <a className="pt-2 nav-link text-center" href="/#"> All
-                                            notifications</a>
+                    notifications</a>
                 </li>
               </ul>
             </NavDropdown>
@@ -321,7 +321,7 @@ class NavbarOne extends Component {
               <NavDropdown.Item ><i className="far fa-key mr-2" /> Change Password</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="#"><i className="far fa-comment-alt-lines mr-2" /> Feedback</NavDropdown.Item> */}
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} onClick={this.logout}><i className="far fa-sign-out mr-2" /> Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={this.logout}><i className="far fa-sign-out mr-2" /> Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>
 

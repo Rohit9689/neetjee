@@ -521,18 +521,16 @@ class SemiGrandExamSection extends Component {
                                                         <Form.Group as={Col} xl={6} lg={6} md={6} sm={12} controlId="SelectExamDate" className="selectExamDate">
                                                             <Form.Label className="text-uppercase">Date & Time</Form.Label>
                                                             <InputGroup>
-                                                                <InputGroup.Prepend>
-                                                                    <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-calendar-day" /></InputGroup.Text>
-                                                                </InputGroup.Prepend>
+                                                                <InputGroup.Text id="inputGroupPrepend"><i className="fas fa-calendar-day" /></InputGroup.Text>
                                                                 <div className="up-datedirection w-100">
-                                                                <DateTime
-                                                                    dateFormat="DD-MM-YYYY"
-                                                                    inputProps={{ placeholder: '29-05-2020' }}
-                                                                    name="sdate"
-                                                                    onChange={this.datefunction}
-                                                                    isValidDate={valid}
-                                                                />
-                                                                 </div>
+                                                                    <DateTime
+                                                                        dateFormat="DD-MM-YYYY"
+                                                                        inputProps={{ placeholder: '29-05-2020' }}
+                                                                        name="sdate"
+                                                                        onChange={this.datefunction}
+                                                                        isValidDate={valid}
+                                                                    />
+                                                                </div>
                                                             </InputGroup>
                                                         </Form.Group>
                                                     </Row>
@@ -605,31 +603,31 @@ class SemiGrandExamSection extends Component {
                                                     </tr>
                                                 </React.Fragment>
                                             ) : (
-                                                    <React.Fragment>
-                                                        {this.state.examtype == "1" ? (
-                                                            <React.Fragment>
-                                                                <tr>
-                                                                    <th> Duration </th>
-                                                                    <th>: 180min </th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>No Of Questions </th>
-                                                                    <th>: 75</th>
-                                                                </tr>
-                                                            </React.Fragment>) : (
-                                                                <React.Fragment>
-                                                                    <tr>
-                                                                        <th> Duration </th>
-                                                                        <th>: 300min </th>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>No Of Questions </th>
-                                                                        <th>: 75</th>
-                                                                    </tr>
-                                                                </React.Fragment>)}
+                                                <React.Fragment>
+                                                    {this.state.examtype == "1" ? (
+                                                        <React.Fragment>
+                                                            <tr>
+                                                                <th> Duration </th>
+                                                                <th>: 180min </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>No Of Questions </th>
+                                                                <th>: 75</th>
+                                                            </tr>
+                                                        </React.Fragment>) : (
+                                                        <React.Fragment>
+                                                            <tr>
+                                                                <th> Duration </th>
+                                                                <th>: 300min </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>No Of Questions </th>
+                                                                <th>: 75</th>
+                                                            </tr>
+                                                        </React.Fragment>)}
 
-                                                    </React.Fragment>
-                                                )}
+                                                </React.Fragment>
+                                            )}
                                         </tbody>
                                     </Table>
                                 </Card>
@@ -648,7 +646,7 @@ class SemiGrandExamSection extends Component {
                                 {/* <Link className="px-5 btn btn-success text-uppercase text-white" to="#">Prepare</Link> */}
                                 {this.state.choiceforexam == 2 ? (
                                     <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white text-uppercase">Save &amp; Continue</Button>) : (
-                                        <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white text-uppercase">Start Exam</Button>)}
+                                    <Button onClick={this.handleFormSubmit} className="mt-5 px-5 btn btn-green text-white text-uppercase">Start Exam</Button>)}
                             </Card.Footer>
                         </Card>
                     </Col>

@@ -1017,7 +1017,7 @@ class OwnQuestionSemiGrandSection extends Component {
                                 </Scrollbars>
                             </Card.Body>
                             <Card.Footer className="border-0">
-                                <Button variant="primary" className="px-4 text-uppercase" className="w-100" onClick={this.props.ParentgenerateQuestionPaper}>Generate question paper</Button>
+                                <Button variant="primary" className="px-4 text-uppercase w-100" onClick={this.props.ParentgenerateQuestionPaper}>Generate question paper</Button>
                                 {/* <Button variant="primary" className="px-4 text-uppercase" className="w-100" onClick={() => this.manageexams()}>Go to manage exams</Button> */}
                             </Card.Footer>
                         </Card>

@@ -3,7 +3,7 @@ import { Row, Container, Col, Image, Modal } from 'react-bootstrap';
 import "./_helpsystem.scss";
 
 class WarmUpModal extends Component {
- 
+
     render() {
         return (
             <Modal {...this.props} className="modal_width"

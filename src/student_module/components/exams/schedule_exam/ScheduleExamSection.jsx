@@ -89,7 +89,6 @@ class ScheduleExamSection extends Component {
     }
     render() {
         console.log("currentState", this.state);
-        const examname = this.props.studentGlobals.exams.find((a) => a.id == Cookies.get("examid"));
         //console.log("this"props.getScheduledExams., this)props.getScheduledExams.;
         const nowdate = moment().unix();
         console.log("props.getScheduledExams", this.props.getScheduledExams);
@@ -161,7 +160,7 @@ class ScheduleExamSection extends Component {
                                                         }
                                                     }}
                                                     className="btn btn-outline-primary">Exam History
-                                            </Link>
+                                                </Link>
                                             </li>
 
                                         </ul>
@@ -199,7 +198,7 @@ class ScheduleExamSection extends Component {
                                                         }
                                                     }}
                                                     className="btn btn-outline-primary">Exam History
-                                            </Link>
+                                                </Link>
                                             </li>
 
                                         </ul>
@@ -237,7 +236,7 @@ class ScheduleExamSection extends Component {
                                                         }
                                                     }}
                                                     className="btn btn-outline-primary">Exam History
-                                            </Link>
+                                                </Link>
                                             </li>
 
                                         </ul>
@@ -275,7 +274,7 @@ class ScheduleExamSection extends Component {
                                                         }
                                                     }}
                                                     className="btn btn-outline-primary">Exam History
-                                            </Link>
+                                                </Link>
                                             </li>
 
                                         </ul>
@@ -294,7 +293,7 @@ class ScheduleExamSection extends Component {
                                             <Card.Body >
                                                 <Row>
                                                     {currentexams.map((getData) => {
-                                                        const examname = this.props.studentGlobals.exams.find((data) => data.id == getData.exam_type)
+                                                        const examname = (this.props.studentGlobals?.exams || []).find((data) => data.id == getData.exam_type)
                                                         return (
                                                             <Col key={getData.id} xl={12} lg={12} md={12} sm={12} xs={12} className="mb-4">
                                                                 <Link
@@ -315,7 +314,7 @@ class ScheduleExamSection extends Component {
                                                                                     <Image src={require('../../../../images/Neet-Exam.png')} width="60" height="65" alt="logo" roundedCircle />
                                                                                 </div>
                                                                                 <div className="ml-xl-5 ml-lg-4 text">
-                                                                                    <Card.Title className="h6 mb-0">{examname.exam}</Card.Title>
+                                                                                    <Card.Title className="h6 mb-0">{examname?.exam || 'N/A'}</Card.Title>
                                                                                     <Card.Text className="text-muted">{getData.exam_name}
                                                                                     </Card.Text>
                                                                                     {/* <Card.Text>Attempted Students : <span className="text-muted">0</span></Card.Text> */}
@@ -349,7 +348,7 @@ class ScheduleExamSection extends Component {
                                                 <Row>
                                                     {upcommingexams.map((getData) => {
                                                         console.log("getData.exam_type", getData.exam_type);
-                                                        const examname = this.props.studentGlobals.exams.find((data) => data.id == getData.exam_type)
+                                                        const examname = (this.props.studentGlobals?.exams || []).find((data) => data.id == getData.exam_type)
                                                         return (
                                                             <React.Fragment>
 
@@ -362,7 +361,7 @@ class ScheduleExamSection extends Component {
                                                                                         <Image src={require('../../../../images/Neet-Exam.png')} width="60" height="65" alt="logo" roundedCircle />
                                                                                     </div>
                                                                                     <div className="ml-xl-5 ml-lg-3 text">
-                                                                                        <Card.Title className="h6 mb-0">{examname.exam}</Card.Title>
+                                                                                        <Card.Title className="h6 mb-0">{examname?.exam || 'N/A'}</Card.Title>
                                                                                         <Card.Text className="text-muted">{getData.exam_name}
                                                                                         </Card.Text>
                                                                                         <Card.Text>{moment.unix(getData.start_time).format("DD-MM-YYYY")}
@@ -432,8 +431,8 @@ class ScheduleExamSection extends Component {
 
                                                 <Row>
                                                     {compexams.map((getData) => {
-                                                        console.log("getData.exam_typecompexams",getData.exam_type, this.props.studentGlobals.exams);
-                                                        const examname = this.props.studentGlobals.exams.find((data) => data.id == getData.exam_type)
+                                                        console.log("getData.exam_typecompexams", getData.exam_type, this.props.studentGlobals.exams);
+                                                        const examname = (this.props.studentGlobals?.exams || []).find((data) => data.id == getData.exam_type)
                                                         return (
                                                             <React.Fragment>
 
@@ -445,7 +444,7 @@ class ScheduleExamSection extends Component {
                                                                                     <Image src={require('../../../../images/Neet-Exam.png')} width="60" height="65" alt="logo" roundedCircle />
                                                                                 </div>
                                                                                 <div className="ml-xl-5 ml-lg-4 text">
-                                                                                    <Card.Title className="h6 mb-0">{examname.exam}</Card.Title>
+                                                                                    <Card.Title className="h6 mb-0">{examname?.exam || 'N/A'}</Card.Title>
                                                                                     <Card.Text className="text-muted">{getData.exam_name}
                                                                                     </Card.Text>
                                                                                     {/* <Card.Text>Attempted Students : <span className="text-muted">0</span></Card.Text> */}
@@ -480,7 +479,7 @@ class ScheduleExamSection extends Component {
 
                                                 <Row>
                                                     {expiredexams.map((getData) => {
-                                                        const examname = this.props.studentGlobals.exams.find((data) => data.id == getData.exam_type)
+                                                        const examname = (this.props.studentGlobals?.exams || []).find((data) => data.id == getData.exam_type)
                                                         return (
                                                             <React.Fragment>
 
@@ -492,7 +491,7 @@ class ScheduleExamSection extends Component {
                                                                                     <Image src={require('../../../../images/Neet-Exam.png')} width="60" height="65" alt="logo" roundedCircle />
                                                                                 </div>
                                                                                 <div className="ml-xl-5 ml-lg-4 text">
-                                                                                    <Card.Title className="h6 mb-0">{examname.exam}</Card.Title>
+                                                                                    <Card.Title className="h6 mb-0">{examname?.exam || 'N/A'}</Card.Title>
                                                                                     <Card.Text className="text-muted">{getData.exam_name}
                                                                                     </Card.Text>
                                                                                     {/* <Card.Text>Attempted Students : <span className="text-muted">0</span></Card.Text> */}

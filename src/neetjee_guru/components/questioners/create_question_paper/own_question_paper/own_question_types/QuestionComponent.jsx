@@ -47,7 +47,7 @@ class QuestionComponent extends Component {
         //     return { ...item, checked: true }
         // })
         console.log("QuestionComponent", props);
-        let clsdata = props.globals.globals.classes.map((item) => {
+        let clsdata = (props.globals?.globals?.classes || []).map((item) => {
             if (item.id == "1") {
                 return { ...item, active: "outline-secondary active" }
             }
@@ -105,7 +105,7 @@ class QuestionComponent extends Component {
     }
     getquestiontypes() {
         let getArray = [];
-        this.props.globals.globals.questionTypes.map((questionData) => {
+        (this.props.globals?.globals?.questionTypes || []).map((questionData) => {
             const newObj = {
                 value: questionData.id,
                 label: questionData.questiontype
@@ -116,8 +116,8 @@ class QuestionComponent extends Component {
     }
     applicationtheory() {
         let getArray = [];
-        if (this.props.globals.globals.questionTheory.length > 0) {
-            this.props.globals.globals.questionTheory.map((theoryData) => {
+        if ((this.props.globals?.globals?.questionTheory?.length || 0) > 0) {
+            (this.props.globals?.globals?.questionTheory || []).map((theoryData) => {
                 const newObj = {
                     value: theoryData.id,
                     label: theoryData.question_theory
@@ -136,8 +136,8 @@ class QuestionComponent extends Component {
     }
     complexity() {
         let getArray = [];
-        if (this.props.globals.globals.complexity.length > 0) {
-            this.props.globals.globals.complexity.map((complexityData) => {
+        if ((this.props.globals?.globals?.complexity?.length || 0) > 0) {
+            (this.props.globals?.globals?.complexity || []).map((complexityData) => {
                 const newObj = {
                     value: complexityData.id,
                     label: complexityData.complexity
@@ -156,44 +156,34 @@ class QuestionComponent extends Component {
     }
     getSubjects() {
         let getArray = [];
-        for (let i = 0; i <= this.props.stateData.subjects.length; i++) {
-            let idata = this.props.stateData.subjects[i];
-            if (idata != undefined) {
-                const newObj = {
-                    value: idata.id,
-                    label: idata.subject
-                }
-                getArray.push(newObj);
-
+        const subjects = this.props.stateData?.subjects || [];
+        for (let i = 0; i < subjects.length; i++) {
+            let idata = subjects[i];
+            const newObj = {
+                value: idata.id,
+                label: idata.subject
             }
-
+            getArray.push(newObj);
         }
         return getArray;
     }
-    getChapters = () => {
+    getChapters() {
         let getArray = [];
-        for (let i = 0; i <= this.props.stateData.subjects.length; i++) {
-            let idata = this.props.stateData.subjects[i];
-            if (idata != undefined) {
-                if (idata.id == this.props.stateData.searchsubject) {
-                    let chData = "";
-                    if (this.state.owedqfilterclass != "0") {
-                        chData = idata.chapters.filter((a) => a.class == this.state.owedqfilterclass);
-                    }
-                    else {
-                        chData = idata.chapters;
-                    }
-                    chData.map((chmapData) => {
+        const subjects = this.props.stateData?.subjects || [];
+        if (subjects.length > 0) {
+            subjects.map((submap) => {
+                if (submap.id == this.props.sid) {
+                    const chapters = submap.chapters || [];
+                    for (let i = 0; i < chapters.length; i++) {
+                        let idata = chapters[i];
                         const newObj = {
-                            value: chmapData.id,
-                            label: chmapData.chapter
+                            value: idata.id,
+                            label: idata.chapter
                         }
                         getArray.push(newObj);
-                    })
-
+                    }
                 }
-            }
-
+            })
         }
         return getArray;
     }
@@ -330,9 +320,9 @@ class QuestionComponent extends Component {
         });
 
         let qcountarr = [];
-        this.props.stateData.subjects.map((smap) => {
-            smap.chapters.map((cmap) => {
-                if (cmap.ownedarray.length > 0) {
+        (this.props.stateData?.subjects || []).map((smap) => {
+            (smap.chapters || []).map((cmap) => {
+                if (cmap.ownedarray && cmap.ownedarray.length > 0) {
                     qcountarr.push(...cmap.ownedarray);
                 }
 
@@ -341,7 +331,7 @@ class QuestionComponent extends Component {
         })
         //start question type data
         let qtypenewArray = [];
-        this.props.globals.globals.questionTypes.map((questionData) => {
+        (this.props.globals?.globals?.questionTypes || []).map((questionData) => {
             const newObj = {
                 value: questionData.id,
                 label: questionData.questiontype
@@ -363,10 +353,10 @@ class QuestionComponent extends Component {
         //end question type data
         console.log("this.state.getInstituteQuestions", this.state.getInstituteQuestions);
         let finddata = [];
-        this.state.getInstituteQuestions.map((item) => {
-            this.props.stateData.subjects.map((item1) => {
+        (this.state.getInstituteQuestions || []).map((item) => {
+            (this.props.stateData?.subjects || []).map((item1) => {
                 if (item1.id == item.subject) {
-                    item1.chapters.map((item3) => {
+                    (item1.chapters || []).map((item3) => {
 
                         const arr = item.chapter.split(",");
                         console.log("drfg", arr, item3.id);
@@ -379,7 +369,7 @@ class QuestionComponent extends Component {
                 }
             })
         });
-        const newData1 = this.state.getInstituteQuestions.map((item) => {
+        const newData1 = (this.state.getInstituteQuestions || []).map((item) => {
             if (finddata.length > 0) {
                 if (finddata.find((a) => a.id == item.id)) {
                     return { ...item, checked: true }
@@ -415,7 +405,7 @@ class QuestionComponent extends Component {
                                 <div className="d-flex align-items-center">
                                     <div className="mr-2">Class:</div>
                                     <ButtonGroup aria-label="Basic example">
-                                        {this.state.classData1.map((classmapData) => (<Button onClick={(e) => this.ownedquestionClassFun1(e, classmapData.id)} variant={classmapData.active}>{classmapData.class}</Button>))}
+                                        {(this.state.classData1 || []).map((classmapData) => (<Button onClick={(e) => this.ownedquestionClassFun1(e, classmapData.id)} variant={classmapData.active}>{classmapData.class}</Button>))}
                                         {/* <Button variant="outline-secondary">XII</Button> */}
                                     </ButtonGroup>
                                 </div>
@@ -522,51 +512,125 @@ class QuestionComponent extends Component {
                                                 </p>
                                             }
                                         >
-                                            {latestData.map((questionsData, index) => {
-                                               if (questionsData.qtype == "9" || questionsData.qtype == "3") {
-                                                console.log("questionsData.question", questionsData.question, questionsData.id);
-                                                let question1 = questionsData.question.replace(/src="/g, 'src=\\"');
-                                                let question2 = question1.replace(/" \/>/g, '\\" />');
-                                                let question = [];
-                                                try {
-                                                    question = JSON.parse(question2);
-                                                }
-                                                catch (err) {
-                                                    console.log("MATRIX ERROR:", err.message);
-                                                }
+                                            {(latestData || []).map((questionsData, index) => {
+                                                if (questionsData.qtype == "9" || questionsData.qtype == "3") {
+                                                    console.log("questionsData.question", questionsData.question, questionsData.id);
+                                                    let question1 = questionsData.question.replace(/src="/g, 'src=\\"');
+                                                    let question2 = question1.replace(/" \/>/g, '\\" />');
+                                                    let question = [];
+                                                    try {
+                                                        question = JSON.parse(question2);
+                                                    }
+                                                    catch (err) {
+                                                        console.log("MATRIX ERROR:", err.message);
+                                                    }
 
 
-                                                console.log("questionsData.questionnn", question);
-                                                return (
-                                                    <Card as={Card.Body} className="bg-light my-2">
+                                                    console.log("questionsData.questionnn", question);
+                                                    return (
+                                                        <Card as={Card.Body} className="bg-light my-2">
+                                                            <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
+                                                                <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
+                                                                <Form.Check.Label htmlFor={"checkbox_01" + index}>
+                                                                    <span>{this.idFunction(index)}.</span>
+                                                                    {parse(questionsData.mat_question)}
+                                                                    <Row>
+                                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                            <ol className="matrixlistoptions" type={
+                                                                                questionsData.list1type == "alphabets" ? ("A")
+                                                                                    : (questionsData.list1type == "numbers") ? ("1")
+                                                                                        : ("roman")}
+                                                                            >
+                                                                                {(question || []).map((item) => (
+                                                                                    <li>{parse(item.qlist1)}</li>
+                                                                                ))}
+                                                                            </ol>
+                                                                        </Col>
+                                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                            <ol className="matrixlistoptions" type={
+                                                                                questionsData.list2type == "alphabets" ? ("A")
+                                                                                    : (questionsData.list2type == "numbers") ? ("1")
+                                                                                        : ("roman")}>
+                                                                                {(question || []).map((item) => (
+                                                                                    <li>{parse(item.qlist2)}</li>
+                                                                                ))}
+                                                                            </ol>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </Form.Check.Label>
+                                                            </Form.Check>
+                                                            <hr className="my-3" />
+                                                            <Row>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>A.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option1)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>B.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option2)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>C.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option3)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>D.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option4)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col xl={12} lg={12} md={12} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span className="font-weight-bold">Currect Answer:</span>
+                                                                        <div className="font-weight-bold ml-2">{questionsData.answer}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+
+                                                        </Card>)
+                                                }
+                                                else if (questionsData.qtype == "8") {
+                                                    return (
+                                                        <Card as={Card.Body} className="bg-light my-2">
+                                                            <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
+                                                                <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
+                                                                <Form.Check.Label htmlFor={"checkbox_01" + index}>
+                                                                    <span>{this.idFunction(index)}</span>
+                                                                    {parse(questionsData.question)}
+                                                                    {" QID- " + questionsData.id}
+                                                                </Form.Check.Label>
+                                                            </Form.Check>
+                                                            <hr className="my-3" />
+                                                            <Row>
+                                                                <Col xl={12} lg={12} md={12} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span className="font-weight-bold">Currect Answer:</span>
+                                                                        <div className="font-weight-bold ml-2">{questionsData.answer}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+
+                                                        </Card>
+                                                    )
+
+                                                }
+                                                else if (questionsData.qtype == "5") {
+                                                    return (<Card as={Card.Body} className="bg-light my-2">
                                                         <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
                                                             <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
                                                             <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                <span>{this.idFunction(index)}.</span>
-                                                                {parse(questionsData.mat_question)}
-                                                                <Row>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <ol className="matrixlistoptions" type={
-                                                                            questionsData.list1type == "alphabets" ? ("A")
-                                                                                : (questionsData.list1type == "numbers") ? ("1")
-                                                                                    : ("roman")}
-                                                                        >
-                                                                            {question.map((item) => (
-                                                                                <li>{parse(item.qlist1)}</li>
-                                                                            ))}
-                                                                        </ol>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <ol className="matrixlistoptions" type={
-                                                                            questionsData.list2type == "alphabets" ? ("A")
-                                                                                : (questionsData.list2type == "numbers") ? ("1")
-                                                                                    : ("roman")}>
-                                                                            {question.map((item) => (
-                                                                                <li>{parse(item.qlist2)}</li>
-                                                                            ))}
-                                                                        </ol>
-                                                                    </Col>
-                                                                </Row>
+                                                                {parse(questionsData.compquestion)}
+                                                                <span>{this.idFunction(index)}</span>
+                                                                {parse(questionsData.question)}
+                                                                {" QID- " + questionsData.id}
                                                             </Form.Check.Label>
                                                         </Form.Check>
                                                         <hr className="my-3" />
@@ -606,250 +670,13 @@ class QuestionComponent extends Component {
                                                         </Row>
 
                                                     </Card>)
-                                            }
-                                            else if (questionsData.qtype == "8") {
-                                                return (
-                                                    <Card as={Card.Body} className="bg-light my-2">
-                                                        <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
-                                                            <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
-                                                            <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                <span>{this.idFunction(index)}</span>
-                                                                {parse(questionsData.question)}
-                                                                {" QID- " + questionsData.id}
-                                                            </Form.Check.Label>
-                                                        </Form.Check>
-                                                        <hr className="my-3" />
-                                                        <Row>
-                                                            <Col xl={12} lg={12} md={12} sm={12} className="my-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <span className="font-weight-bold">Currect Answer:</span>
-                                                                    <div className="font-weight-bold ml-2">{questionsData.answer}</div>
-                                                                </div>
-                                                            </Col>
-                                                        </Row>
-
-                                                    </Card>
-                                                )
-
-                                            }
-                                            else if (questionsData.qtype == "5") {
-                                                return (<Card as={Card.Body} className="bg-light my-2">
-                                                    <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
-                                                        <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
-                                                        <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                            {parse(questionsData.compquestion)}
-                                                            <span>{this.idFunction(index)}</span>
-                                                            {parse(questionsData.question)}
-                                                            {" QID- " + questionsData.id}
-                                                        </Form.Check.Label>
-                                                    </Form.Check>
-                                                    <hr className="my-3" />
-                                                    <Row>
-                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                            <div className="d-flex align-items-center">
-                                                                <span>A.</span>
-                                                                <div className="ml-2">{parse(questionsData.option1)}</div>
-                                                            </div>
-                                                        </Col>
-                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                            <div className="d-flex align-items-center">
-                                                                <span>B.</span>
-                                                                <div className="ml-2">{parse(questionsData.option2)}</div>
-                                                            </div>
-                                                        </Col>
-                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                            <div className="d-flex align-items-center">
-                                                                <span>C.</span>
-                                                                <div className="ml-2">{parse(questionsData.option3)}</div>
-                                                            </div>
-                                                        </Col>
-                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                            <div className="d-flex align-items-center">
-                                                                <span>D.</span>
-                                                                <div className="ml-2">{parse(questionsData.option4)}</div>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col xl={12} lg={12} md={12} sm={12} className="my-2">
-                                                            <div className="d-flex align-items-center">
-                                                                <span className="font-weight-bold">Currect Answer:</span>
-                                                                <div className="font-weight-bold ml-2">{questionsData.answer}</div>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-
-                                                </Card>)
-                                            }
-                                            else {
-                                                return (
-                                                    <Card as={Card.Body} className="bg-light my-2">
-                                                        <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
-                                                            <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
-                                                            <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                <span>{this.idFunction(index)}</span>
-                                                                {parse(questionsData.question)}
-                                                                {" QID- " + questionsData.id}
-                                                            </Form.Check.Label>
-                                                        </Form.Check>
-                                                        <hr className="my-3" />
-                                                        <Row>
-                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <span>A.</span>
-                                                                    <div className="ml-2">{parse(questionsData.option1)}</div>
-                                                                </div>
-                                                            </Col>
-                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <span>B.</span>
-                                                                    <div className="ml-2">{parse(questionsData.option2)}</div>
-                                                                </div>
-                                                            </Col>
-                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <span>C.</span>
-                                                                    <div className="ml-2">{parse(questionsData.option3)}</div>
-                                                                </div>
-                                                            </Col>
-                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <span>D.</span>
-                                                                    <div className="ml-2">{parse(questionsData.option4)}</div>
-                                                                </div>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col xl={12} lg={12} md={12} sm={12} className="my-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <span className="font-weight-bold">Currect Answer:</span>
-                                                                    <div className="font-weight-bold ml-2">{questionsData.answer}</div>
-                                                                </div>
-                                                            </Col>
-                                                        </Row>
-
-                                                    </Card>
-                                                )
-                                            }})}
-                                        </InfiniteScroll>
-                                    ) : (
-                                            <React.Fragment>
-                                                {latestData.map((questionsData, index) => {
-                                                    if (questionsData.qtype == "9" || questionsData.qtype == "3") {
-                                                        console.log("questionsData.question", questionsData.question, questionsData.id);
-                                                        let question1 = questionsData.question.replace(/src="/g, 'src=\\"');
-                                                        let question2 = question1.replace(/" \/>/g, '\\" />');
-                                                        let question = [];
-                                                        try {
-                                                            question = JSON.parse(question2);
-                                                        }
-                                                        catch (err) {
-                                                            console.log("MATRIX ERROR:", err.message);
-                                                        }
-    
-    
-                                                        console.log("questionsData.questionnn", question);
-                                                        return (
-                                                            <Card as={Card.Body} className="bg-light my-2">
-                                                                <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
-                                                                    <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
-                                                                    <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                        <span>{this.idFunction(index)}.</span>
-                                                                        {parse(questionsData.mat_question)}
-                                                                        <Row>
-                                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                                <ol className="matrixlistoptions" type={
-                                                                                    questionsData.list1type == "alphabets" ? ("A")
-                                                                                        : (questionsData.list1type == "numbers") ? ("1")
-                                                                                            : ("roman")}
-                                                                                >
-                                                                                    {question.map((item) => (
-                                                                                        <li>{parse(item.qlist1)}</li>
-                                                                                    ))}
-                                                                                </ol>
-                                                                            </Col>
-                                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                                <ol className="matrixlistoptions" type={
-                                                                                    questionsData.list2type == "alphabets" ? ("A")
-                                                                                        : (questionsData.list2type == "numbers") ? ("1")
-                                                                                            : ("roman")}>
-                                                                                    {question.map((item) => (
-                                                                                        <li>{parse(item.qlist2)}</li>
-                                                                                    ))}
-                                                                                </ol>
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </Form.Check.Label>
-                                                                </Form.Check>
-                                                                <hr className="my-3" />
-                                                                <Row>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>A.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option1)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>B.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option2)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>C.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option3)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>D.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option4)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row>
-                                                                    <Col xl={12} lg={12} md={12} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span className="font-weight-bold">Currect Answer:</span>
-                                                                            <div className="font-weight-bold ml-2">{questionsData.answer}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                </Row>
-    
-                                                            </Card>)
-                                                    }
-                                                    else if (questionsData.qtype == "8") {
-                                                        return (
-                                                            <Card as={Card.Body} className="bg-light my-2">
-                                                                <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
-                                                                    <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
-                                                                    <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                        <span>{this.idFunction(index)}</span>
-                                                                        {parse(questionsData.question)}
-                                                                        {" QID- " + questionsData.id}
-                                                                    </Form.Check.Label>
-                                                                </Form.Check>
-                                                                <hr className="my-3" />
-                                                                <Row>
-                                                                    <Col xl={12} lg={12} md={12} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span className="font-weight-bold">Currect Answer:</span>
-                                                                            <div className="font-weight-bold ml-2">{questionsData.answer}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                </Row>
-    
-                                                            </Card>
-                                                        )
-    
-                                                    }
-                                                    else if (questionsData.qtype == "5") {
-                                                        return (<Card as={Card.Body} className="bg-light my-2">
+                                                }
+                                                else {
+                                                    return (
+                                                        <Card as={Card.Body} className="bg-light my-2">
                                                             <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
                                                                 <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
                                                                 <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                    {parse(questionsData.compquestion)}
                                                                     <span>{this.idFunction(index)}</span>
                                                                     {parse(questionsData.question)}
                                                                     {" QID- " + questionsData.id}
@@ -890,67 +717,232 @@ class QuestionComponent extends Component {
                                                                     </div>
                                                                 </Col>
                                                             </Row>
-    
-                                                        </Card>)
-                                                    }
-                                                    else {
-                                                        return (
-                                                            <Card as={Card.Body} className="bg-light my-2">
-                                                                <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
-                                                                    <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
-                                                                    <Form.Check.Label htmlFor={"checkbox_01" + index}>
-                                                                        <span>{this.idFunction(index)}</span>
-                                                                        {parse(questionsData.question)}
-                                                                        {" QID- " + questionsData.id}
-                                                                    </Form.Check.Label>
-                                                                </Form.Check>
-                                                                <hr className="my-3" />
-                                                                <Row>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>A.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option1)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>B.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option2)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>C.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option3)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                    <Col xl={6} lg={6} md={6} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span>D.</span>
-                                                                            <div className="ml-2">{parse(questionsData.option4)}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row>
-                                                                    <Col xl={12} lg={12} md={12} sm={12} className="my-2">
-                                                                        <div className="d-flex align-items-center">
-                                                                            <span className="font-weight-bold">Currect Answer:</span>
-                                                                            <div className="font-weight-bold ml-2">{questionsData.answer}</div>
-                                                                        </div>
-                                                                    </Col>
-                                                                </Row>
-    
-                                                            </Card>
-                                                        )
-                                                    }})}
 
-                                                {this.state.getInstituteQuestions.length == 0 ? (<p style={{ textAlign: "center" }}>
-                                                    <b>No data available </b>
-                                                </p>) : (<p style={{ textAlign: "center" }}>
-                                                    <b>Yay! You have seen it all</b>
-                                                </p>)}
-                                            </React.Fragment>
-                                        )}
+                                                        </Card>
+                                                    )
+                                                }
+                                            })}
+                                        </InfiniteScroll>
+                                    ) : (
+                                        <React.Fragment>
+                                            {(latestData || []).map((questionsData, index) => {
+                                                if (questionsData.qtype == "9" || questionsData.qtype == "3") {
+                                                    console.log("questionsData.question", questionsData.question, questionsData.id);
+                                                    let question1 = questionsData.question.replace(/src="/g, 'src=\\"');
+                                                    let question2 = question1.replace(/" \/>/g, '\\" />');
+                                                    let question = [];
+                                                    try {
+                                                        question = JSON.parse(question2);
+                                                    }
+                                                    catch (err) {
+                                                        console.log("MATRIX ERROR:", err.message);
+                                                    }
+
+
+                                                    console.log("questionsData.questionnn", question);
+                                                    return (
+                                                        <Card as={Card.Body} className="bg-light my-2">
+                                                            <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
+                                                                <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
+                                                                <Form.Check.Label htmlFor={"checkbox_01" + index}>
+                                                                    <span>{this.idFunction(index)}.</span>
+                                                                    {parse(questionsData.mat_question)}
+                                                                    <Row>
+                                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                            <ol className="matrixlistoptions" type={
+                                                                                questionsData.list1type == "alphabets" ? ("A")
+                                                                                    : (questionsData.list1type == "numbers") ? ("1")
+                                                                                        : ("roman")}
+                                                                            >
+                                                                                {(question || []).map((item) => (
+                                                                                    <li>{parse(item.qlist1)}</li>
+                                                                                ))}
+                                                                            </ol>
+                                                                        </Col>
+                                                                        <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                            <ol className="matrixlistoptions" type={
+                                                                                questionsData.list2type == "alphabets" ? ("A")
+                                                                                    : (questionsData.list2type == "numbers") ? ("1")
+                                                                                        : ("roman")}>
+                                                                                {(question || []).map((item) => (
+                                                                                    <li>{parse(item.qlist2)}</li>
+                                                                                ))}
+                                                                            </ol>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </Form.Check.Label>
+                                                            </Form.Check>
+                                                            <hr className="my-3" />
+                                                            <Row>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>A.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option1)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>B.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option2)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>C.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option3)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>D.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option4)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col xl={12} lg={12} md={12} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span className="font-weight-bold">Currect Answer:</span>
+                                                                        <div className="font-weight-bold ml-2">{questionsData.answer}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+
+                                                        </Card>)
+                                                }
+                                                else if (questionsData.qtype == "8") {
+                                                    return (
+                                                        <Card as={Card.Body} className="bg-light my-2">
+                                                            <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
+                                                                <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
+                                                                <Form.Check.Label htmlFor={"checkbox_01" + index}>
+                                                                    <span>{this.idFunction(index)}</span>
+                                                                    {parse(questionsData.question)}
+                                                                    {" QID- " + questionsData.id}
+                                                                </Form.Check.Label>
+                                                            </Form.Check>
+                                                            <hr className="my-3" />
+                                                            <Row>
+                                                                <Col xl={12} lg={12} md={12} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span className="font-weight-bold">Currect Answer:</span>
+                                                                        <div className="font-weight-bold ml-2">{questionsData.answer}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+
+                                                        </Card>
+                                                    )
+
+                                                }
+                                                else if (questionsData.qtype == "5") {
+                                                    return (<Card as={Card.Body} className="bg-light my-2">
+                                                        <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
+                                                            <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
+                                                            <Form.Check.Label htmlFor={"checkbox_01" + index}>
+                                                                {parse(questionsData.compquestion)}
+                                                                <span>{this.idFunction(index)}</span>
+                                                                {parse(questionsData.question)}
+                                                                {" QID- " + questionsData.id}
+                                                            </Form.Check.Label>
+                                                        </Form.Check>
+                                                        <hr className="my-3" />
+                                                        <Row>
+                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <span>A.</span>
+                                                                    <div className="ml-2">{parse(questionsData.option1)}</div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <span>B.</span>
+                                                                    <div className="ml-2">{parse(questionsData.option2)}</div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <span>C.</span>
+                                                                    <div className="ml-2">{parse(questionsData.option3)}</div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <span>D.</span>
+                                                                    <div className="ml-2">{parse(questionsData.option4)}</div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col xl={12} lg={12} md={12} sm={12} className="my-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <span className="font-weight-bold">Currect Answer:</span>
+                                                                    <div className="font-weight-bold ml-2">{questionsData.answer}</div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Card>)
+                                                }
+                                                else {
+                                                    return (
+                                                        <Card as={Card.Body} className="bg-light my-2">
+                                                            <Form.Check type="checkbox" id={"checkbox_01" + index} custom>
+                                                                <Form.Check.Input type="checkbox" checked={questionsData.checked} onClick={(e) => this.props.pQuestionFunction(e, questionsData, "wbank")} />
+                                                                <Form.Check.Label htmlFor={"checkbox_01" + index}>
+                                                                    <span>{this.idFunction(index)}</span>
+                                                                    {parse(questionsData.question)}
+                                                                    {" QID- " + questionsData.id}
+                                                                </Form.Check.Label>
+                                                            </Form.Check>
+                                                            <hr className="my-3" />
+                                                            <Row>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>A.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option1)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>B.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option2)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>C.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option3)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                                <Col xl={6} lg={6} md={6} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span>D.</span>
+                                                                        <div className="ml-2">{parse(questionsData.option4)}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col xl={12} lg={12} md={12} sm={12} className="my-2">
+                                                                    <div className="d-flex align-items-center">
+                                                                        <span className="font-weight-bold">Currect Answer:</span>
+                                                                        <div className="font-weight-bold ml-2">{questionsData.answer}</div>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+
+                                                        </Card>
+                                                    )
+                                                }
+                                            })}
+
+                                            {this.state.getInstituteQuestions.length == 0 ? (<p style={{ textAlign: "center" }}>
+                                                <b>No data available </b>
+                                            </p>) : (<p style={{ textAlign: "center" }}>
+                                                <b>Yay! You have seen it all</b>
+                                            </p>)}
+                                        </React.Fragment>
+                                    )}
                                 </Scrollbars>
                             </Card>
 

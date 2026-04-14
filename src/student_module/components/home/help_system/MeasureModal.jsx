@@ -51,7 +51,7 @@ class MeasureModal extends Component {
                                                         Further you can find a detailed analysis by time,
                                                         question type, complexity type and topic wise
                                                         analysis of your performance.
-                                                        </p>
+                                                    </p>
                                                     <p className="mt-4">In this overview you can use the sort option
                                                         to get a class wise and exam wise analysis.</p>
                                                 </div>
@@ -61,8 +61,8 @@ class MeasureModal extends Component {
                                             <Col>
                                                 <h6 className="mt-3">Results and Analysis.</h6>
                                                 <p className="mt-2">Here you get to see how well you have been doing in your Practise and Exams. Your overall accuracy in
-                                                the practise sessions, questions that appeared, correctly answered, incorrectly answered and how many
-                                                of the incorrectly answered questions were corrected later is shown here. The number of skipped
+                                                    the practise sessions, questions that appeared, correctly answered, incorrectly answered and how many
+                                                    of the incorrectly answered questions were corrected later is shown here. The number of skipped
                                                     questions are not shown here.</p>
                                                 <Image className="w-80 img_center mt-2" src={require('../../../../images/helpSystemImages/measure2.png')} alt="img" />
                                                 <Row>
@@ -75,7 +75,7 @@ class MeasureModal extends Component {
                                                                 subject you have not started practising yet,
                                                                 the topics in the chapters in each subject t
                                                                 hat you have started but not practised yet.
-                                                                </p>
+                                                            </p>
                                                             <p className="mt-2">This thorough analysis gives you a distinct
                                                                 way to prepare better and improve.</p>
                                                             <p className="mt-2">On the right of the screen your performance

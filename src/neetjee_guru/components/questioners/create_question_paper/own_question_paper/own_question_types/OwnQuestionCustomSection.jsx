@@ -615,7 +615,7 @@ class OwnQuestionCustomSection extends Component {
                                                 <Col xl={4} lg={4} md={6} sm={12} xs={12} className="my-2 d-flex align-items-center">
                                                     <div className="mr-2">Class:</div>
                                                     <ButtonGroup aria-label="Basic example">
-                                                        {this.state.classData.map((classmapData) => (<Button onClick={(e) => this.syllabusClassFun(e, classmapData.id)} variant={classmapData.active}>{classmapData.class}</Button>))}
+                                                        {this.state?.classData?.map((classmapData) => (<Button onClick={(e) => this.syllabusClassFun(e, classmapData.id)} variant={classmapData.active}>{classmapData.class}</Button>))}
 
                                                         {/* <Button variant="outline-secondary">XII-2</Button> */}
                                                     </ButtonGroup>
@@ -660,7 +660,7 @@ class OwnQuestionCustomSection extends Component {
                                                             autoHideTimeout={500}
                                                             autoHideDuration={200}>
                                                             <ul className="list-unstyled subject-list m-0">
-                                                                {this.props.stateData.subjects.map((subjectmapData) => (
+                                                                {this.props.stateData?.subjects?.map((subjectmapData) => (
                                                                     <li className={subjectmapData.subjectactive} onClick={(e) => this.props.psubjectFunction(subjectmapData.id)}>
                                                                         <div className="subName">{subjectmapData.subject}</div>
                                                                         <div className="arrow"><i className="fal fa-arrow-right" /></div>
@@ -682,7 +682,7 @@ class OwnQuestionCustomSection extends Component {
                                                                 autoHideTimeout={500}
                                                                 autoHideDuration={200}>
                                                                 <Form>
-                                                                    {this.props.stateData.subjects.map((item) => (
+                                                                    {this.props.stateData?.subjects?.map((item) => (
                                                                         <div>
                                                                             {item.subjectactive == "d-flex justify-content-between align-items-center active" ? (
 
@@ -736,7 +736,7 @@ class OwnQuestionCustomSection extends Component {
                                                             autoHideTimeout={500}
                                                             autoHideDuration={200}>
                                                             <ul className="list-unstyled chapter-list m-0">
-                                                                {this.props.stateData.subjects.map((subjectmapData) => {
+                                                                {this.props.stateData?.subjects?.map((subjectmapData) => {
                                                                     let mchaptermapData = [];
                                                                     if (subjectmapData.subjectactive == "d-flex justify-content-between align-items-center active") {
 
@@ -755,7 +755,7 @@ class OwnQuestionCustomSection extends Component {
                                                                         <React.Fragment>
                                                                             {subjectmapData.subjectactive == "d-flex justify-content-between align-items-center active" ? (
                                                                                 <React.Fragment>
-                                                                                    {mchaptermapData.map((chaptermapData) => {
+                                                                                    {mchaptermapData?.map((chaptermapData) => {
                                                                                         return (
                                                                                             <li className={chaptermapData.chapteractive} onClick={(e) => this.props.pchapterFunction(subjectmapData.id, chaptermapData.id)}>
                                                                                                 <div className="names">{chaptermapData.chapter}</div>
@@ -783,15 +783,15 @@ class OwnQuestionCustomSection extends Component {
                                                             autoHideTimeout={500}
                                                             autoHideDuration={200}>
                                                             <ul className="list-unstyled chap-topic-list m-0 pl-1">
-                                                                {this.props.stateData.subjects.map((subjectmapData) => (
+                                                                {this.props.stateData?.subjects?.map((subjectmapData) => (
                                                                     <React.Fragment>
                                                                         {subjectmapData.subjectactive == "d-flex justify-content-between align-items-center active" ? (
                                                                             <React.Fragment>
-                                                                                {subjectmapData.chapters.map((chaptermapData) => (
+                                                                                {subjectmapData?.chapters?.map((chaptermapData) => (
                                                                                     <React.Fragment>
                                                                                         {chaptermapData.chapteractive == "d-flex justify-content-between align-items-center active" ? (
                                                                                             <React.Fragment>
-                                                                                                {chaptermapData.topics.map((topicmapData, index) => (
+                                                                                                {chaptermapData?.topics?.map((topicmapData, index) => (
                                                                                                     <React.Fragment>
                                                                                                         {index == "0" ? (
                                                                                                             <React.Fragment>
@@ -980,7 +980,7 @@ class OwnQuestionCustomSection extends Component {
                                                             autoHideDuration={200}>
                                                             <Card.Body className="p-3">
                                                                 <ul className="list-unstyled subject-list p-0 m-0">
-                                                                    {this.props.stateData.advancedsubjects.map((getsub, index) => (
+                                                                    {this.props.stateData?.advancedsubjects?.map((getsub, index) => (
                                                                         <li
                                                                             className={getsub.subjectactive1}
                                                                             onClick={() => this.props.subjectFunction1(getsub.id, "qtype")}
@@ -1003,11 +1003,11 @@ class OwnQuestionCustomSection extends Component {
                                                             autoHideDuration={200}>
                                                             <Card.Body className="p-3">
                                                                 <ul className="list-unstyled chap-topic-list m-0 pl-1">
-                                                                    {this.props.stateData.advancedsubjects.map((chData) => (
+                                                                    {this.props.stateData?.advancedsubjects?.map((chData) => (
                                                                         <div>
                                                                             {chData.subjectactive1 == "d-flex justify-content-between align-items-center active" ? (
                                                                                 <div>
-                                                                                    {chData.questionTypes.map((cData, index) => (
+                                                                                    {chData?.questionTypes?.map((cData, index) => (
 
                                                                                         <li className={cData.active}>
                                                                                             <Form.Check type="checkbox" id={"typeofcheckboxOne" + "_" + index + "_" + chData.id} custom>
@@ -1043,14 +1043,14 @@ class OwnQuestionCustomSection extends Component {
                                                             autoHideDuration={200}>
                                                             <Card.Body className="p-3">
                                                                 <Form>
-                                                                    {this.props.stateData.advancedsubjects.map((chData) => (
+                                                                    {this.props?.stateData?.advancedsubjects?.map((chData) => (
                                                                         <div>
                                                                             {chData.subjectactive1 == "d-flex justify-content-between align-items-center active" ? (
                                                                                 <div>
                                                                                     <Form.Text className="form-text text-danger">
                                                                                         {chData.totpererr1}
                                                                                     </Form.Text>
-                                                                                    {chData.questionTypes.map((cData) => (
+                                                                                    {chData?.questionTypes?.map((cData) => (
                                                                                         <div>
                                                                                             {cData.checked == true ? (
                                                                                                 <Form.Group as={Row} controlId="formChapter1">
@@ -1420,7 +1420,7 @@ class OwnQuestionCustomSection extends Component {
                                 </Scrollbars>
                             </Card.Body>
                             <Card.Footer className="border-0">
-                                <Button variant="primary" className="px-4 text-uppercase" className="w-100" onClick={this.props.ParentgenerateQuestionPaper}>Generate question paper</Button>
+                                <Button variant="primary" className="px-4 text-uppercase w-100" onClick={this.props.ParentgenerateQuestionPaper}>Generate question paper</Button>
                                 {/* <Button variant="primary" className="px-4 text-uppercase" className="w-100" onClick={() => this.manageexams()}>Go to manage exams</Button> */}
                             </Card.Footer>
                         </Card>

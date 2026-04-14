@@ -129,8 +129,8 @@ class OwnQuestionMockExam extends Component {
             searchchaptervalue: "",
             questionbankpercentage: "0",
             ownaddedpercentage: "0",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             formErrors: {
@@ -167,14 +167,14 @@ class OwnQuestionMockExam extends Component {
     }
     menuToggler = () => {
         const toggled = Cookies.get("toggle");
-         if (toggled === "wrapper") {
-             this.setState({toggled:"wrapper sidebar-enable"});
-             Cookies.set("toggle", "wrapper sidebar-enable");
-         } else {
-             this.setState({toggled:"wrapper"});
-             Cookies.set("toggle", "wrapper");
-         }
-     };
+        if (toggled === "wrapper") {
+            this.setState({ toggled: "wrapper sidebar-enable" });
+            Cookies.set("toggle", "wrapper sidebar-enable");
+        } else {
+            this.setState({ toggled: "wrapper" });
+            Cookies.set("toggle", "wrapper");
+        }
+    };
     generateQuestionPaper = (e) => {
         let status = false;
         for (const item of this.state.subjects) {
@@ -405,8 +405,8 @@ class OwnQuestionMockExam extends Component {
                         searchchaptervalue: "",
                         questionbankpercentage: "0",
                         ownaddedpercentage: "0",
-                        questiontypes: "",
-                        questiontypesvalue: "",
+                        questiontypes: [],
+                        questiontypesvalue: [],
                         applicationtheory: "",
                         applicationtheoryvalue: "",
                         formErrors: {
@@ -961,7 +961,7 @@ class OwnQuestionMockExam extends Component {
                     <NavbarOne onClick={() => this.menuToggler()} />
                     <div className="overlay" onClick={() => this.menuToggler()} />
                     {
-                        !loading1 && !loading2 && !loading3 &&(
+                        !loading1 && !loading2 && !loading3 && (
                             <React.Fragment>
                                 <div className="main-content">
 
@@ -989,7 +989,7 @@ class OwnQuestionMockExam extends Component {
                                     />
                                 </div>
                                 <Footer />
-                                
+
                             </React.Fragment>
                         )
                     }
@@ -1024,15 +1024,15 @@ export default withRouter(
                     fetchPolicy: 'cache-and-network'
                 }), name: "getSections"
             }),
-            graphql(FETCH_INSTITUTEMOCKTESTS,
-                {
-                    options: props => ({
-                        variables: {
-                            institution_id: parseInt(Cookies.get("institutionid"))
-                        },
-                        fetchPolicy: 'cache-and-network'
-                    }), name: "getInstituteMocktests"
-                })
+        graphql(FETCH_INSTITUTEMOCKTESTS,
+            {
+                options: props => ({
+                    variables: {
+                        institution_id: parseInt(Cookies.get("institutionid"))
+                    },
+                    fetchPolicy: 'cache-and-network'
+                }), name: "getInstituteMocktests"
+            })
 
     )
         (OwnQuestionMockExam));

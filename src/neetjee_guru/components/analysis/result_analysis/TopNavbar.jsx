@@ -107,7 +107,7 @@ class TopNavbar extends Component {
                                     <NavDropdown.Item onClick={() => this.setState({ modalShow: true })}>Change Password</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="#">Feedback</NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item as={Link} onClick={(e) => this.logout(e)}>Logout</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={(e) => this.logout(e)}>Logout</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                         </Navbar.Collapse>

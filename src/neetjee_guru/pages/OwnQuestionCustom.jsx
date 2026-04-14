@@ -203,14 +203,14 @@ class OwnQuestionCustom extends Component {
     }
     menuToggler = () => {
         const toggled = Cookies.get("toggle");
-         if (toggled === "wrapper") {
-             this.setState({toggled:"wrapper sidebar-enable"});
-             Cookies.set("toggle", "wrapper sidebar-enable");
-         } else {
-             this.setState({toggled:"wrapper"});
-             Cookies.set("toggle", "wrapper");
-         }
-     };
+        if (toggled === "wrapper") {
+            this.setState({ toggled: "wrapper sidebar-enable" });
+            Cookies.set("toggle", "wrapper sidebar-enable");
+        } else {
+            this.setState({ toggled: "wrapper" });
+            Cookies.set("toggle", "wrapper");
+        }
+    };
     componentDidMount() {
         console.log("componentDidMount", this.props.history.location.state);
 
@@ -1126,8 +1126,8 @@ class OwnQuestionCustom extends Component {
                 },
                 searchchapter: "",
                 searchchaptervalue: "",
-                questiontypes: "",
-                questiontypesvalue: "",
+                questiontypes: [],
+                questiontypesvalue: [],
                 applicationtheory: "0",
                 applicationtheoryvalue: { value: "0", label: "Select All" },
                 complexity: "0",
@@ -1144,8 +1144,8 @@ class OwnQuestionCustom extends Component {
                 },
                 qbsearchchapter: "",
                 qbsearchchaptervalue: "",
-                qbquestiontypes: "",
-                qbquestiontypesvalue: "",
+                qbquestiontypes: [],
+                qbquestiontypesvalue: [],
                 qbapplicationtheory: "0",
                 qbapplicationtheoryvalue: { value: "0", label: "Select All" },
                 qbcomplexity: "0",
@@ -1303,15 +1303,17 @@ class OwnQuestionCustom extends Component {
                         return { ...topicData, checked: false }
                     })
                     return {
-                        ...cmap, chapteractive: "d-flex justify-content-between align-items-center" ,topics: topic, checked: false, checkedall: false, ownedarray: [], questionbarray: []
+                        ...cmap, chapteractive: "d-flex justify-content-between align-items-center", topics: topic, checked: false, checkedall: false, ownedarray: [], questionbarray: []
                     }
 
                 })
-                return { ...smap, 
+                return {
+                    ...smap,
                     chapters: chapters,
                     checked: false,
                     subjectactive: "d-flex justify-content-between align-items-center",
-                    totError: "" }
+                    totError: ""
+                }
 
             });
             this.setState({
@@ -1320,12 +1322,12 @@ class OwnQuestionCustom extends Component {
                 searchsubjectvalue: "",
                 searchchapter: "0",
                 searchchaptervalue: "",
-                questiontypes:[],
-                questiontypesvalue:[],
+                questiontypes: [],
+                questiontypesvalue: [],
                 applicationtheory: "0",
-                applicationtheoryvalue: {value:"0",label:"Select All"},
+                applicationtheoryvalue: { value: "0", label: "Select All" },
                 complexity: "0",
-                complexityvalue: {value:"0",label:"Select All"},
+                complexityvalue: { value: "0", label: "Select All" },
 
                 qbsearchsubject: "0",
                 qbsearchsubjectvalue: "",
@@ -1334,9 +1336,9 @@ class OwnQuestionCustom extends Component {
                 qbquestiontypes: [],
                 qbquestiontypesvalue: [],
                 qbapplicationtheory: "0",
-                qbapplicationtheoryvalue:{value:"0",label:"Select All"},
+                qbapplicationtheoryvalue: { value: "0", label: "Select All" },
                 qbcomplexity: "0",
-                qbcomplexityvalue: {value:"0",label:"Select All"},
+                qbcomplexityvalue: { value: "0", label: "Select All" },
             });
 
         }

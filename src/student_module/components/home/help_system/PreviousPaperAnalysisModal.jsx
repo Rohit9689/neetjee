@@ -3,7 +3,7 @@ import { Row, Container, Col, Image, Card, Modal } from 'react-bootstrap';
 import "./_helpsystem.scss";
 
 class PreviousPaperAnalysisModal extends Component {
-     render() {
+    render() {
         return (
             <Modal {...this.props} className="modal_width"
 

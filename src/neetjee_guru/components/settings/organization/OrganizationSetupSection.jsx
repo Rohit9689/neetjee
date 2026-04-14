@@ -777,7 +777,7 @@ class OrganizationSetupSection extends Component {
     if (loading) return null;
 
     const orgdata = this.organizeStructure(
-      OrgStructure.getOrganisationStructure
+      JSON.parse(JSON.stringify(OrgStructure.getOrganisationStructure))
     );
     const displayData = this.getOrganisationStructure(orgdata);
 

@@ -750,12 +750,18 @@ class UserCreationSection extends Component {
         //console.log("m2");
         this.setState({ modalShow1: false });
     }
-    handleEditorChange = (e) => {
-        console.log("handleEditorChange", e.target.getContent());
+    handleEditorChange = (content) => {
+        let editorContent = "";
+        if (typeof content === "string") {
+            editorContent = content;
+        } else if (content && content.target && typeof content.target.getContent === "function") {
+            editorContent = content.target.getContent();
+        }
+        console.log("handleEditorChange", editorContent);
         this.setState({
-            ldescription: e.target.getContent()
+            ldescription: editorContent
         }, () => {
-            this.validateField("ldescription", "1");
+            this.validateField("ldescription", editorContent);
         });
 
     }
@@ -792,17 +798,17 @@ class UserCreationSection extends Component {
                             </div>
                             {this.state.modalShow == true ? (
                                 <div className="mb-5">
-                                <NotifyStudentModal
-                                    handleEditorChange={this.handleEditorChange}
-                                    handleMultipleSelectInputChange={this.handleMultipleSelectInputChange}
-                                    globals={globals.globals}
-                                    parenthandleFormSubmit={this.handleFormSubmit}
-                                    parentselecthandleInputChange={this.selecthandleInputChange}
-                                    ParenthandleInputChange={this.handleInputChange}
-                                    show={this.state.modalShow}
-                                    onHide1={this.onHideFun}
-                                    stateData={this.state}
-                                />
+                                    <NotifyStudentModal
+                                        handleEditorChange={this.handleEditorChange}
+                                        handleMultipleSelectInputChange={this.handleMultipleSelectInputChange}
+                                        globals={globals.globals}
+                                        parenthandleFormSubmit={this.handleFormSubmit}
+                                        parentselecthandleInputChange={this.selecthandleInputChange}
+                                        ParenthandleInputChange={this.handleInputChange}
+                                        show={this.state.modalShow}
+                                        onHide1={this.onHideFun}
+                                        stateData={this.state}
+                                    />
                                 </div>
                             ) : ("")
 

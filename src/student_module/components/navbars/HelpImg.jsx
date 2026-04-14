@@ -17,94 +17,94 @@ class HelpImg extends Component {
         this.state = {
             helpShow: false,
             getReadyForExamModalShow: false,
-            mockTestModalShow:false,
-            previousPaperAnalysisModal:false,
-            linkageChapterAnalysisModal:false,
-            notesModalShow:false,
-            bookMarksModalShow:false,
-            examModalShow:false
+            mockTestModalShow: false,
+            previousPaperAnalysisModal: false,
+            linkageChapterAnalysisModal: false,
+            notesModalShow: false,
+            bookMarksModalShow: false,
+            examModalShow: false
         }
     }
-    modalTypeFun=()=>{
-        if(this.props.headerBottom.Title=="Previous Paper Analysis"){
+    modalTypeFun = () => {
+        if (this.props.headerBottom.Title == "Previous Paper Analysis") {
             this.setState({
-                previousPaperAnalysisModal: true, 
+                previousPaperAnalysisModal: true,
                 helpShow: false
             });
         }
-        else if(this.props.headerBottom.Title=="Linkage Chapter Analysis"){
+        else if (this.props.headerBottom.Title == "Linkage Chapter Analysis") {
             this.setState({
-                linkageChapterAnalysisModal: true, 
+                linkageChapterAnalysisModal: true,
                 helpShow: false
             });
         }
-        else if(this.props.headerBottom.Title=="Bookmarks"){
+        else if (this.props.headerBottom.Title == "Bookmarks") {
             this.setState({
-                bookMarksModalShow: true, 
+                bookMarksModalShow: true,
                 helpShow: false
             });
         }
-        else if(this.props.headerBottom.Title=="Notes"){
+        else if (this.props.headerBottom.Title == "Notes") {
             this.setState({
-                notesModalShow: true, 
+                notesModalShow: true,
                 helpShow: false
             });
         }
-        else if(this.props.headerBottom.Title=="Create Exams"){
+        else if (this.props.headerBottom.Title == "Create Exams") {
             this.setState({
-                examModalShow: true, 
+                examModalShow: true,
                 helpShow: false
             });
         }
-        else if(this.props.headerBottom.Title=="Get Ready For Exam"){
+        else if (this.props.headerBottom.Title == "Get Ready For Exam") {
             this.setState({
-                getReadyForExamModalShow: true, 
+                getReadyForExamModalShow: true,
                 helpShow: false
             });
         }
-        else if(this.props.headerBottom.Title=="Mock Test"){
+        else if (this.props.headerBottom.Title == "Mock Test") {
             this.setState({
-                mockTestModalShow: true, 
+                mockTestModalShow: true,
                 helpShow: false
             });
         }
-        else{
+        else {
 
         }
-        
+
 
     }
     render() {
         const { helpShow, getReadyForExamModalShow } = this.state;
         console.log("headerBottom", this.props.headerBottom);
-        const PDFFILE='https://rizee.in/static/media/mocktest_results.pdf';
+        const PDFFILE = 'https://rizee.in/static/media/mocktest_results.pdf';
         return (
             <React.Fragment>
-               <div className="header-bottom py-2">
+                <div className="header-bottom py-2">
                     <Container>
                         <Row className="align-items-end">
                             <Col xl={9} lg={7} md={7} sm={6} xs={6}>
                                 <Image src={this.props.headerBottom.Img} alt="Image" width={this.props.headerBottom.width} />
                                 <h5 className="mt-2 title">{this.props.headerBottom.Title}</h5>
                             </Col>
-                            {this.props.headerBottom.Title=="Previous Paper Analysis" || 
-                            this.props.headerBottom.Title=="Bookmarks" || 
-                            this.props.headerBottom.Title=="Notes" || 
-                            this.props.headerBottom.Title=="Create Exams"
-                            || this.props.headerBottom.Title=="Get Ready For Exam" || 
-                            this.props.headerBottom.Title=="Mock Test"?( 
-                            <Col xl={3} lg={5} md={5} sm={6} xs={6}>
-                                {
-                                    !helpShow && !getReadyForExamModalShow && !this.state.previousPaperAnalysisModal && !this.state.notesModalShow && !this.state.bookMarksModalShow && !this.state.examModalShow ?
-                                        <Link to="#" 
-                                        onClick={() => this.setState({ helpShow: true })} 
-                                        className="text-muted">
-                                            <Image src={this.props.headerBottom.helpImg} alt="help-img" fluid />
-                                        </Link>
-                                        :
-                                        null
-                                }
-                            </Col>):("")}
+                            {this.props.headerBottom.Title == "Previous Paper Analysis" ||
+                                this.props.headerBottom.Title == "Bookmarks" ||
+                                this.props.headerBottom.Title == "Notes" ||
+                                this.props.headerBottom.Title == "Create Exams"
+                                || this.props.headerBottom.Title == "Get Ready For Exam" ||
+                                this.props.headerBottom.Title == "Mock Test" ? (
+                                <Col xl={3} lg={5} md={5} sm={6} xs={6}>
+                                    {
+                                        !helpShow && !getReadyForExamModalShow && !this.state.previousPaperAnalysisModal && !this.state.notesModalShow && !this.state.bookMarksModalShow && !this.state.examModalShow ?
+                                            <Link to="#"
+                                                onClick={() => this.setState({ helpShow: true })}
+                                                className="text-muted">
+                                                <Image src={this.props.headerBottom.helpImg} alt="help-img" fluid />
+                                            </Link>
+                                            :
+                                            null
+                                    }
+                                </Col>) : ("")}
 
                             {/* {this.props.headerBottom.Title=="Videos" || this.props.headerBottom.Title=="Linkage Chapter Analysis" || this.props.headerBottom.Title=="Category Videos" || this.props.headerBottom.Title=="Category Videos" || this.props.headerBottom.Title=="Recently Watched Videos"
                             || this.props.headerBottom.Title=="NEET" || 
@@ -129,7 +129,7 @@ class HelpImg extends Component {
                         </Row>
                     </Container>
                 </div>
-               
+
 
                 <Modal {...this.props} className="help-modal"
                     size="lg"
@@ -142,9 +142,9 @@ class HelpImg extends Component {
                             <Row className="d-flex">
                                 <Col xl={8} lg={6} md={12} className="text-center">
                                     <div className="d-lg-flex align-item-center justify-content-center">
-                                        <Link  onClick={()=>this.modalTypeFun()} className="mr-xl-5 mr-lg-5 text-decoration-none text-dark"><h5>Click here to view <br /> {this.props.headerBottom.Title} Help</h5></Link >
-                                        <Link className="text-decoration-none text-dark" 
-                                        onClick={()=>this.modalTypeFun()}
+                                        <Link onClick={() => this.modalTypeFun()} className="mr-xl-5 mr-lg-5 text-decoration-none text-dark"><h5>Click here to view <br /> {this.props.headerBottom.Title} Help</h5></Link >
+                                        <Link className="text-decoration-none text-dark"
+                                            onClick={() => this.modalTypeFun()}
                                         >
                                             <i className="fal fa-hand-pointer" style={{ fontSize: 48 }} />
                                         </Link>

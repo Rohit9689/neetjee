@@ -368,7 +368,7 @@ class OwnQuestionCustompresentSection extends Component {
                                                                     name="ownaddedquestions"
                                                                     value=""
                                                                     onChange={this.props.phandleInputChange} />
-                                                                <Form.Check.Label htmlFor="checkbox3">In Percentage (%)</Form.Check.Label>
+                                                                <Form.Check.Label htmlFor="checkbox3">In In Percentage (%) (%)</Form.Check.Label>
                                                             </Form.Check>
                                                         </Card>
                                                         {this.props.stateData.ownaddedquestions == true ? (
@@ -864,7 +864,7 @@ class OwnQuestionCustompresentSection extends Component {
                                 </Scrollbars>
                             </Card.Body>
                             <Card.Footer className="border-0">
-                                <Button variant="primary" className="px-4 text-uppercase" className="w-100" onClick={this.props.ParentgenerateQuestionPaper}>Generate question paper</Button>
+                                <Button variant="primary" className="px-4 text-uppercase w-100" onClick={this.props.ParentgenerateQuestionPaper}>Generate question paper</Button>
                             </Card.Footer>
                         </Card>
                     </Col>

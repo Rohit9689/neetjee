@@ -138,8 +138,8 @@ class OwnQuestionGrand extends Component {
             searchchaptervalue: "",
             questionbankpercentage: "100",
             ownaddedpercentage: "0",
-            questiontypes: "",
-            questiontypesvalue: "",
+            questiontypes: [],
+            questiontypesvalue: [],
             applicationtheory: "",
             applicationtheoryvalue: "",
             timeduration: 80,
@@ -178,14 +178,14 @@ class OwnQuestionGrand extends Component {
     }
     menuToggler = () => {
         const toggled = Cookies.get("toggle");
-         if (toggled === "wrapper") {
-             this.setState({toggled:"wrapper sidebar-enable"});
-             Cookies.set("toggle", "wrapper sidebar-enable");
-         } else {
-             this.setState({toggled:"wrapper"});
-             Cookies.set("toggle", "wrapper");
-         }
-     };
+        if (toggled === "wrapper") {
+            this.setState({ toggled: "wrapper sidebar-enable" });
+            Cookies.set("toggle", "wrapper sidebar-enable");
+        } else {
+            this.setState({ toggled: "wrapper" });
+            Cookies.set("toggle", "wrapper");
+        }
+    };
     componentDidMount() {
         console.log("componentDidMount", this.props.history.location.state);
         let examsData = this.props.history.location.state.getGroupData.globals.exams.find((a) => a.id == this.props.history.location.state.getGroupData.categoryfindData.exams_covered);
@@ -402,11 +402,11 @@ class OwnQuestionGrand extends Component {
             username: Cookies.get("username")
 
         }
-        let question_count=[];
+        let question_count = [];
         console.log('creategeneralpaper', creategeneralpaper,
-        parseInt(this.state.timeduration),
-        question_count);
-        
+            parseInt(this.state.timeduration),
+            question_count);
+
         this.creategroupgrandgeneralpaperfun(
             creategeneralpaper,
             parseInt(this.state.timeduration),
@@ -428,7 +428,7 @@ class OwnQuestionGrand extends Component {
             variables: {
                 params,
                 time_duration,
-        question_count
+                question_count
             },
             update: (store, { data }) => {
                 console.log("createGeneralPaperdata", data);
@@ -942,21 +942,21 @@ class OwnQuestionGrand extends Component {
 
                 break;
 
-                case "timeduration":
+            case "timeduration":
 
 
-                    //var pattern = new RegExp(/^[0-9\b]+$/);
-                    var pattern = new RegExp("^[-+]?[0-9]*$");
-    
-                    if (!pattern.test(value)) {
-                        timedurationValid = false;
-                        fieldValidationErrors.timeduration = "Invalid Input";
-                    } else {
-                        timedurationValid = true;
-                        fieldValidationErrors.timeduration = "";
-                    }
-    
-                    break;
+                //var pattern = new RegExp(/^[0-9\b]+$/);
+                var pattern = new RegExp("^[-+]?[0-9]*$");
+
+                if (!pattern.test(value)) {
+                    timedurationValid = false;
+                    fieldValidationErrors.timeduration = "Invalid Input";
+                } else {
+                    timedurationValid = true;
+                    fieldValidationErrors.timeduration = "";
+                }
+
+                break;
             default:
                 break;
         }

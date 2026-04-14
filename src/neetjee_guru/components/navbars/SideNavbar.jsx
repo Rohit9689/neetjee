@@ -175,7 +175,7 @@ class SideNavbar extends Component {
             onClick={() => this.props.onClick()}
           >
             {/* <Image src={logo} width="100" alt="logo" /> */}
-            <svg xmlns="http://www.w3.org/2000/svg" width="159.501" height="37.139"
+            {/* <svg xmlns="http://www.w3.org/2000/svg" width="159.501" height="37.139"
               viewBox="0 0 159.501 37.139">
               <g transform="translate(-384.741 -406.553)">
                 <g transform="translate(445.845 406.553)">
@@ -248,7 +248,8 @@ class SideNavbar extends Component {
                     transform="translate(-571.865 -409.399)" />
                 </g>
               </g>
-            </svg>
+            </svg> */}
+            <img loading='lazy' width="150" height="43" className='mt-2 bg-white' src='https://entrolabs.com/assets/logo/logo-black.png' alt='logo '   style={{ marginTop: "8px" }}/>
           </Link>
         </div>
         <Scrollbars

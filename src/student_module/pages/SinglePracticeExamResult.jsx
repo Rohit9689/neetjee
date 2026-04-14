@@ -206,11 +206,11 @@ class SinglePracticeExamResult extends Component {
             return "Custom Exam";
         }
     }
-    windowClose=()=>{
+    windowClose = () => {
         window.close();
     }
     render() {
-        if(localStorage.getItem("sessionid")==undefined){
+        if (localStorage.getItem("sessionid") == undefined) {
             this.props.history.push("/student/login");
         }
         const getStudentSessions = this.props.getStudentSessions;
@@ -235,13 +235,13 @@ class SinglePracticeExamResult extends Component {
                             <Col className="d-flex justify-content-between align-center">
                                 <div className="title-block">
                                     <h5 className="title mb-0">Your Practice {localStorage.getItem("stype") == "error" ? ("Error") : ("")} Exam Result</h5>
-                                    <p className="text-gray4"><i className="fas fa-star text-warning"></i> Practice {localStorage.getItem("stype")=="error"?("Error"):("")} Exam Result</p>
+                                    <p className="text-gray4"><i className="fas fa-star text-warning"></i> Practice {localStorage.getItem("stype") == "error" ? ("Error") : ("")} Exam Result</p>
                                 </div>
 
                                 <div className="right-content d-flex align-items-center">
-                                <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2"
+                                    <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2"
                                         style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }} onClick={() => this.windowClose()}> Close</Link>
-                                    
+
 
 
                                 </div>
@@ -273,43 +273,43 @@ class SinglePracticeExamResult extends Component {
         let wtott = 0;
         let stotq = 0;
         let stott = 0;
-        if(getStudentSessions.getStudentSessions[0]!=undefined){
+        if (getStudentSessions.getStudentSessions[0] != undefined) {
             getStudentSessions.getStudentSessions[0].correct_vs_complexity.map((cmap) => {
                 ctotq = ctotq + (parseInt(cmap.in_time) + parseInt(cmap.less_time) + parseInt(cmap.over_time))
-    
+
             })
-    
-            
+
+
             getStudentSessions.getStudentSessions[0].correct_vs_complexity.map((cmap) => {
                 ctott = ctott + (parseInt(cmap.in_total_time) + parseInt(cmap.less_total_time) + parseInt(cmap.over_total_time))
-    
+
             })
-    
-           
+
+
             getStudentSessions.getStudentSessions[0].wrong_vs_complexity.map((cmap) => {
                 wtotq = wtotq + (parseInt(cmap.in_time) + parseInt(cmap.less_time) + parseInt(cmap.over_time))
-    
+
             })
-    
-            
+
+
             getStudentSessions.getStudentSessions[0].wrong_vs_complexity.map((cmap) => {
                 wtott = wtott + (parseInt(cmap.in_total_time) + parseInt(cmap.less_total_time) + parseInt(cmap.over_total_time))
-    
+
             })
-    
-            
+
+
             getStudentSessions.getStudentSessions[0].skipped_vs_complexity.map((cmap) => {
                 stotq = stotq + (parseInt(cmap.in_time) + parseInt(cmap.less_time) + parseInt(cmap.over_time))
-    
+
             })
-    
-            
+
+
             getStudentSessions.getStudentSessions[0].skipped_vs_complexity.map((cmap) => {
                 stott = stott + (parseInt(cmap.in_total_time) + parseInt(cmap.less_total_time) + parseInt(cmap.over_total_time))
-    
+
             })
         }
-        
+
 
         let globalsubjects = "";
         if (JSON.parse(localStorage.getItem("subjects")) != "") {
@@ -318,8 +318,8 @@ class SinglePracticeExamResult extends Component {
         else {
             this.props.history.push("/student/login");
         }
-        console.log("getStudentSessions.getStudentSessions[0]",getStudentSessions.getStudentSessions[0]);
-        
+        console.log("getStudentSessions.getStudentSessions[0]", getStudentSessions.getStudentSessions[0]);
+
         return (
             <div className="practice_exams_area">
                 <Navbar bg="white" className="header-top">
@@ -338,12 +338,12 @@ class SinglePracticeExamResult extends Component {
                         <Col className="d-flex justify-content-between align-center">
                             <div className="title-block">
                                 <h5 className="title mb-0">Your Practice {localStorage.getItem("stype") == "error" ? ("Error") : ("")} Exam Result</h5>
-                                <p className="text-gray4"><i className="fas fa-star text-warning"></i> Practice {localStorage.getItem("stype")=="error"?("Error"):("")} Exam Result</p>
+                                <p className="text-gray4"><i className="fas fa-star text-warning"></i> Practice {localStorage.getItem("stype") == "error" ? ("Error") : ("")} Exam Result</p>
                             </div>
                             <div className="right-content d-flex align-items-center">
-                               <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2"
-                                        style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }} onClick={() => this.windowClose()}> Close</Link>
-                              </div>
+                                <Link className="d-flex align-items-center rounded-pill btn px-3 py-2 ml-2"
+                                    style={{ background: '#212b64', color: '#fff', border: '1px solid #212b64' }} onClick={() => this.windowClose()}> Close</Link>
+                            </div>
                         </Col>
                     </Row>
                     <Row className="mt-4">
@@ -372,22 +372,22 @@ class SinglePracticeExamResult extends Component {
                         <Col xl={8} lg={12} md={12} sm={12} className="my-3">
                             <Card as={Card.Body} className="subject_cards p-1 border-0 text-center shadow">
                                 <Row className="g-0">
-                                   
-                                            <Col>
-                                                <Card
-                                                    className={this.subjectClassfun(getStudentSessions.getStudentSessions[0].subject)}>
-                                                    <Card.Header className="bg-white">
-                                                        <div className="icon">
-                                                            {this.subjectIconfun(getStudentSessions.getStudentSessions[0].subject)}
-                                                        </div>
-                                                    </Card.Header>
-                                                    <Card.Body className="rounded p-3">
-                                                        <h6 className="card-subtitle pt-2">{getStudentSessions.getStudentSessions[0].subject!=0?(globalsubjects.find((a)=>a.id==getStudentSessions.getStudentSessions[0].subject).subject):("")}</h6>
-                                                        <h1 className="card-title mb-0">{this.graphValue()} <small>/ {this.props.getStudentSessions.getStudentSessions[0].total_marks}</small></h1>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                    </Row>
+
+                                    <Col>
+                                        <Card
+                                            className={this.subjectClassfun(getStudentSessions.getStudentSessions[0].subject)}>
+                                            <Card.Header className="bg-white">
+                                                <div className="icon">
+                                                    {this.subjectIconfun(getStudentSessions.getStudentSessions[0].subject)}
+                                                </div>
+                                            </Card.Header>
+                                            <Card.Body className="rounded p-3">
+                                                <h6 className="card-subtitle pt-2">{getStudentSessions.getStudentSessions[0].subject != 0 ? (globalsubjects.find((a) => a.id == getStudentSessions.getStudentSessions[0].subject).subject) : ("")}</h6>
+                                                <h1 className="card-title mb-0">{this.graphValue()} <small>/ {this.props.getStudentSessions.getStudentSessions[0].total_marks}</small></h1>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                </Row>
                             </Card>
                         </Col>
 
@@ -429,10 +429,10 @@ class SinglePracticeExamResult extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <tr className="text-success">
+                                        <tr className="text-success">
                                             <th><i className="fas fa-check-circle text-success" /> Right</th>
                                             <td>{ctotq}</td>
-                                            <td>{!isNaN(Math.round(parseInt(ctott) / parseInt(ctotq)))?(Math.round(parseInt(ctott) / parseInt(ctotq))):('0')}</td>
+                                            <td>{!isNaN(Math.round(parseInt(ctott) / parseInt(ctotq))) ? (Math.round(parseInt(ctott) / parseInt(ctotq))) : ('0')}</td>
                                             {getStudentSessions.getStudentSessions[0].correct_vs_complexity.map((cmap) => {
                                                 return (<td>{parseInt(cmap.in_time) + parseInt(cmap.less_time) + parseInt(cmap.over_time)}</td>)
                                             })}
@@ -440,7 +440,7 @@ class SinglePracticeExamResult extends Component {
                                         <tr className="theme-red">
                                             <th><i className="fas fa-times-circle text-danger" /> Wrong</th>
                                             <td>{wtotq}</td>
-                                            <td>{!isNaN(Math.round(parseInt(wtott) / parseInt(wtotq)))?(Math.round(parseInt(wtott) / parseInt(wtotq))):('0')}</td>
+                                            <td>{!isNaN(Math.round(parseInt(wtott) / parseInt(wtotq))) ? (Math.round(parseInt(wtott) / parseInt(wtotq))) : ('0')}</td>
                                             {getStudentSessions.getStudentSessions[0].wrong_vs_complexity.map((wmap) => {
                                                 return (<td>{parseInt(wmap.in_time) + parseInt(wmap.less_time) + parseInt(wmap.over_time)}</td>)
                                             })}
@@ -448,7 +448,7 @@ class SinglePracticeExamResult extends Component {
                                         <tr className="theme-purple">
                                             <th><i className="fas fa-times-circle theme-purple" /> Un-Answered</th>
                                             <td>{stotq}</td>
-                                            <td>{!isNaN(Math.round(parseInt(stott) / parseInt(stotq)))?(Math.round(parseInt(stott) / parseInt(stotq))):('0')}</td>
+                                            <td>{!isNaN(Math.round(parseInt(stott) / parseInt(stotq))) ? (Math.round(parseInt(stott) / parseInt(stotq))) : ('0')}</td>
                                             {getStudentSessions.getStudentSessions[0].skipped_vs_complexity.map((smap) => {
                                                 return (<td>{parseInt(smap.in_time) + parseInt(smap.less_time) + parseInt(smap.over_time)}</td>)
                                             })}
