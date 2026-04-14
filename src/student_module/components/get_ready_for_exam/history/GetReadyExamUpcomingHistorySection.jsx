@@ -226,9 +226,9 @@ class GetReadyExamUpcomingHistorySection extends Component {
                             <div style={{ margin: 0, padding: 0 }} className="actions-buttons d-flex justify-content-center align-items-top">
                                 <Button variant="link text-success"><i className="fal fa-book-reader" /></Button>
                             </div>) : (
-                                <div style={{ margin: 0, padding: 0 }} className="actions-buttons d-flex justify-content-center align-items-top">
-                                    <Button variant="link text-success"><i className="fal fa-book-reader" /></Button>
-                                </div>)}
+                            <div style={{ margin: 0, padding: 0 }} className="actions-buttons d-flex justify-content-center align-items-top">
+                                <Button variant="link text-success"><i className="fal fa-book-reader" /></Button>
+                            </div>)}
                     </React.Fragment>) : ("")}
             </React.Fragment>
         );
@@ -248,7 +248,7 @@ class GetReadyExamUpcomingHistorySection extends Component {
                             <div style={{ margin: 0, padding: 0 }} className="actions-buttons d-flex justify-content-center align-items-top">
                                 <Button variant="link text-primary"><i className="fal fa-clipboard" /></Button>
                             </div>) : (""
-                            )}
+                        )}
                     </React.Fragment>) : ("")}
             </React.Fragment>
         );
@@ -335,18 +335,15 @@ class GetReadyExamUpcomingHistorySection extends Component {
             },
             update: (store, { data }) => {
                 console.log("data", data);
-                const data1 = store.readQuery({
+                const rawData = store.readQuery({
                     query: FETCH_GETREADYEXAM,
                     variables: {
                         mobile: Cookies.get("mobile"),
                         page: 0
                     }
                 });
-                // console.log("data1", this.props.getReadyForExamList);
-
-                // let data4 = this.props.getReadyForExamList.filter(x => x.id != this.state.rowIndex);
-                // console.log("data4", data4);
-                // this.props.getReadyForExamList = data4;
+                // Deep-clone to avoid mutating the frozen Apollo cache object
+                const data1 = JSON.parse(JSON.stringify(rawData));
                 data1.getReadyForExamList = data1.getReadyForExamList.filter(x => x.id != this.state.rowIndex);
 
                 try {
@@ -362,14 +359,6 @@ class GetReadyExamUpcomingHistorySection extends Component {
                     console.log("Exception", e);
                 }
 
-                const data4 = store.readQuery({
-                    query: FETCH_GETREADYEXAM,
-                    variables: {
-                        mobile: Cookies.get("mobile"),
-                        page: 0
-                    }
-                });
-                data1.getReadyForExamList = data4;
                 console.log("data.deleteGetReadyForExam", data.deleteGetReadyForExam);
                 if (data.deleteGetReadyForExam) {
                     this.setState({

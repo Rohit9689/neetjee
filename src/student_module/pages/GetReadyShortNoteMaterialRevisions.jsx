@@ -42,22 +42,20 @@ class GetReadyShortNoteMaterialRevisions extends Component {
         let sampleArray = [];
         let sampleArray2 = [];
 
-        //console.log("syllabus", props.history.location.state.syllabus);
-
+        const syllabus = JSON.parse(JSON.stringify(props.history.location.state.syllabus));
         const qtypes = props.history.location.state.studentGlobals.contentTypes.filter(item => (item.id != 1 && item.id != 5 && item.id != 9));
-        //console.log("qtypes", qtypes);
         let chapterId = "";
         let chaptername = "";
-        for (let i = 0; i < props.history.location.state.syllabus.length; i++) {
-            let someData = props.history.location.state.syllabus[i];
+        for (let i = 0; i < syllabus.length; i++) {
+            let someData = syllabus[i];
             if (someData.chapters.length != 0) {
                 chapterId = someData.chapters[0].id;
                 chaptername = someData.chapters[0].chapter;
                 break;
             }
         }
-        for (let i = 0; i < props.history.location.state.syllabus.length; i++) {
-            let someData = props.history.location.state.syllabus[i];
+        for (let i = 0; i < syllabus.length; i++) {
+            let someData = syllabus[i];
 
             const newarr1 = {
                 ...someData,
@@ -70,8 +68,8 @@ class GetReadyShortNoteMaterialRevisions extends Component {
             });
         }
 
-        for (let i = 0; i < props.history.location.state.syllabus.length; i++) {
-            let someData = props.history.location.state.syllabus[i];
+        for (let i = 0; i < syllabus.length; i++) {
+            let someData = syllabus[i];
             const newarr2 = {
                 ...someData,
                 classActive: "",
@@ -96,10 +94,10 @@ class GetReadyShortNoteMaterialRevisions extends Component {
             toggled: "wrapper sidebar-enable",
             studentGlobals: props.history.location.state.studentGlobals,
             mfilterData: sampleArray2,
-            syllabus: props.history.location.state.syllabus,
+            syllabus: syllabus,
             filterData: sampleArray,
-            subjectname: props.history.location.state.syllabus[0].subject_name,
-            subjectid: props.history.location.state.syllabus[0].subject_id,
+            subjectname: syllabus[0].subject_name,
+            subjectid: syllabus[0].subject_id,
             chapterId: chapterId,
             chaptername: chaptername,
             qtypeId: 0,
