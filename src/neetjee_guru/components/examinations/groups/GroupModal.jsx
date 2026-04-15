@@ -261,11 +261,10 @@ class GroupModal extends Component {
     }
   };
   addSectionCategory = async (params) => {
-    await this.props.addSectionCategory({
-      variables: {
-        params,
-      },
-      update: (store, { data }) => {
+  const result = await this.props.addSectionCategory({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_SECTIONSCATEGORY,
           variables: {
@@ -278,24 +277,13 @@ class GroupModal extends Component {
           if (this.state.branch.toString() != "0") {
             this.state.branch.map((item) => {
               let findData = this.props.globals.globalBranches.find((a) => a.id == item);
-              if (findData != undefined) {
-                const newObj = findData.branch_name;
-                branchvalue.push(newObj);
-              }
-
-            })
-          }
-          else {
+              if (findData != undefined) branchvalue.push(findData?.branch_name);
+            });
+          } else {
             this.props.globals.globalBranches.map((item) => {
-              //let findData = this.props.globals.globalBranches.find((a) => a.id == item);
-              if (item != undefined) {
-                const newObj = item.branch_name;
-                branchvalue.push(newObj);
-              }
-
-            })
+              if (item != undefined) branchvalue.push(item?.branch_name);
+            });
           }
-
         }
 
         let sectionvalue = [];
@@ -303,40 +291,25 @@ class GroupModal extends Component {
           if (this.state.section.toString() != "0") {
             this.state.section.map((item) => {
               let findData = this.props.globals.globalSections.find((a) => a.id == item);
-              if (findData != undefined) {
-                const newObj = findData.section_name;
-                sectionvalue.push(newObj);
-              }
-
-            })
+              if (findData != undefined) sectionvalue.push(findData.section_name);
+            });
           } else {
             this.props.globals.globalSections.map((item) => {
-              //let findData = this.props.globals.globalSections.find((a) => a.id == item);
-              if (item != undefined) {
-                const newObj = item.section_name;
-                sectionvalue.push(newObj);
-              }
-
-            })
+              if (item != undefined) sectionvalue.push(item.section_name);
+            });
           }
-
         }
+
         let packagename = "";
         if (this.state.package != "") {
           let findData = this.props.globals.globalPackages.find((a) => a.id == this.state.package);
-          if (findData != undefined) {
-            packagename = findData.package_name;
-          }
+          if (findData != undefined) packagename = findData.package_name;
         }
-        console.log("packagename", packagename);
+
         let class_id_values = "";
         if (this.state.class != "") {
           let findData = this.props.globals.classes.find((a) => a.id == this.state.class);
-          if (findData != undefined) {
-            class_id_values = findData.class;
-          }
-
-
+          if (findData != undefined) class_id_values = findData.class;
         }
 
         const newSection = {
@@ -348,73 +321,57 @@ class GroupModal extends Component {
           package_id: parseInt(this.state.package),
           package_name: packagename,
           category_id: parseInt(this.state.category),
-
           branch_id_values: branchvalue.toString(),
           class_id_values: class_id_values,
           section_id_values: sectionvalue.toString(),
-
           __typename: "SectionCategory",
-
         };
+
         data1.getSectionCategories.push(newSection);
 
-        try {
-          store.writeQuery({
-            query: FETCH_SECTIONSCATEGORY,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid")),
-            },
-            data: data1,
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-
-
-
-        let data4 = store.readQuery({
+        store.writeQuery({
           query: FETCH_SECTIONSCATEGORY,
           variables: {
             institution_id: parseInt(Cookies.get("institutionid")),
           },
+          data: data1,
         });
-        console.log("data4", data4);
-        data1.getSectionCategories = data4;
+      } catch (e) {
+        console.log("Cache update exception", e);
+      }
+    },
+  });
 
-        console.log("addSectionCategorydata", data);
-        if (data.addSectionCategory) {
-          this.setState({
-            currentStep: 5,
-            branch: "",
-            section: "",
-            class: "",
-            group: "",
-            package: "",
-            category: "",
-            submitError: "",
-            formErrors: {
-              group: "",
-              package: "",
-              category: "",
-              class: "",
-              branch: "",
-              section: ""
-            },
-            sectionValid: false,
-            groupValid: false,
-            packageValid: false,
-            categoryValid: false,
-            classValid: false,
-            branchValid: false,
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
-        }
+  // ✅ Close modal from actual response
+  if (result.data.addSectionCategory) {
+    this.setState({
+      currentStep: 1,
+      branch: [],
+      section: "",
+      class: "",
+      group: "",
+      package: "",
+      category: "",
+      submitError: "",
+      formErrors: {
+        group: "",
+        package: "",
+        category: "",
+        class: "",
+        branch: "",
+        section: ""
       },
+      sectionValid: false,
+      groupValid: false,
+      packageValid: false,
+      categoryValid: false,
+      classValid: false,
+      branchValid: false,
+      formValid: false
     });
-  };
+    this.props.onHide(); // ← closes modal
+  }
+};
   SetpageLoad = () => {
     this.setState({ currentStep: 1, submitError: "" });
     this.props.onHide();
@@ -504,7 +461,7 @@ class GroupModal extends Component {
         if (idata != undefined) {
           const newObj = {
             value: idata.id,
-            label: idata.branch_name
+            label: idata?.branch_name
           }
           getArray.push(newObj);
 

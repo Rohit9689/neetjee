@@ -327,11 +327,17 @@ class InnerGroupCards extends Component {
         subject: parseInt(this.props.subjectid),
         chapter: parseInt(this.props.ocid)
       });
-    let subjectsData = "";
-    if (getSubjects.getSubjects != undefined) {
-      subjectsData = getSubjects.getSubjects[0].studentChapters[0]
+  let subjectsData = null;
 
-    }
+if (
+  getSubjects &&
+  getSubjects.getSubjects &&
+  getSubjects.getSubjects.length > 0 &&
+  getSubjects.getSubjects[0].studentChapters &&
+  getSubjects.getSubjects[0].studentChapters.length > 0
+) {
+  subjectsData = getSubjects.getSubjects[0].studentChapters[0];
+}
     return (
       <React.Fragment>
         <Tab.Container id="subject-tabs" defaultActiveKey="first">
@@ -351,8 +357,8 @@ class InnerGroupCards extends Component {
                 <i className="fal fa-file-invoice mr-2" />{" "}
                 <span>
                   {this.percentage(
-                    subjectsData.attempted_questions,
-                    subjectsData.total_questions
+                    subjectsData?.attempted_questions || 0,
+                    subjectsData?.total_questions || 0
                   )}
                   %
                 </span>

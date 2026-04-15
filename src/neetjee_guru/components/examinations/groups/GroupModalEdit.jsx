@@ -67,7 +67,7 @@ class GroupModalEdit extends Component {
         if (idata != undefined) {
           const newObj = {
             value: idata.id,
-            label: idata.branch_name
+            label: idata?.branch_name
           }
           getArray.push(newObj);
 
@@ -84,7 +84,7 @@ class GroupModalEdit extends Component {
         let findData = this.props.globals.globalBranches.find((a) => a.id == item);
         const newObj = {
           value: item,
-          label: findData.branch_name
+          label: findData?.branch_name
         }
         getdata.push(newObj);
       }
@@ -120,7 +120,7 @@ class GroupModalEdit extends Component {
         let findData = this.props.getSections.find((a) => a.id == item);
         const newObj = {
           value: item,
-          label: findData.section_name
+          label: findData?.section_name
         }
         getdata.push(newObj);
       })
@@ -154,7 +154,7 @@ class GroupModalEdit extends Component {
                           if (this.props.stateData.category == idata.category_id) {
                             const newObj = {
                               value: idata.id,
-                              label: idata.section_name
+                              label: idata?.section_name
                             }
                             getArray.push(newObj);
                           }
@@ -162,7 +162,7 @@ class GroupModalEdit extends Component {
                         else {
                           const newObj = {
                             value: idata.id,
-                            label: idata.section_name
+                            label: idata?.section_name
                           }
                           getArray.push(newObj);
                         }
@@ -172,7 +172,7 @@ class GroupModalEdit extends Component {
                     else {
                       const newObj = {
                         value: idata.id,
-                        label: idata.section_name
+                        label: idata?.section_name
                       }
                       getArray.push(newObj);
                       console.log("getArray", getArray);
@@ -190,7 +190,7 @@ class GroupModalEdit extends Component {
                           if (this.props.stateData.category == idata.category_id) {
                             const newObj = {
                               value: idata.id,
-                              label: idata.section_name
+                              label: idata?.section_name
                             }
                             getArray.push(newObj);
                           }
@@ -198,7 +198,7 @@ class GroupModalEdit extends Component {
                         else {
                           const newObj = {
                             value: idata.id,
-                            label: idata.section_name
+                            label: idata?.section_name
                           }
                           getArray.push(newObj);
                         }
@@ -208,7 +208,7 @@ class GroupModalEdit extends Component {
                     else {
                       const newObj = {
                         value: idata.id,
-                        label: idata.section_name
+                        label: idata?.section_name
                       }
                       getArray.push(newObj);
 
@@ -228,14 +228,14 @@ class GroupModalEdit extends Component {
                     if (this.props.stateData.category == idata.category_id) {
                       const newObj = {
                         value: idata.id,
-                        label: idata.section_name
+                        label: idata?.section_name
                       }
                       getArray.push(newObj);
                     }
                   } else {
                     const newObj = {
                       value: idata.id,
-                      label: idata.section_name
+                      label: idata?.section_name
                     }
                     getArray.push(newObj);
                   }

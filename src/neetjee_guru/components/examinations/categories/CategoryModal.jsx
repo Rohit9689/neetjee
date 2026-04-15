@@ -142,11 +142,12 @@ class CategoryModal extends Component {
   };
 
   adddata = async params => {
-    await this.props.adddata({
-      variables: {
-        params
-      },
-      update: (store, { data }) => {
+  const result = await this.props.adddata({
+    variables: {
+      params
+    },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: GETDATA2,
           variables: {
@@ -154,14 +155,11 @@ class CategoryModal extends Component {
           }
         });
 
-        console.log("data1", data1, this.state);
-
         const new_data = {
           id: data.addCategory,
           category_name: this.state.category_name,
           package_id: parseInt(this.state.package),
           package_name: this.state.package_name.label,
-          //exams_covered: parseInt(data.addCategory),
           high_difficult: parseInt(this.state.high_difficult),
           difficult: parseInt(this.state.difficult),
           moderate: parseInt(this.state.medium),
@@ -169,57 +167,41 @@ class CategoryModal extends Component {
           timestamp: moment().unix(),
           __typename: "Categories"
         };
+
         data1.getCategories.unshift(new_data);
 
-        try {
-          store.writeQuery({
-            query: GETDATA2,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-
-        let data4 = store.readQuery({
+        store.writeQuery({
           query: GETDATA2,
           variables: {
             institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          },
+          data: data1
         });
-        data1.getCategories = data4;
-
-        console.log("GETDATA2adddata", data4);
-
-        if (data.addCategory) {
-          this.setState({
-            category_name: "",
-
-            package: 0,
-            package_name: "",
-            high_difficult: 0,
-            difficult: 0,
-            medium: 0,
-            easy: 0,
-            submitError: "Data Inserted Successfully!",
-            formErrors: {
-              category_name: "",
-              package: ""
-            },
-            category_nameValid: false,
-            packageValid: false,
-            formValid: false
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
-        }
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal based on actual response, safe from cache errors
+  if (result.data.addCategory) {
+    this.setState({
+      category_name: "",
+      package: 0,
+      package_name: "",
+      high_difficult: 0,
+      difficult: 0,
+      medium: 0,
+      easy: 0,
+      submitError: "",
+      formErrors: { category_name: "", package: "" },
+      category_nameValid: false,
+      packageValid: false,
+      formValid: false
     });
-  };
+    this.props.onHide();
+  }
+};
 
   getExams(npackage) {
     if (this.props.getPackages != undefined) {

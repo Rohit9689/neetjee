@@ -407,99 +407,94 @@ class TeacherModal extends Component {
         }
     };
 
-    addFaculity = async params => {
-        await this.props.addFaculity({
-            variables: {
-                params
-            },
-            update: (store, { data }) => {
-                console.log("Datas", data)
-                let data1 = store.readQuery({
-                    query: FETCH_TEACHERS,
-                    variables: {
-                        institution_id: parseInt(Cookies.get("institutionid")),
-                        userlevel: parseInt(Cookies.get("userlevel"))
-                    }
-                });
-
-                const newTeacher = {
-                    id: data.addFaculity,
-                    name: this.state.teacher_name,
-                    mobile: this.state.contact_no,
-                    subject: this.state.subject.toString(),
-                    branch: this.state.branch.toString(),
-                    class: params.class.toString(),
-                    section: this.state.section.toString(),
-                    email: this.state.email,
-                    userlevel: parseInt(this.state.userlevel),
-                    username: this.state.email,
-                    __typename: "Teachers1"
-                };
-
-                data1.getFaculity.push(newTeacher);
-                console.log("data2", data1);
-                try {
-                    store.writeQuery({
-                        query: FETCH_TEACHERS,
-                        variables: {
-                            institution_id: parseInt(Cookies.get("institutionid")),
-                            userlevel: parseInt(Cookies.get("userlevel"))
-                        },
-                        data: data1
-                    });
-
-                }
-                catch (e) {
-                    console.log("Exception", e);
-                }
-
-                if (data.addFaculity) {
-                    this.setState({
-                        currentStep: 5,
-                        teacher_name: "",
-                        contact_no: "",
-                        userlevel: "",
-                        userlevelvalue: "",
-                        subject: [],
-                        subjectvalue: [],
-                        branch: [],
-                        branchvalue: [],
-                        section: [],
-                        sectionvalue: [],
-                        email: "",
-                        class: "",
-                        classvalue: "",
-                        password: "",
-                        submitError: "",
-                        formErrors: {
-                            teacher_name: "",
-                            contact_no: "",
-                            subject: "",
-                            branch: "",
-                            class: "",
-                            section: "",
-                            password: "",
-                            email: "",
-                            userlevel: ""
-                        },
-                        teacher_nameValid: false,
-                        contact_noValid: false,
-                        subjectValid: false,
-                        sectionValid: false,
-                        classValid: false,
-                        branchValid: false,
-                        passwordValid: false,
-                        emailValid: false,
-                        userlevelValid: false,
-                        loading: false,
-                        formValid: false
-                    });
-
-                    this.SetpageLoad();
-                }
-            }
+  addFaculity = async params => {
+  const result = await this.props.addFaculity({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
+        let data1 = store.readQuery({
+          query: FETCH_TEACHERS,
+          variables: {
+            institution_id: parseInt(Cookies.get("institutionid")),
+            userlevel: parseInt(Cookies.get("userlevel"))
+          }
         });
-    };
+
+        const newTeacher = {
+          id: data.addFaculity,
+          name: this.state.teacher_name,
+          mobile: this.state.contact_no,
+          subject: this.state.subject.toString(),
+          branch: this.state.branch.toString(),
+          class: params.class.toString(),
+          section: this.state.section.toString(),
+          email: this.state.email,
+          userlevel: parseInt(this.state.userlevel),
+          username: this.state.email,
+          __typename: "Teachers1"
+        };
+
+        data1.getFaculity.push(newTeacher);
+
+        store.writeQuery({
+          query: FETCH_TEACHERS,
+          variables: {
+            institution_id: parseInt(Cookies.get("institutionid")),
+            userlevel: parseInt(Cookies.get("userlevel"))
+          },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
+      }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.addFaculity) {
+    this.setState({
+      currentStep: 1,
+      teacher_name: "",
+      contact_no: "",
+      userlevel: "",
+      userlevelvalue: "",
+      subject: [],
+      subjectvalue: [],
+      branch: [],
+      branchvalue: [],
+      section: [],
+      sectionvalue: [],
+      email: "",
+      class: "",
+      classvalue: "",
+      password: "",
+      submitError: "",
+      formErrors: {
+        teacher_name: "",
+        contact_no: "",
+        subject: "",
+        branch: "",
+        class: "",
+        section: "",
+        password: "",
+        email: "",
+        userlevel: ""
+      },
+      teacher_nameValid: false,
+      contact_noValid: false,
+      subjectValid: false,
+      sectionValid: false,
+      classValid: false,
+      branchValid: false,
+      passwordValid: false,
+      emailValid: false,
+      userlevelValid: false,
+      loading: false,
+      formValid: false
+    });
+    this.props.onHide(); // ← closes modal
+  }
+};
 
     SetpageLoad = () => {
         console.log("setTimeout");

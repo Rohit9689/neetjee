@@ -366,7 +366,7 @@ class UserCreationSection extends Component {
     fileUpload(file, stream) {
         console.log("fileupload", file);
 
-        const url = "http://admin.mylearningplus.in/mobile.php?uploadImage=true";
+        const url = "http://34.100.238.121:81/neetjee-dataadmin/mobile.php?uploadImage=true";
         const formData = new FormData();
         formData.append("file", file);
         formData.append("stream", stream);

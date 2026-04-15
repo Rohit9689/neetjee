@@ -225,16 +225,13 @@ class AddSectionComponent extends Component {
     }
   };
   editsection = async sections => {
-    await this.props.editsection({
-      variables: {
-        sections
-      },
-      update: (store, { data }) => {
+  const result = await this.props.editsection({
+    variables: { sections },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_SECTIONS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
 
         const newSection = {
@@ -251,58 +248,46 @@ class AddSectionComponent extends Component {
           __typename: "Sections"
         };
 
-        let esection = data1.getSections.find(
-          x => (x.id = this.state.sectionid)
-        );
+        let esection = data1.getSections.find(x => x.id === this.state.sectionid);
         const idindex = data1.getSections.indexOf(esection);
-
         data1.getSections.splice(idindex, 1, newSection);
-        try {
-          store.writeQuery({
-            query: FETCH_SECTIONS,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-        console.log(data, "editSection");
-        if (data.editSection) {
-          this.setState({
-            status: 1,
-            sectionid: "",
-            currentStep: 5,
-            branch_name: "",
-            branch: 0,
-            category: 0,
-            category_name: "",
-            high_difficult: 0,
-            difficult: 0,
-            moderate: 0,
-            easy: 0,
-            section: "",
-            package: "",
-            submitError: "",
-            formErrors: {
-              branch: "",
-              category: "",
-              section: ""
-            },
-            branchValid: false,
-            categoryValid: false,
-            sectionValid: false,
-            formValid: false
-          });
 
-          setTimeout(() => {
-            this.SetpageLoadedit();
-          }, 1500);
-        }
+        store.writeQuery({
+          query: FETCH_SECTIONS,
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.editSection) {
+    this.setState({
+      currentStep: 1,
+      sectionid: "",
+      branch: 0,
+      branchvalue: "",
+      category: 0,
+      categoryvalue: "",
+      high_difficult: 0,
+      difficult: 0,
+      moderate: 0,
+      easy: 0,
+      section: "",
+      package: "",
+      submitError: "",
+      formErrors: { branch: "", category: "", section: "" },
+      branchValid: false,
+      categoryValid: false,
+      sectionValid: false,
+      formValid: false,
+      modalShow1: false  // ← closes modal
     });
-  };
+  }
+};
   SetpageLoadedit = () => {
     this.setState({ currentStep: 1, modalShow1: false });
   };
@@ -333,17 +318,14 @@ class AddSectionComponent extends Component {
       this.setState({ submitError: "Please fill all the values to proceed" });
     }
   };
-  addsection = async sections => {
-    await this.props.addsection({
-      variables: {
-        sections
-      },
-      update: (store, { data }) => {
+ addsection = async sections => {
+  const result = await this.props.addsection({
+    variables: { sections },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_SECTIONS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
 
         const newSection = {
@@ -361,49 +343,41 @@ class AddSectionComponent extends Component {
         };
         data1.getSections.push(newSection);
 
-        try {
-          store.writeQuery({
-            query: FETCH_SECTIONS,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-        if (data.addSection) {
-          this.setState({
-            currentStep: 5,
-            branch_name: "",
-            branch: 0,
-            category: 0,
-            category_name: "",
-            high_difficult: 0,
-            difficult: 0,
-            moderate: 0,
-            easy: 0,
-            section: "",
-            package: "",
-            submitError: "",
-            formErrors: {
-              branch: "",
-              category: "",
-              section: ""
-            },
-            branchValid: false,
-            categoryValid: true,
-            sectionValid: false,
-            formValid: false
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
-        }
+        store.writeQuery({
+          query: FETCH_SECTIONS,
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.addSection) {
+    this.setState({
+      currentStep: 1,
+      branch: 0,
+      branchvalue: "",
+      category: 0,
+      categoryvalue: "",
+      high_difficult: 0,
+      difficult: 0,
+      moderate: 0,
+      easy: 0,
+      section: "",
+      package: "",
+      submitError: "",
+      formErrors: { branch: "", category: "", section: "" },
+      branchValid: false,
+      categoryValid: true,
+      sectionValid: false,
+      formValid: false,
+      modalShow: false  // ← closes modal
     });
-  };
+  }
+};
   SetpageLoad = () => {
     this.setState({ currentStep: 2, modalShow: false });
   };
@@ -564,49 +538,49 @@ class AddSectionComponent extends Component {
     });
   };
 
-  handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
-    await this.props.handleDelete({
-      variables: {
-        section_id: rowIndex.id
-      },
-      update: (store, { data }) => {
-        console.log("data", data);
-        let data1 = store.readQuery({
-          query: FETCH_SECTIONS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        data1.getSections = data1.getSections.filter(x => x.id != rowIndex.id);
-        try {
-          store.writeQuery({
-            query: FETCH_SECTIONS,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
+ handleDelete = async (e, cell, row, rowIndex) => {
+  await this.props.handleDelete({
+    variables: {
+      section_id: rowIndex.id
+    },
+    update: (store, { data }) => {
+
+      // ✅ Read cache
+      const existingData = store.readQuery({
+        query: FETCH_SECTIONS,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
         }
-        let data2 = store.readQuery({
-          query: FETCH_SECTIONS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        data1.getSections = data2;
-        if (data.deleteSection) {
-          this.setState({
-            status: 2
-          });
-          setTimeout(() => {
-            this.DeleteSetpageLoad();
-          }, 1000);
+      });
+
+      // ✅ Create new array (NO mutation)
+      const updatedSections = existingData.getSections.filter(
+        item => item.id !== rowIndex.id
+      );
+
+      // ✅ Write back
+      store.writeQuery({
+        query: FETCH_SECTIONS,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
+        },
+        data: {
+          ...existingData,
+          getSections: updatedSections
         }
+      });
+
+      // ✅ Success UI
+      if (data.deleteSection) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.DeleteSetpageLoad();
+        }, 1000);
       }
-    });
-  };
+    }
+  });
+};
   DeleteSetpageLoad = () => {
     this.setState({ status: 1 });
   };

@@ -80,61 +80,49 @@ class CategorySection extends Component {
       editRow: rowIndex
     });
   };
-  handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
-    // console.log("Delete Student Parent", rowIndex);
+ handleDelete = async (e, cell, row, rowIndex) => {
+  await this.props.deletedata({
+    variables: {
+      category_id: rowIndex.id
+    },
+    update: (store, { data }) => {
 
-    await this.props.deletedata({
-      variables: {
-        category_id: rowIndex.id
-      },
-      update: (store, { data }) => {
-        console.log("data", data);
-        const data1 = store.readQuery({
-          query: GETDATA,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-
-        console.log("rowIndex.id", rowIndex.id);
-
-        data1.getCategories = data1.getCategories.filter(x => x.id != rowIndex.id);
-
-        try {
-          store.writeQuery({
-            query: GETDATA,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
+      // ✅ Step 1: read existing cache
+      const existingData = store.readQuery({
+        query: GETDATA,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
         }
+      });
 
-        const data2 = store.readQuery({
-          query: GETDATA,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
+      // ✅ Step 2: create NEW array (no mutation)
+      const updatedCategories = existingData.getCategories.filter(
+        item => item.id !== rowIndex.id
+      );
 
-        console.log("deleted data", data2);
-
-        data1.getCategories = data2;
-
-        if (data.deleteCategory) {
-          this.setState({
-            status: 2
-          });
-
-          setTimeout(() => {
-            this.DeleteSetpageLoad();
-          }, 1000);
+      // ✅ Step 3: write back safely
+      store.writeQuery({
+        query: GETDATA,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
+        },
+        data: {
+          ...existingData,
+          getCategories: updatedCategories
         }
+      });
+
+      // ✅ Step 4: UI feedback
+      if (data.deleteCategory) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.DeleteSetpageLoad();
+        }, 1000);
       }
-    });
-  };
+    }
+  });
+};
   DeleteSetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ status: 1 });

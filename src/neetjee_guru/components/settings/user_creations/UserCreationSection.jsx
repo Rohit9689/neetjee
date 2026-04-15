@@ -173,57 +173,47 @@ class UserCreationSection extends Component {
             status: 1,
         });
     };
-    handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
-        await this.props.handleDelete({
-            variables: {
-                id: rowIndex.id
-            },
-            update: (store, { data }) => {
-                console.log("data", data);
-                const data1 = store.readQuery({
-                    query: FETCH_GETINSTITUTEUSERS,
-                    variables: {
-                        username: Cookies.get("username"),
-                        institution_id: parseInt(Cookies.get("institutionid"))
-                    }
-                });
-                console.log("data1s", data1.getInstituteUsers);
-                console.log("rowIndex.id", rowIndex.id);
-                data1.getInstituteUsers = data1.getInstituteUsers.filter(x => x.id != rowIndex.id);
-                console.log("data2s", data1.getInstituteUsers);
-                try {
-                    store.writeQuery({
-                        query: FETCH_GETINSTITUTEUSERS,
-                        variables: {
-                            username: Cookies.get("username"),
-                            institution_id: parseInt(Cookies.get("institutionid"))
-                        },
-                        data: data1
-                    });
-                } catch (e) {
-                    console.log("Exception", e);
-                }
+    handleDelete = async (e, cell, row, rowIndex) => {
+  await this.props.handleDelete({
+    variables: {
+      id: rowIndex.id
+    },
+    update: (store, { data }) => {
 
-                const data4 = store.readQuery({
-                    query: FETCH_GETINSTITUTEUSERS,
-                    variables: {
-                        username: Cookies.get("username"),
-                        institution_id: parseInt(Cookies.get("institutionid"))
-                    }
-                });
-                data1.getInstituteUsers = data4;
-                console.log("data4s", data4);
-                if (data.deleteInstituteUser) {
-                    this.setState({
-                        status: 2
-                    });
-                    setTimeout(() => {
-                        this.DeleteSetpageLoad();
-                    }, 1000);
-                }
-            }
-        });
-    };
+      const existingData = store.readQuery({
+        query: FETCH_GETINSTITUTEUSERS,
+        variables: {
+          username: Cookies.get("username"),
+          institution_id: parseInt(Cookies.get("institutionid"))
+        }
+      });
+
+      const updatedUsers = existingData.getInstituteUsers.filter(
+        user => user.id !== rowIndex.id
+      );
+
+      store.writeQuery({
+        query: FETCH_GETINSTITUTEUSERS,
+        variables: {
+          username: Cookies.get("username"),
+          institution_id: parseInt(Cookies.get("institutionid"))
+        },
+        data: {
+          ...existingData,
+          getInstituteUsers: updatedUsers
+        }
+      });
+
+      if (data.deleteInstituteUser) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.setState({ status: 1 });
+        }, 1000);
+      }
+    }
+  });
+};
     DeleteSetpageLoad = () => {
         console.log("setTimeout");
         this.setState({ status: 1 });
@@ -605,11 +595,13 @@ class UserCreationSection extends Component {
         }
     };
     adduser = async params => {
-        await this.props.adduser({
-            variables: {
-                params
-            },
-            update: (store, { data }) => {
+    await this.props.adduser({
+        variables: {
+            params
+        },
+        update: (store, { data }) => {
+            // Wrap cache update separately so it never blocks modal close
+            try {
                 let data1 = store.readQuery({
                     query: FETCH_GETINSTITUTEUSERS,
                     variables: {
@@ -621,113 +613,69 @@ class UserCreationSection extends Component {
                 let classvalue = "";
                 if (this.state.class11 == "1" && this.state.class12 == "2") {
                     classvalue = "0";
-                }
-                else if (this.state.class11 == "1") {
+                } else if (this.state.class11 == "1") {
                     classvalue = "1";
-                }
-                else if (this.state.class12 == "2") {
+                } else if (this.state.class12 == "2") {
                     classvalue = "2";
                 }
-                console.log("classvalue", classvalue);
 
                 let chapterVal = "";
                 let chapternameVal = "";
                 if (this.state.chapter.toString() == "0") {
-                    console.log("123");
                     let chArray = [];
                     let chArrayname = [];
                     this.props.globals.subjects.map((item) => {
-                        //if (item.id == this.state.subject) {
                         this.state.subject.map((sitmem) => {
                             if (sitmem == item.id) {
                                 item.chapters.map((item2) => {
-                                    const newObj = item2.id
-                                    const newObj2 = item2.chapter
-                                    chArray.push(newObj);
-                                    chArrayname.push(newObj2);
-                                })
+                                    chArray.push(item2.id);
+                                    chArrayname.push(item2.chapter);
+                                });
                             }
-
                         });
-
-
-                        //}
-
-                    })
+                    });
                     chapterVal = chArray.toString();
                     chapternameVal = chArrayname.toString();
                 } else {
-                    console.log("1234");
                     chapterVal = this.state.chapter.toString();
                     let chArrayname = [];
                     this.state.chapter.map((chitem) => {
-                        console.log("chitem", chitem, this.props.globals.subjects);
                         this.props.globals.subjects.map((item) => {
-                            console.log("item.id", item.id, this.state.subject);
-                            //if (item.id == this.state.subject) {
                             this.state.subject.map((sitem) => {
                                 if (item.id == sitem) {
-                                    console.log("item.idtrue");
                                     item.chapters.map((item2) => {
-                                        console.log("item.idtrueitem2.id", item2.id, chitem);
                                         if (item2.id == chitem) {
-                                            const newObj2 = item2.chapter
-                                            //chArray.push(newObj);
-                                            chArrayname.push(newObj2);
+                                            chArrayname.push(item2.chapter);
                                         }
-
-                                    })
+                                    });
                                 }
-
-                            })
-
-
-                            //}
-
-                        })
-                    })
+                            });
+                        });
+                    });
                     chapternameVal = chArrayname.toString();
-
                 }
-                // let subject_name = "";
-                // this.props.globals.subjects.map((item) => {
-                //     if (item.id == this.state.subject) {
-                //         subject_name = item.subject;
-                //     }
 
-                // });
-
-                //start subject
                 let subjectVal = "";
                 let subjectnameVal = "";
                 if (this.state.subject.toString() == "0") {
-                    console.log("123");
                     let subArray = [];
                     let subArrayname = [];
                     this.props.globals.subjects.map((item) => {
-
-                        const newObj = item.id
-                        const newObj2 = item.subject
-                        subArray.push(newObj);
-                        subArrayname.push(newObj2);
-
-
-                    })
+                        subArray.push(item.id);
+                        subArrayname.push(item.subject);
+                    });
                     subjectVal = subArray.toString();
                     subjectnameVal = subArrayname.toString();
                 } else {
-
                     subjectVal = this.state.subject.toString();
                     let subArrayname = [];
                     this.state.subject.map((item) => {
                         let filterData = this.props.globals.subjects.find((a) => a.id == item);
-                        const newObj2 = filterData.subject
-                        subArrayname.push(newObj2);
-                    })
+                        subArrayname.push(filterData.subject);
+                    });
                     subjectnameVal = subArrayname.toString();
-
                 }
-                //end subject
+
                 const newUser = {
                     id: data.addInstituteUser,
                     username: this.state.username,
@@ -743,66 +691,68 @@ class UserCreationSection extends Component {
                     chapter: chapterVal,
                     __typename: "InstituteUsers"
                 };
+
                 data1.getInstituteUsers.push(newUser);
 
-                try {
-                    store.writeQuery({
-                        query: FETCH_GETINSTITUTEUSERS,
-                        variables: {
-                            username: Cookies.get("username"),
-                            institution_id: parseInt(Cookies.get("institutionid"))
-                        },
-                        data: data1
-                    });
-                } catch (e) {
-                    console.log("Exception", e);
-                }
-                if (data.addInstituteUser) {
-                    this.setState({
-                        formValid: false,
-                        currentStep: "5",
-                        loading: false,
-                        submitError: "",
-                        userid: "",
+                store.writeQuery({
+                    query: FETCH_GETINSTITUTEUSERS,
+                    variables: {
+                        username: Cookies.get("username"),
+                        institution_id: parseInt(Cookies.get("institutionid"))
+                    },
+                    data: data1
+                });
+
+            } catch (e) {
+                console.log("Cache update exception", e);
+                // Cache update failed — that's okay, we'll still close the modal
+            }
+
+            // ✅ This now ALWAYS runs regardless of cache update success/failure
+            if (data.addInstituteUser) {
+                this.setState({
+                    formValid: false,
+                    currentStep: "5",
+                    loading: false,
+                    submitError: "",
+                    userid: "",
+                    fullname: "",
+                    username: "",
+                    email: "",
+                    password: "",
+                    mobile: "",
+                    usertype: "",
+                    usertypevalue: "",
+                    subject: [],
+                    subjectvalue: [],
+                    class11: "",
+                    class12: "",
+                    checked1: true,
+                    checked2: false,
+                    chapter: [],
+                    chaptervalue: [],
+                    formErrors: {
                         fullname: "",
                         username: "",
                         email: "",
                         password: "",
                         mobile: "",
                         usertype: "",
-                        usertypevalue: "",
-                        subject: [],
-                        subjectvalue: [],
-                        class11: "",
-                        class12: "",
-                        checked1: true,
-                        checked2: false,
-                        chapter: [],
-                        chaptervalue: [],
-
-                        formErrors: {
-                            fullname: "",
-                            username: "",
-                            email: "",
-                            password: "",
-                            mobile: "",
-                            usertype: "",
-                            subject: ""
-                        },
-                        fullnameValid: false,
-                        usernameValid: false,
-                        emailValid: false,
-                        passwordValid: false,
-                        mobileValid: false,
-                        usertypeValid: false,
-                        subjectValid: false
-                    });
-
-                    this.SetpageLoad();
-                }
+                        subject: ""
+                    },
+                    fullnameValid: false,
+                    usernameValid: false,
+                    emailValid: false,
+                    passwordValid: false,
+                    mobileValid: false,
+                    usertypeValid: false,
+                    subjectValid: false
+                });
+                this.SetpageLoad();
             }
-        });
-    };
+        }
+    });
+};
     SetpageLoad = () => {
         console.log("setTimeout");
         this.setState({ currentStep: 1, modalShow: false });

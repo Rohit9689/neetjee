@@ -134,30 +134,14 @@ class CategoryModalEdit extends Component {
   };
 
   editdata = async params => {
-    await this.props.editdata({
-      variables: {
-        params
-      },
-      update: (store, { data }) => {
+  const result = await this.props.editdata({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: GETDATA2,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
-
-        console.log("data1", data1, data);
-
-        // let changed = data1.getCategories.find(x => x.id == this.state.id);
-        // let replace = data1.getCategories.indexOf(changed);
-
-        // data1.getCategories[replace].package_name = this.state.package_name.label;
-        // data1.getCategories[replace].category_name = this.state.category_name;
-        // data1.getCategories[replace].package_id = this.state.package;
-        // data1.getCategories[replace].high_difficult = this.state.high_difficult;
-        // data1.getCategories[replace].difficult = this.state.difficult;
-        // data1.getCategories[replace].moderate = this.state.medium;
-        // data1.getCategories[replace].easy = this.state.easy;
 
         let found = data1.getCategories.find(a => a.id === this.state.id);
         let idindex = data1.getCategories.indexOf(found);
@@ -166,7 +150,6 @@ class CategoryModalEdit extends Component {
           category_name: this.state.category_name,
           package_id: this.state.package,
           package_name: this.state.package_name.label,
-
           high_difficult: this.state.high_difficult,
           difficult: this.state.difficult,
           moderate: this.state.medium,
@@ -176,47 +159,37 @@ class CategoryModalEdit extends Component {
         };
         data1.getCategories.splice(idindex, 1, newCategories);
 
-        try {
-          store.writeQuery({
-            query: GETDATA2,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-
-        console.log("adddata", data1);
-
-        if (data.updateCategory) {
-          this.setState({
-            category_name: "",
-
-            package: 0,
-            package_name: "",
-            high_difficult: 0,
-            difficult: 0,
-            medium: 0,
-            easy: 0,
-            submitError: "Data Saved Successfully!",
-            formErrors: {
-              category_name: "",
-              package: ""
-            },
-            category_nameValid: false,
-            packageValid: false,
-            formValid: false
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
-        }
+        store.writeQuery({
+          query: GETDATA2,
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.updateCategory) {
+    this.setState({
+      id: 0,
+      category_name: "",
+      package: 0,
+      package_name: "",
+      high_difficult: 0,
+      difficult: 0,
+      medium: 0,
+      easy: 0,
+      submitError: "",
+      formErrors: { category_name: "", package: "" },
+      category_nameValid: false,
+      packageValid: false,
+      formValid: false
     });
-  };
+    this.props.onHide(); // ← closes modal
+  }
+};
 
   getExams(npackage) {
     if (this.props.getPackages != undefined) {

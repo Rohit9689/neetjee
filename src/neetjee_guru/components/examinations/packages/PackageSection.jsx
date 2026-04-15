@@ -98,62 +98,51 @@ class PackageSection extends Component {
       editRow: rowIndex
     });
   };
-  handleDeleteFunction = async (e, cell, row, rowIndex, formatExtraData) => {
-    console.log("Delete Student Parent", rowIndex.id);
+  handleDeleteFunction = async (e, cell, row, rowIndex) => {
+  console.log("Delete Package", rowIndex.id);
 
-    await this.props.deletedata({
-      variables: {
-        id: parseInt(rowIndex.id)
-      },
-      update: (store, { data }) => {
-        console.log("data", data);
-        const data1 = store.readQuery({
-          query: GETDATA,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
+  await this.props.deletedata({
+    variables: {
+      id: parseInt(rowIndex.id)
+    },
+    update: (store, { data }) => {
 
-        console.log("rowIndex.id", rowIndex.id);
-
-        data1.getPackages = data1.getPackages.filter(x => x.id != rowIndex.id);
-
-        try {
-          store.writeQuery({
-            query: GETDATA,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
+      // ✅ Step 1: Read cache
+      const existingData = store.readQuery({
+        query: GETDATA,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
         }
+      });
 
-        const data2 = store.readQuery({
-          query: GETDATA,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
+      // ✅ Step 2: Create NEW array (NO mutation)
+      const updatedPackages = existingData.getPackages.filter(
+        pkg => pkg.id !== rowIndex.id
+      );
 
-        console.log("deleted data", data2);
-        data1.getPackages = data2;
-
-        //this.props.getPackages = data2.getPackages;
-
-        if (data.deletePackage) {
-          this.setState({
-            status: 2
-          });
-
-          setTimeout(() => {
-            this.DeleteSetpageLoad();
-          }, 1000);
+      // ✅ Step 3: Write back to cache
+      store.writeQuery({
+        query: GETDATA,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
+        },
+        data: {
+          ...existingData,
+          getPackages: updatedPackages
         }
+      });
+
+      // ✅ Step 4: UI feedback
+      if (data.deletePackage) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.setState({ status: 1 });
+        }, 1000);
       }
-    });
-  };
+    }
+  });
+};
   DeleteSetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ status: 1 });

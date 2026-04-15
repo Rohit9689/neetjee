@@ -396,11 +396,10 @@ class TeachersSection extends Component {
   };
 
   updateFaculity = async (params) => {
-    await this.props.updateFaculity({
-      variables: {
-        params,
-      },
-      update: (store, { data }) => {
+  const result = await this.props.updateFaculity({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_TEACHERS,
           variables: {
@@ -412,19 +411,16 @@ class TeachersSection extends Component {
           (th) => th.username == this.state.teacherid
         );
 
-        console.log("data1", data1, teacher);
+        if (teacher !== -1) {
+          data1.getFaculity[teacher].name = this.state.teacher_name;
+          data1.getFaculity[teacher].mobile = this.state.contact_no;
+          data1.getFaculity[teacher].subject = this.state.subject.toString();
+          data1.getFaculity[teacher].branch = this.state.branch.toString();
+          data1.getFaculity[teacher].class = params.class.toString();
+          data1.getFaculity[teacher].section = this.state.section.toString();
+          data1.getFaculity[teacher].userlevel = parseInt(this.state.userlevel);
+          data1.getFaculity[teacher].email = this.state.email;
 
-        data1.getFaculity[teacher].name = this.state.teacher_name;
-        data1.getFaculity[teacher].mobile = this.state.contact_no;
-        data1.getFaculity[teacher].subject = this.state.subject.toString();
-        data1.getFaculity[teacher].branch = this.state.branch.toString();
-        data1.getFaculity[teacher].class = params.class.toString();
-        data1.getFaculity[teacher].section = this.state.section.toString();
-        data1.getFaculity[teacher].userlevel = parseInt(this.state.userlevel);
-        data1.getFaculity[teacher].email = this.state.email;
-
-
-        try {
           store.writeQuery({
             query: FETCH_TEACHERS,
             variables: {
@@ -432,68 +428,59 @@ class TeachersSection extends Component {
             },
             data: data1,
           });
-        } catch (e) {
-          console.log("Exception", e);
         }
+      } catch (e) {
+        console.log("Cache update exception", e);
+      }
+    },
+  });
 
-        console.log("updateFaculity", data);
-
-        if (data.updateFaculity) {
-          this.setState({
-            currentStep: 5,
-            teacher_name: "",
-            contact_no: "",
-            userlevel: "",
-            userlevelvalue: "",
-            subject: [],
-            subjectvalue: [],
-            branch: [],
-            branchvalue: [],
-            section: [],
-            sectionvalue: [],
-            email: "",
-            class: "",
-            classvalue: "",
-            password: "",
-            submitError: "",
-            formErrors: {
-              teacher_name: "",
-              contact_no: "",
-              subject: "",
-              branch: "",
-              class: "",
-              section: "",
-              password: "",
-              email: "",
-              userlevel: ""
-            },
-            teacher_nameValid: true,
-            contact_noValid: true,
-            subjectValid: true,
-            sectionValid: true,
-            classValid: true,
-            branchValid: true,
-            passwordValid: true,
-            emailValid: true,
-            userlevelValid: true,
-            formValid: true,
-            BranchesSection: {
-              Title: "Faculties",
-              btnName: "Add Faculty",
-            },
-            tableHeaderData: {
-              Title: "Faculties",
-            },
-            modalShow: false,
-            modalShow1: false,
-            loading: false,
-            status: 1,
-          });
-          this.SetpageLoad();
-        }
+  // ✅ Close modal from actual response
+  if (result.data.updateFaculity) {
+    this.setState({
+      currentStep: 1,
+      teacher_name: "",
+      contact_no: "",
+      userlevel: "",
+      userlevelvalue: "",
+      subject: [],
+      subjectvalue: [],
+      branch: [],
+      branchvalue: [],
+      section: [],
+      sectionvalue: [],
+      email: "",
+      class: "",
+      classvalue: "",
+      password: "",
+      submitError: "",
+      teacherid: "",
+      formErrors: {
+        teacher_name: "",
+        contact_no: "",
+        subject: "",
+        branch: "",
+        class: "",
+        section: "",
+        password: "",
+        email: "",
+        userlevel: ""
       },
+      teacher_nameValid: false,
+      contact_noValid: false,
+      subjectValid: false,
+      sectionValid: false,
+      classValid: false,
+      branchValid: false,
+      passwordValid: false,
+      emailValid: false,
+      userlevelValid: false,
+      formValid: false,
+      loading: false,
+      modalShow1: false  // ← closes modal
     });
-  };
+  }
+};
 
   SetpageLoad = () => {
     //console.log("setTimeout");

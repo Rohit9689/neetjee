@@ -102,13 +102,13 @@ class ProfileSection extends Component {
             picture: picture,
             show1: false,
             profile_pic_error: "",
-            institute_name:institute_name
+            institute_name: institute_name
         }
     }
     fileUpload(file, stream) {
         console.log("fileupload", file);
 
-        //const url = "http://admin.mylearningplus.in/mobile.php?uploadImage=true";
+        //const url = "http://34.100.238.121:81/neetjee-dataadmin/mobile.php?uploadImage=true";
         const url = "https://rizee.in/mobile.php?uploadImage=true";
         const formData = new FormData();
         formData.append("file", file);
@@ -742,10 +742,10 @@ class ProfileSection extends Component {
                                         User Saved successfully
                                     </Form.Text>
                                 ) : (
-                                        <Form.Text className="form-text text-danger">
-                                            {this.state.submitError}
-                                        </Form.Text>
-                                    )}
+                                    <Form.Text className="form-text text-danger">
+                                        {this.state.submitError}
+                                    </Form.Text>
+                                )}
                                 <Card.Body>
                                     <Row>
                                         <Col xl={3} lg={3} md={4} sm={12}>
@@ -757,8 +757,8 @@ class ProfileSection extends Component {
                                                     ) : this.state.picture != "" ? (
                                                         <Image width="140" style={{ height: "140px" }} src={this.state.picture} alt="profile-img" thumbnail roundedCircle />
                                                     ) : (
-                                                                <Image width="140" style={{ height: "140px" }} src={require('../../../images/businessman.png')} alt="profile-img" thumbnail roundedCircle />
-                                                            )}
+                                                        <Image width="140" style={{ height: "140px" }} src={require('../../../images/businessman.png')} alt="profile-img" thumbnail roundedCircle />
+                                                    )}
 
                                                     {/* <div className="upload_btn">
                                                         <i className="fal fa-edit" onClick={this.handleInputChangelogo} />
@@ -852,20 +852,20 @@ class ProfileSection extends Component {
                                                                     autoComplete="off" />
                                                             </Form.Group>
                                                             <Form.Group as={Col} sm={6} xs={12} controlId="formBasicBranch">
-                                                            <Form.Label>Branch</Form.Label>
-                                                            <SelectDropDown
-                                                                stateData={this.state.branchvalue}
-                                                                handleChange={this.selecthandleInputChange}
-                                                                name="branch"
-                                                                options={this.getBranch()}
-                                                                placeholderName={'Branch'}
-                                                                dropdownIndicator={{ DropdownIndicator }}
-                                                            />
-                                                        </Form.Group>
+                                                                <Form.Label>Branch</Form.Label>
+                                                                <SelectDropDown
+                                                                    stateData={this.state.branchvalue}
+                                                                    handleChange={this.selecthandleInputChange}
+                                                                    name="branch"
+                                                                    options={this.getBranch()}
+                                                                    placeholderName={'Branch'}
+                                                                    dropdownIndicator={{ DropdownIndicator }}
+                                                                />
+                                                            </Form.Group>
                                                         </React.Fragment>
-                                                        )}
+                                                    )}
 
-                                                    
+
                                                 </Form.Row>
                                                 {this.props.getStudentProfile.user_exams.length === 0 ? (
                                                     <React.Fragment>
@@ -928,45 +928,45 @@ class ProfileSection extends Component {
                                                         })}
                                                     </React.Fragment>
                                                 ) : (
-                                                        <React.Fragment>
-                                                            {this.state.userexams.map((item, index) => {
-                                                                return (
-                                                                    <Form.Row>
-                                                                        <Form.Group as={Col} xl={6} lg={6} md={6} sm={12} xs={12} controlId="formBasicAdmission">
-                                                                            <Form.Label>Admission/Hall ticket no.</Form.Label>
-                                                                            <Form.Control
-                                                                                type="text"
-                                                                                name="hallticketno"
-                                                                                value={item.hallticketno}
-                                                                                onChange={(e) => this.edithallticketno_handlechange(e, index)}
-                                                                                placeholder="Enter Hall ticket no."
-                                                                                autoComplete="off"
-                                                                            />
+                                                    <React.Fragment>
+                                                        {this.state.userexams.map((item, index) => {
+                                                            return (
+                                                                <Form.Row>
+                                                                    <Form.Group as={Col} xl={6} lg={6} md={6} sm={12} xs={12} controlId="formBasicAdmission">
+                                                                        <Form.Label>Admission/Hall ticket no.</Form.Label>
+                                                                        <Form.Control
+                                                                            type="text"
+                                                                            name="hallticketno"
+                                                                            value={item.hallticketno}
+                                                                            onChange={(e) => this.edithallticketno_handlechange(e, index)}
+                                                                            placeholder="Enter Hall ticket no."
+                                                                            autoComplete="off"
+                                                                        />
+                                                                    </Form.Group>
+                                                                    <Form.Group as={Col} xl={5} lg={5} md={5} sm={12} xs={12} controlId="formBasicBranch">
+                                                                        <Form.Label>Exam Type</Form.Label>
+                                                                        <SelectDropDown
+                                                                            index={index}
+                                                                            stateData={item.examtypevalue}
+                                                                            handleChange={this.editexamtype_handlechange}
+                                                                            name="examtype"
+                                                                            options={this.getExamtype()}
+                                                                            placeholderName={'Exams'}
+                                                                            dropdownIndicator={{ DropdownIndicator }} />
+                                                                    </Form.Group>
+                                                                    {index == 0 ? (
+                                                                        <Form.Group as={Col} xl={1} lg={1} md={1} sm={1} xs={2} controlId="formBasicBranch">
+                                                                            <Button className="btn btn-lightblue mt-md-4" onClick={this.addPost} block> <i className="fas fa-plus" /></Button>
                                                                         </Form.Group>
-                                                                        <Form.Group as={Col} xl={5} lg={5} md={5} sm={12} xs={12} controlId="formBasicBranch">
-                                                                            <Form.Label>Exam Type</Form.Label>
-                                                                            <SelectDropDown
-                                                                                index={index}
-                                                                                stateData={item.examtypevalue}
-                                                                                handleChange={this.editexamtype_handlechange}
-                                                                                name="examtype"
-                                                                                options={this.getExamtype()}
-                                                                                placeholderName={'Exams'}
-                                                                                dropdownIndicator={{ DropdownIndicator }} />
-                                                                        </Form.Group>
-                                                                        {index == 0 ? (
-                                                                            <Form.Group as={Col} xl={1} lg={1} md={1} sm={1} xs={2} controlId="formBasicBranch">
-                                                                                <Button className="btn btn-lightblue mt-md-4" onClick={this.addPost} block> <i className="fas fa-plus" /></Button>
-                                                                            </Form.Group>
-                                                                        ) : (<Form.Group as={Col} xl={1} lg={1} md={1} sm={1} xs={2} controlId="formBasicBranch">
-                                                                            <Button onClick={() => this.edithandleRemove(index)} className="btn btn-lightred mt-md-4" block> <i className="fas fa-minus" /></Button>
-                                                                        </Form.Group>)}
+                                                                    ) : (<Form.Group as={Col} xl={1} lg={1} md={1} sm={1} xs={2} controlId="formBasicBranch">
+                                                                        <Button onClick={() => this.edithandleRemove(index)} className="btn btn-lightred mt-md-4" block> <i className="fas fa-minus" /></Button>
+                                                                    </Form.Group>)}
 
-                                                                    </Form.Row>
-                                                                )
-                                                            })}
-                                                        </React.Fragment>
-                                                    )}
+                                                                </Form.Row>
+                                                            )
+                                                        })}
+                                                    </React.Fragment>
+                                                )}
 
 
                                                 <Form.Group controlId="formBasicSubject">

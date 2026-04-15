@@ -373,152 +373,115 @@ class GroupSection extends Component {
       this.setState({ submitError: "Please fill all the values to proceed" });
     }
   };
-  editgroup = async params => {
-    await this.props.editgroup({
-      variables: {
-        params
-      },
-      update: (store, { data }) => {
+ editgroup = async params => {
+  const result = await this.props.editgroup({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_SECTIONSCATEGORY,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
 
         const group = data1.getSectionCategories.findIndex(
           gp => gp.id == this.state.groupid
         );
-        console.log("institutionidthis.props", this.props);
-        let branchvalue = [];
-        if (this.state.branch != "") {
-          if (this.state.branch.toString() != "0") {
-            this.state.branch.map((item) => {
-              let findData = this.props.globals.globals.globalBranches.find((a) => a.id == item);
-              if (findData != undefined) {
-                const newObj = findData.branch_name;
-                branchvalue.push(newObj);
-              }
 
-            })
-
-          }
-          else {
-            this.props.globals.globals.globalBranches.map((item) => {
-              //let findData = this.props.globals.globals.globalBranches.find((a) => a.id == item);
-              if (item != undefined) {
-                const newObj = item.branch_name;
-                branchvalue.push(newObj);
-              }
-
-            })
-
+        if (group !== -1) {
+          let branchvalue = [];
+          if (this.state.branch != "") {
+            if (this.state.branch.toString() != "0") {
+              this.state.branch.map((item) => {
+                let findData = this.props.globals.globals.globalBranches.find((a) => a.id == item);
+                if (findData != undefined) branchvalue.push(findData.branch_name);
+              });
+            } else {
+              this.props.globals.globals.globalBranches.map((item) => {
+                if (item != undefined) branchvalue.push(item.branch_name);
+              });
+            }
           }
 
-        }
-
-        let sectionvalue = [];
-        if (this.state.section != "") {
-          if (this.state.section.toString() != "0") {
-            this.state.section.map((item) => {
-              let findData = this.props.globals.globals.globalSections.find((a) => a.id == item);
-              if (findData != undefined) {
-                const newObj = findData.section_name;
-                sectionvalue.push(newObj);
-              }
-
-            })
-
-          } else {
-            this.props.globals.globals.globalSections.map((item) => {
-              //let findData = this.props.globals.globals.globalSections.find((a) => a.id == item);
-              if (item != undefined) {
-                const newObj = item.section_name;
-                sectionvalue.push(newObj);
-              }
-
-            })
-
+          let sectionvalue = [];
+          if (this.state.section != "") {
+            if (this.state.section.toString() != "0") {
+              this.state.section.map((item) => {
+                let findData = this.props.globals.globals.globalSections.find((a) => a.id == item);
+                if (findData != undefined) sectionvalue.push(findData.section_name);
+              });
+            } else {
+              this.props.globals.globals.globalSections.map((item) => {
+                if (item != undefined) sectionvalue.push(item.section_name);
+              });
+            }
           }
 
-        }
-        let packagename = "";
-        if (this.state.package != "") {
-          let findData = this.props.globals.globals.globalPackages.find((a) => a.id == this.state.package);
-          if (findData != undefined) {
-            packagename = findData.package_name;
+          let packagename = "";
+          if (this.state.package != "") {
+            let findData = this.props.globals.globals.globalPackages.find((a) => a.id == this.state.package);
+            if (findData != undefined) packagename = findData.package_name;
           }
 
-
-        }
-        let class_id_values = "";
-        if (this.state.class != "") {
-          let findData = this.props.globals.globals.classes.find((a) => a.id == this.state.class);
-          if (findData != undefined) {
-            class_id_values = findData.class;
+          let class_id_values = "";
+          if (this.state.class != "") {
+            let findData = this.props.globals.globals.classes.find((a) => a.id == this.state.class);
+            if (findData != undefined) class_id_values = findData.class;
           }
 
+          data1.getSectionCategories[group].section_category = this.state.group;
+          data1.getSectionCategories[group].branch_ids = this.state.branch.toString();
+          data1.getSectionCategories[group].package_id = this.state.package;
+          data1.getSectionCategories[group].category_id = this.state.category;
+          data1.getSectionCategories[group].class_ids = this.state.class;
+          data1.getSectionCategories[group].section_ids = this.state.section.toString();
+          data1.getSectionCategories[group].branch_id_values = branchvalue.toString();
+          data1.getSectionCategories[group].class_id_values = class_id_values;
+          data1.getSectionCategories[group].section_id_values = sectionvalue.toString();
+          data1.getSectionCategories[group].package_name = packagename;
 
-        }
-
-        data1.getSectionCategories[group].section_category = this.state.group;
-        data1.getSectionCategories[group].branch_ids = this.state.branch.toString();
-        data1.getSectionCategories[group].package_id = this.state.package;
-        data1.getSectionCategories[group].category_id = this.state.category;
-        data1.getSectionCategories[group].class_ids = this.state.class;
-        data1.getSectionCategories[group].section_ids = this.state.section.toString();
-        data1.getSectionCategories[group].branch_id_values = branchvalue.toString();
-        data1.getSectionCategories[group].class_id_values = class_id_values;
-        data1.getSectionCategories[group].section_id_values = sectionvalue.toString();
-        data1.getSectionCategories[group].package_name = packagename;
-        try {
           store.writeQuery({
             query: FETCH_SECTIONSCATEGORY,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
+            variables: { institution_id: parseInt(Cookies.get("institutionid")) },
             data: data1
           });
-        } catch (e) {
-          console.log("Exception", e);
         }
-
-        console.log("addSectionCategorydata", data);
-        if (data.editSectionCategory) {
-          this.setState({
-            groupid: "",
-            currentStep: 5,
-            class: "",
-            section: [],
-            package: "",
-            branch: [],
-            group: "",
-            category: "",
-            submitError: "",
-            formErrors: {
-              group: "",
-              package: "",
-              category: "",
-              class: "",
-              branch: "",
-              section: ""
-            },
-            sectionValid: true,
-            groupValid: true,
-            packageValid: true,
-            categoryValid: true,
-            classValid: true,
-            branchValid: true,
-            formValid: true
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
-        }
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.editSectionCategory) {
+    this.setState({
+      groupid: "",
+      currentStep: 1,
+      class: "",
+      section: [],
+      package: "",
+      branch: [],
+      group: "",
+      category: "",
+      submitError: "",
+      formErrors: {
+        group: "",
+        package: "",
+        category: "",
+        class: "",
+        branch: "",
+        section: ""
+      },
+      sectionValid: true,
+      groupValid: true,
+      packageValid: true,
+      categoryValid: true,
+      classValid: true,
+      branchValid: true,
+      formValid: true,
+      modalShow1: false  // ← closes modal
     });
-  };
+  }
+};
   SetpageLoad = () => {
     this.setState({
       currentStep: 1,
@@ -649,56 +612,49 @@ class GroupSection extends Component {
       section: rowIndex.section
     });
   };
-  handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
-    await this.props.handleDelete({
-      variables: {
-        section_category_id: rowIndex.id
-      },
-      update: (store, { data }) => {
-        console.log("data", data);
-        const data1 = store.readQuery({
-          query: FETCH_SECTIONSCATEGORY,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        console.log("data1s", data1.getSectionCategories);
-        console.log("rowIndex.id", rowIndex.id);
-        data1.getSectionCategories = data1.getSectionCategories.filter(
-          x => x.id != rowIndex.id
-        );
-        console.log("data2s", data1.getSectionCategories);
-        try {
-          store.writeQuery({
-            query: FETCH_SECTIONSCATEGORY,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
+ handleDelete = async (e, cell, row, rowIndex) => {
+  await this.props.handleDelete({
+    variables: {
+      section_category_id: rowIndex.id
+    },
+    update: (store, { data }) => {
 
-        const data4 = store.readQuery({
-          query: FETCH_SECTIONSCATEGORY,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        data1.getSections = data4;
-        console.log("data4s", data4);
-        if (data.deleteSectionCategory) {
-          this.setState({
-            status: 2
-          });
-          setTimeout(() => {
-            this.DeleteSetpageLoad();
-          }, 1000);
+      // ✅ Step 1: read cache
+      const existingData = store.readQuery({
+        query: FETCH_SECTIONSCATEGORY,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
         }
+      });
+
+      // ✅ Step 2: create new array (NO mutation)
+      const updatedCategories = existingData.getSectionCategories.filter(
+        item => item.id !== rowIndex.id
+      );
+
+      // ✅ Step 3: write back
+      store.writeQuery({
+        query: FETCH_SECTIONSCATEGORY,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
+        },
+        data: {
+          ...existingData,
+          getSectionCategories: updatedCategories
+        }
+      });
+
+      // ✅ Step 4: UI update
+      if (data.deleteSectionCategory) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.DeleteSetpageLoad();
+        }, 1000);
       }
-    });
-  };
+    }
+  });
+};
   DeleteSetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ status: 1 });

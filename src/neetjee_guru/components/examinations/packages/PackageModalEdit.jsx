@@ -109,18 +109,16 @@ class PackageModalEdit extends Component {
     }
   };
 
-  editdata = async params => {
-    await this.props.editdata({
-      variables: {
-        params
-      },
-      update: (store, { data }) => {
+ editdata = async params => {
+  const result = await this.props.editdata({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: GETDATA,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
+
         let found = data1.getPackages.find(a => a.id === this.state.id);
         let idindex = data1.getPackages.indexOf(found);
         const newPackage = {
@@ -131,39 +129,35 @@ class PackageModalEdit extends Component {
           __typename: "Packages"
         };
         data1.getPackages.splice(idindex, 1, newPackage);
-        try {
-          store.writeQuery({
-            query: GETDATA,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-        if (data.updatePackage) {
-          this.setState({
-            package_name: "",
-            exams: 0,
-            id: -1,
 
-            submitError: "Data Updated Successfully!",
-            formErrors: {
-              package_name: "",
-              exams: ""
-            },
-            package_nameValid: false,
-            examsValid: false,
-            loading: false,
-            formValid: false
-          });
-
-          this.SetpageLoad();
-        }
+        store.writeQuery({
+          query: GETDATA,
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.updatePackage) {
+    this.setState({
+      package_name: "",
+      exams: 0,
+      id: 0,
+      examsvalue: "",
+      submitError: "",
+      formErrors: { package_name: "", exams: "" },
+      package_nameValid: false,
+      examsValid: false,
+      loading: false,
+      formValid: false
     });
-  };
+    this.props.onHide(); // ← closes modal
+  }
+};
 
   SetpageLoad = () => {
     console.log("Setpageload packagemodaledit");

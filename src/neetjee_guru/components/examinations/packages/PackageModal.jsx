@@ -95,11 +95,12 @@ class PackageModal extends Component {
   };
 
   adddata = async params => {
-    await this.props.adddata({
-      variables: {
-        params
-      },
-      update: (store, { data }) => {
+  const result = await this.props.adddata({
+    variables: {
+      params
+    },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: GETDATA,
           variables: {
@@ -107,7 +108,6 @@ class PackageModal extends Component {
           }
         });
 
-        console.log("data1", data1, data);
         let timestamp = moment().unix();
         const new_data = {
           id: parseInt(data.addPackage),
@@ -119,42 +119,34 @@ class PackageModal extends Component {
 
         data1.getPackages.unshift(new_data);
 
-        try {
-          store.writeQuery({
-            query: GETDATA,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-
-        console.log("adddata", data1);
-
-        if (data.addPackage) {
-          this.setState({
-            package_name: "",
-            exams: 0,
-
-            submitError: "Data Inserted Successfully!",
-            formErrors: {
-              package_name: "",
-              exams: ""
-            },
-            package_nameValid: false,
-            examsValid: false,
-            loading: false,
-            formValid: false
-          });
-
-          this.SetpageLoad();
-        }
+        store.writeQuery({
+          query: GETDATA,
+          variables: {
+            institution_id: parseInt(Cookies.get("institutionid"))
+          },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
-    });
-  };
+    }
+  });
 
+  // ✅ Check response here — safe from cache errors
+  if (result.data.addPackage) {
+    this.props.onHide();
+    this.setState({
+      package_name: "",
+      exams: 0,
+      submitError: "",
+      formErrors: { package_name: "", exams: "" },
+      package_nameValid: false,
+      examsValid: false,
+      loading: false,
+      formValid: false
+    });
+  }
+};
   SetpageLoad = () => {
     this.setState({ submitError: "" });
     this.props.onHide();

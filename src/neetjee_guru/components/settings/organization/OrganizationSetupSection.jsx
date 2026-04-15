@@ -82,6 +82,7 @@ class OrganizationSetupSection extends Component {
       group_name: "",
       parent: 0,
       submitError: "",
+      submitSuccess: "",
       formErrors: {
         group_name: "",
         parent: ""
@@ -165,66 +166,54 @@ class OrganizationSetupSection extends Component {
   };
 
   adddata = async params => {
-    await this.props.adddata({
-      variables: {
-        params
-      },
+    const result = await this.props.adddata({
+      variables: { params },
       update: (store, { data }) => {
-        let data1 = store.readQuery({
-          query: GETDATA,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-
-        console.log("data1", data1, data);
-
-        const new_data = {
-          id: parseInt(data.addOrganisationStructure),
-          group_name: this.state.group_name,
-          parent_id: parseInt(this.state.parent),
-          timestamp: "123",
-          __typename: "getOrganisationStructure"
-        };
-
-        data1.getOrganisationStructure.push(new_data);
-
         try {
+          let data1 = store.readQuery({
+            query: GETDATA,
+            variables: { institution_id: parseInt(Cookies.get("institutionid")) }
+          });
+
+          const new_data = {
+            id: parseInt(data.addOrganisationStructure),
+            group_name: this.state.group_name,
+            parent_id: parseInt(this.state.parent),
+            timestamp: "123",
+            __typename: "getOrganisationStructure"
+          };
+
+          data1.getOrganisationStructure.push(new_data);
+
           store.writeQuery({
             query: GETDATA,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
+            variables: { institution_id: parseInt(Cookies.get("institutionid")) },
             data: data1
           });
         } catch (e) {
-          console.log("Exception", e);
-        }
-
-        console.log("adddata", data1);
-
-        if (data.addOrganisationStructure) {
-          this.setState({
-            group_name: "",
-            parent: 0,
-            parentValue: "",
-
-            submitError: "Data Inserted Successfully!",
-            formErrors: {
-              group_name: "",
-              parent: ""
-            },
-            group_nameValid: false,
-            parentValid: false,
-            formValid: false
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad1();
-          }, 1500);
+          console.log("Cache update exception", e);
         }
       }
     });
+
+    // ✅ Show success message from actual response
+    if (result.data.addOrganisationStructure) {
+      this.setState({
+        group_name: "",
+        parent: 0,
+        parentValue: "",
+        submitError: "",
+        submitSuccess: "Group created successfully!",  // ← success msg
+        formErrors: { group_name: "", parent: "" },
+        group_nameValid: false,
+        parentValid: false,
+        formValid: false
+      });
+
+      setTimeout(() => {
+        this.setState({ submitSuccess: "" });
+      }, 3000);
+    }
   };
   SetpageLoad1 = () => {
     this.setState({ submitError: "" });
@@ -799,6 +788,9 @@ class OrganizationSetupSection extends Component {
             <Card as={Card.Body} className="h-100">
               <Form.Text className="form-text text-danger">
                 {this.state.submitError}
+              </Form.Text>
+              <Form.Text className="form-text text-success">
+                {this.state.submitSuccess}
               </Form.Text>
               <Form className="create-tree">
                 <Form.Group controlId="SelectPrinciple">

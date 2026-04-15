@@ -216,19 +216,15 @@ class BranchesSection extends Component {
     }
   };
   addbranch = async branches => {
-    await this.props.addbranch({
-      variables: {
-        branches
-      },
-      update: (store, { data }) => {
+  const result = await this.props.addbranch({
+    variables: { branches },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_BRANCHES,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
 
-        console.log("data1", data1);
         const newBranch = {
           id: data.addBranch,
           branch_name: this.state.branch,
@@ -236,9 +232,7 @@ class BranchesSection extends Component {
           complete_address: this.state.address,
           region_id: this.state.region,
           city_id: parseInt(this.state.city_id),
-          organisation_structure_id: parseInt(
-            this.state.organisation_structure_id
-          ),
+          organisation_structure_id: parseInt(this.state.organisation_structure_id),
           hod: this.state.hod,
           hod_mobile: this.state.hod_mobile,
           principal: this.state.principal,
@@ -251,52 +245,29 @@ class BranchesSection extends Component {
         };
         data1.getBranches.push(newBranch);
 
-        try {
-          store.writeQuery({
-            query: FETCH_BRANCHES,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-        if (data.addBranch) {
-          this.setState({
-            currentStep: 5,
-            branch: "",
-
-            mobile: "",
-            address: "",
-            region: "",
-            city_id: 0,
-            organisation_structure_id: 0,
-            hod: "",
-            hod_mobile: "",
-            principal: "",
-            principal_mobile: "",
-            vice_principal: "",
-            vice_principal_mobile: "",
-            submitError: "",
-            formErrors: {
-              branch: "",
-              principal: "",
-              mobile: ""
-            },
-            branchValid: false,
-            principalValid: false,
-            mobileValid: false,
-            formValid: false
-          });
-
-          setTimeout(() => {
-            this.SetpageLoad();
-          }, 1500);
-        }
+        store.writeQuery({
+          query: FETCH_BRANCHES,
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.addBranch) {
+    this.setState({
+      branch: "", mobile: "", address: "", region: "", city_id: 0,
+      organisation_structure_id: 0, hod: "", hod_mobile: "", principal: "",
+      principal_mobile: "", vice_principal: "", vice_principal_mobile: "",
+      submitError: "", formErrors: { branch: "", principal: "", mobile: "" },
+      branchValid: false, principalValid: false, mobileValid: false,
+      formValid: false, currentStep: 1, modalShow: false  // ← closes modal
     });
-  };
+  }
+};
   SetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ currentStep: 1, modalShow: false });
@@ -346,34 +317,25 @@ class BranchesSection extends Component {
     }
   };
   editbranch = async params => {
-    await this.props.editbranch({
-      variables: {
-        params
-      },
-      update: (store, { data }) => {
+  const result = await this.props.editbranch({
+    variables: { params },
+    update: (store, { data }) => {
+      try {
         let data1 = store.readQuery({
           query: FETCH_BRANCHES,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) }
         });
-
-        console.log("data1", data1);
-        console.log("this.state", this.state);
 
         let found = data1.getBranches.find(a => a.id === this.state.branchid);
         let idindex = data1.getBranches.indexOf(found);
         const newBranch = {
           id: this.state.branchid,
           branch_name: this.state.branch,
-
           contact_no: this.state.mobile,
           complete_address: this.state.address,
           region_id: this.state.region,
           city_id: parseInt(this.state.city_id),
-          organisation_structure_id: parseInt(
-            this.state.organisation_structure_id
-          ),
+          organisation_structure_id: parseInt(this.state.organisation_structure_id),
           hod: this.state.hod,
           hod_mobile: this.state.hod_mobile,
           principal: this.state.principal,
@@ -385,52 +347,30 @@ class BranchesSection extends Component {
           __typename: "Branches"
         };
         data1.getBranches.splice(idindex, 1, newBranch);
-        try {
-          store.writeQuery({
-            query: FETCH_BRANCHES,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
-        if (data.updateBranch) {
-          this.setState({
-            currentStep: 5,
-            branchid: "",
-            branch: "",
-            mobile: "",
-            address: "",
-            region: "",
-            city_id: 0,
-            organisation_structure_id: 0,
-            hod: "",
-            hod_mobile: "",
-            principal: "",
-            principal_mobile: "",
-            vice_principal: "",
-            vice_principal_mobile: "",
-            submitError: "",
-            formErrors: {
-              branch: "",
-              principal: "",
-              mobile: ""
-            },
-            branchValid: false,
-            principalValid: false,
-            mobileValid: false,
-            formValid: false
-          });
 
-          setTimeout(() => {
-            this.SetpageLoad1();
-          }, 1500);
-        }
+        store.writeQuery({
+          query: FETCH_BRANCHES,
+          variables: { institution_id: parseInt(Cookies.get("institutionid")) },
+          data: data1
+        });
+      } catch (e) {
+        console.log("Cache update exception", e);
       }
+    }
+  });
+
+  // ✅ Close modal from actual response
+  if (result.data.updateBranch) {
+    this.setState({
+      branchid: "", branch: "", mobile: "", address: "", region: "", city_id: 0,
+      organisation_structure_id: 0, hod: "", hod_mobile: "", principal: "",
+      principal_mobile: "", vice_principal: "", vice_principal_mobile: "",
+      submitError: "", formErrors: { branch: "", principal: "", mobile: "" },
+      branchValid: false, principalValid: false, mobileValid: false,
+      formValid: false, currentStep: 1, modalShow1: false  // ← closes modal
     });
-  };
+  }
+};
   SetpageLoad1 = () => {
     console.log("setTimeout");
     this.setState({ currentStep: 1, modalShow1: false });
@@ -652,54 +592,45 @@ class BranchesSection extends Component {
     });
   };
 
-  handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
-    await this.props.handleDelete({
-      variables: {
-        branch_id: rowIndex.id
-      },
-      update: (store, { data }) => {
-        console.log("data", data);
-        const data1 = store.readQuery({
-          query: FETCH_BRANCHES,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        console.log("data1s", data1.getBranches);
-        console.log("rowIndex.id", rowIndex.id);
-        data1.getBranches = data1.getBranches.filter(x => x.id != rowIndex.id);
-        console.log("data2s", data1.getBranches);
-        try {
-          store.writeQuery({
-            query: FETCH_BRANCHES,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
+  handleDelete = async (e, cell, row, rowIndex) => {
+  await this.props.handleDelete({
+    variables: {
+      branch_id: rowIndex.id
+    },
+    update: (store, { data }) => {
 
-        const data4 = store.readQuery({
-          query: FETCH_BRANCHES,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        data1.getBranches = data4;
-        console.log("data4s", data4);
-        if (data.deleteBranch) {
-          this.setState({
-            status: 2
-          });
-          setTimeout(() => {
-            this.DeleteSetpageLoad();
-          }, 1000);
+      const existingData = store.readQuery({
+        query: FETCH_BRANCHES,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
         }
+      });
+
+      const updatedBranches = existingData.getBranches.filter(
+        branch => branch.id !== rowIndex.id
+      );
+
+      store.writeQuery({
+        query: FETCH_BRANCHES,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid"))
+        },
+        data: {
+          ...existingData,
+          getBranches: updatedBranches
+        }
+      });
+
+      if (data.deleteBranch) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.DeleteSetpageLoad();
+        }, 1000);
       }
-    });
-  };
+    }
+  });
+};
   DeleteSetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ status: 1 });

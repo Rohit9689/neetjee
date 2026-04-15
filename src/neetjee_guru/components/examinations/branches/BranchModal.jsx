@@ -50,10 +50,10 @@ class UserModal extends Component {
               Branch Saved successfully
             </Form.Text>
           ) : (
-              <Form.Text className="form-text text-danger">
-                {this.props.stateData.submitError}
-              </Form.Text>
-            )}
+            <Form.Text className="form-text text-danger">
+              {this.props.stateData.submitError}
+            </Form.Text>
+          )}
           <Form>
             <Row>
               <Col lg={8} md={12} sm={12}>

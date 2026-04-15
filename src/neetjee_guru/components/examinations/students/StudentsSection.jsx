@@ -520,56 +520,49 @@ class StudentsSection extends Component {
     });
   };
 
-  handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
-    await this.props.handleDelete({
-      variables: {
-        studentId: rowIndex.id,
-      },
-      update: (store, { data }) => {
-        console.log("data", data);
-        const data1 = store.readQuery({
-          query: FETCH_STUDENTS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid")),
-          },
-        });
-        console.log("data1s", data1.getStudents);
-        console.log("rowIndex.id", rowIndex.id);
-        data1.getStudents = data1.getStudents.filter(
-          (x) => x.id != rowIndex.id
-        );
-        console.log("data2s", data1.getStudents);
-        try {
-          store.writeQuery({
-            query: FETCH_STUDENTS,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid")),
-            },
-            data: data1,
-          });
-        } catch (e) {
-          console.log("Exception", e);
-        }
+ handleDelete = async (e, cell, row, rowIndex) => {
+  await this.props.handleDelete({
+    variables: {
+      studentId: rowIndex.id,
+    },
+    update: (store, { data }) => {
 
-        const data4 = store.readQuery({
-          query: FETCH_STUDENTS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid")),
-          },
-        });
-        data1.getStudents = data4;
-        console.log("data4s", data4);
-        if (data.deleteStudent) {
-          this.setState({
-            status: 2,
-          });
-          setTimeout(() => {
-            this.DeleteSetpageLoad();
-          }, 1000);
-        }
-      },
-    });
-  };
+      // ✅ Step 1: read cache
+      const existingData = store.readQuery({
+        query: FETCH_STUDENTS,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid")),
+        },
+      });
+
+      // ✅ Step 2: create new array (NO mutation)
+      const updatedStudents = existingData.getStudents.filter(
+        (student) => student.id !== rowIndex.id
+      );
+
+      // ✅ Step 3: write back
+      store.writeQuery({
+        query: FETCH_STUDENTS,
+        variables: {
+          institution_id: parseInt(Cookies.get("institutionid")),
+        },
+        data: {
+          ...existingData,
+          getStudents: updatedStudents,
+        },
+      });
+
+      // ✅ Step 4: UI update
+      if (data.deleteStudent) {
+        this.setState({ status: 2 });
+
+        setTimeout(() => {
+          this.DeleteSetpageLoad();
+        }, 1000);
+      }
+    },
+  });
+};
   DeleteSetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ status: 1 });

@@ -437,7 +437,7 @@ class BranchModal extends Component {
                                     className="btn btn-green px-5"
                                     onClick={this.props.parenthandleFormSubmit}
                                     disabled={this.props.loading}
-                                >{this.props.loading ? "Saving..." : "Save"}</Button>
+                                >Save</Button>
                             </Col>
                         </Row>
                     </Form>
