@@ -272,22 +272,22 @@ class FreeMockTestSectionSection extends Component {
                                                                                 </Card>
                                                                             </Col>
                                                                             <Col xs="12">
-                                                                                {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-1" className="w-100"> View Result</Button>)
-                                                                                    : (<Button className="mock-btn mt-1" onClick={() => this.startExam(a, islive, "free")} className="w-100"> Start Test</Button>)}
+                                                                                {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-1 w-100" > View Result</Button>)
+                                                                                    : (<Button className="mock-btn mt-1 w-100" onClick={() => this.startExam(a, islive, "free")} > Start Test</Button>)}
                                                                             </Col>
                                                                         </React.Fragment>) : (
                                                                             <React.Fragment>
                                                                                 {islive == undefined ? (
                                                                                     <Col xl={{ span: 8, offset: 4 }} lg={12} md={12} sm={12} xs={12}>
                                                                                         <h1 className="live-text text-uppercase d-flex align-items-center"> <i className="fas fa-circle text-danger mb-1 mr-1" /> <span>Live</span></h1>
-                                                                                        {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-1" className="w-100"> View Result</Button>)
-                                                                                            : (<Button className="mock-btn mt-1" onClick={() => this.startExam(a, islive, "free")} className="w-100"> Start Test</Button>)}
+                                                                                        {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-1 w-100" > View Result</Button>)
+                                                                                            : (<Button className="mock-btn mt-1 w-100" onClick={() => this.startExam(a, islive, "free")} > Start Test</Button>)}
                                                                                     </Col>
                                                                                 ) : (
                                                                                         <Col xl={{ span: 8, offset: 4 }} lg={12} md={12} sm={12} xs={12}>
 
-                                                                                            {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-2" className="w-100"> View Result</Button>)
-                                                                                                : (<Button className="mock-btn mt-2" onClick={() => this.startExam(a, islive, "free")} className="w-100"> Start Test</Button>)}
+                                                                                            {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-2 w-100" > View Result</Button>)
+                                                                                                : (<Button className="mock-btn mt-2 w-100" onClick={() => this.startExam(a, islive, "free")} > Start Test</Button>)}
                                                                                         </Col>
                                                                                     )}
                                                                             </React.Fragment>
@@ -313,7 +313,7 @@ class FreeMockTestSectionSection extends Component {
                                             return (<li>
                                                 <Card as={Card.Body}
                                                     className={smap.exam_started == true && smap.is_completed == false ? ("p-1 single-card  active") : ("p-1 single-card ")}>
-                                                    <Row className="align-items-center" className="g-0">
+                                                    <Row className="align-items-center g-0" >
                                                         <Col xl={7} lg={7} md={12}>
                                                             <div className="d-flex align-items-center">
                                                                 <div className="img-block text-center mr-2">
@@ -352,7 +352,7 @@ class FreeMockTestSectionSection extends Component {
                                                                         </Card>
                                                                     </Col>
                                                                     <Col xs="12">
-                                                                        <Button onClick={() => this.handleResultFunction(smap.exam_session_id, smap.end_time)} className="mock-btn mt-1" className="w-100"> View Result</Button>
+                                                                        <Button onClick={() => this.handleResultFunction(smap.exam_session_id, smap.end_time)} className="mock-btn mt-1" > View Result</Button>
 
                                                                     </Col>
                                                                 </Row>
@@ -382,10 +382,10 @@ class FreeMockTestSectionSection extends Component {
                                                                     (
                                                                         <React.Fragment>
                                                                             {smap.is_registered == true ? (
-                                                                                <Col xs={6}><Button className="mock-registered" className="w-100">Registered</Button>
+                                                                                <Col xs={6}><Button className="mock-registered w-100" >Registered</Button>
                                                                                 </Col>) : (
                                                                                     <Col xs={6}>
-                                                                                        <Button className="mock-btn" onClick={(e) => this.register(e, smap.id)} className="w-100">Register</Button>
+                                                                                        <Button className="mock-btn w-100" onClick={(e) => this.register(e, smap.id)} >Register</Button>
                                                                                     </Col>
                                                                                 )}
                                                                         </React.Fragment>
@@ -393,7 +393,7 @@ class FreeMockTestSectionSection extends Component {
                                                                     )
                                                                     : smap.exam_expired == true ? (
                                                                         <Col xs={6}>
-                                                                            <Button className="mock-btn" className="w-100">Exam Expired</Button>
+                                                                            <Button className="mock-btn w-100" >Exam Expired</Button>
                                                                         </Col>
 
                                                                     )
@@ -402,12 +402,12 @@ class FreeMockTestSectionSection extends Component {
                                                                                 <Col xs={6}>
                                                                                     <Button className="mock-btn"
                                                                                         onClick={() => this.startExam(smap, islive, "schedule")}
-
-                                                                                        className="w-100">Start Test</Button>
+                                                                                        classame="w-100"
+                                                                                        >Start Test</Button>
                                                                                 </Col>)
                                                                             : (
                                                                                 <Col xs={6}>
-                                                                                    <Button className="mock-btn" onClick={() => this.modalaFun(smap.exam_name)} className="w-100">Buy Now</Button>
+                                                                                    <Button className="mock-btn" onClick={() => this.modalaFun(smap.exam_name)} >Buy Now</Button>
                                                                                 </Col>)}
                                                             </React.Fragment>)}
 
@@ -454,19 +454,19 @@ class FreeMockTestSectionSection extends Component {
                                                                         {smap1.exam_started == false ?
                                                                             (
                                                                                 <React.Fragment>
-                                                                                    {smap1.is_registered == true ? (<Button className="mt-3 mock-registered" className="w-100">Registered</Button>) : (
-                                                                                        <Button className="mock-btn" onClick={(e) => this.register(e, smap1.id)} className="w-100">Register</Button>
+                                                                                    {smap1.is_registered == true ? (<Button className="mt-3 mock-registered" >Registered</Button>) : (
+                                                                                        <Button className="mock-btn" onClick={(e) => this.register(e, smap1.id)} >Register</Button>
                                                                                     )}
                                                                                 </React.Fragment>
 
                                                                             )
-                                                                            : smap1.exam_expired == true ? (<Button className="mt-3" className="w-100">Exam Expired</Button>)
+                                                                            : smap1.exam_expired == true ? (<Button className="mt-3" >Exam Expired</Button>)
                                                                                 : smap1.amount == "0" || smap1.is_purchased == true ?
                                                                                     (<Button className="mock-btn"
                                                                                         onClick={() => this.startExam(smap1, islive)}
 
-                                                                                        className="w-100">Start Test</Button>)
-                                                                                    : (<Button className="mt-3" onClick={() => this.modalaFun(smap1.exam_name)} className="w-100">Buy Now</Button>)}
+                                                                                        >Start Test</Button>)
+                                                                                    : (<Button className="mt-3" onClick={() => this.modalaFun(smap1.exam_name)} >Buy Now</Button>)}
                                                                     </Col>
                                                                 </Row>
                                                             </Card>

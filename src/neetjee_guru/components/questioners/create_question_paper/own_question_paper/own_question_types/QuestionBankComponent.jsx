@@ -222,7 +222,7 @@ class QuestionBankComponent extends Component {
             console.log("variables:", {
                 subject: this.props.stateData.qbsearchsubject,
                 chapter: this.props.stateData.qbsearchchapter,
-                question_type: this.props.stateData.qbquestiontypes.toString(),
+                question_type: this.props.stateData.qbquestiontypes.toString() || "",
                 question_theory: this.props.stateData.qbapplicationtheory,
                 complexity: this.props.stateData.qbcomplexity,
                 institute_id: parseInt(Cookies.get("institutionid")),
@@ -281,7 +281,7 @@ class QuestionBankComponent extends Component {
 
                     subject: this.props.stateData.qbsearchsubject,
                     chapter: this.props.stateData.qbsearchchapter,
-                    question_type: this.props.stateData.qbquestiontypes.toString(),
+                    question_type: this.props.stateData.qbquestiontypes.toString() || "",
                     question_theory: this.props.stateData.qbapplicationtheory,
                     complexity: this.props.stateData.qbcomplexity,
                     institute_id: parseInt(Cookies.get("institutionid")),

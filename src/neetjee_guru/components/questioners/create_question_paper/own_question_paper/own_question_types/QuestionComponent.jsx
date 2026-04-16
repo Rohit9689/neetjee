@@ -275,7 +275,7 @@ class QuestionComponent extends Component {
                 variables: {
                     subject: this.props.stateData.searchsubject,
                     chapter: this.props.stateData.searchchapter,
-                    question_type: this.props.stateData.questiontypes.toString(),
+                    question_type: this.props.stateData.questiontypes.toString() || "",
                     question_theory: this.props.stateData.applicationtheory,
                     complexity: this.props.stateData.complexity,
                     institute_id: parseInt(Cookies.get("institutionid")),

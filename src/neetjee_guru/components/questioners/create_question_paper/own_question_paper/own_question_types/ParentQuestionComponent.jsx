@@ -431,7 +431,7 @@ export default
                     variables: {
                         subject: props.stateData.searchsubject,
                         chapter: props.stateData.searchchapter,
-                        question_type: props.stateData.questiontypes.toString(),
+                        question_type: props.stateData.questiontypes.toString() || "",
                         question_theory: props.stateData.applicationtheory,
                         complexity: props.stateData.complexity,
                         institute_id: parseInt(Cookies.get("institutionid")),

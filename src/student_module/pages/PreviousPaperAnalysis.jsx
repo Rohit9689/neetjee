@@ -38,7 +38,7 @@ class PreviousPaperAnalysis extends Component {
         if (Cookies.get("examid") == 1) {
             pexamtype = "0";
         }
-        else if (Cookies.get("examid") == 2 || Cookies.get("examid") == 5) {
+        else if (Cookies.get("examid") == 2 || Cookies.get("examid") == 5 || Cookies.get("examid") == 6) {
             pexamtype = "1";
         }
         this.state = {
@@ -108,6 +108,9 @@ class PreviousPaperAnalysis extends Component {
                 pexamtype = childstate.subexamtype;
             }
 
+        }
+        else if (Cookies.get("examid") == 6) {
+            pexamtype = childstate.subexamtype;
         }
         this.setState({
             pexamtype: pexamtype,

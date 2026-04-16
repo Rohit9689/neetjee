@@ -428,7 +428,7 @@ compose(
                     variables: {
                         subject: props.stateData.qbsearchsubject,
                         chapter: props.stateData.qbsearchchapter,
-                        question_type: props.stateData.qbquestiontypes.toString(),
+                        question_type: props.stateData.qbquestiontypes.toString() || "",
                         question_theory: props.stateData.qbapplicationtheory,
                         complexity: props.stateData.qbcomplexity,
                         institute_id: parseInt(Cookies.get("institutionid")),

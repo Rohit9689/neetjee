@@ -588,7 +588,7 @@ export default withRouter(
                     variables: {
                         subject: props.stateData.searchsubjectown,
                         chapter: props.stateData.searchchapter,
-                        question_type: props.stateData.questiontypes,
+                        question_type: props?.stateData?.questiontypes.toString() || "",
                         question_theory: props.stateData.applicationtheory,
                         institute_id: parseInt(Cookies.get("institutionid"))
                     }

@@ -228,8 +228,8 @@ class HistoryNotifyFreeMockTestSectionSection extends Component {
                                                                                 </Card>
                                                                             </Col>
                                                                             <Col xs={12}>
-                                                                            {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-2" className="w-100"> View Result</Button>)
-                                                                            : (<Button className="mock-btn  mt-2" onClick={() => this.startExam(a)} className="w-100"> Start Test</Button>)}
+                                                                            {a.is_completed == true ? (<Button onClick={() => this.handleResultFunction(a.exam_session_id)} className="mock-btn mt-2 w-100" > View Result</Button>)
+                                                                            : (<Button className="mock-btn  mt-2 w-100" onClick={() => this.startExam(a)}> Start Test</Button>)}
                                                                             </Col>
                                                                         </React.Fragment>) : (
 

@@ -264,11 +264,14 @@ class HeaderTabContent extends Component {
         //start get test data
         let yearnewArray = [];
 
+        // TS-EAMCET-MPC (examid 6) uses JEE previous papers
+        const effectiveExamId = Cookies.get("examid") == "6" ? "2" : Cookies.get("examid");
+
         this.props.studentGlobals.previousSets.map((item) => {
             if (item != undefined) {
                 if (Cookies.get("examid") != 5) {
 
-                    if (item.exam == Cookies.get("examid")) {
+                    if (item.exam == effectiveExamId) {
                         if (item.exam == "1") {
                             let labelname = item.qset + "-" + item.year
                             if ((item.enabled == true && moduleValid.previous_paper_analysis_tab == false) || isStudentUserValid.previous_sets.split(",").includes(item.id.toString())) {
@@ -484,7 +487,7 @@ class HeaderTabContent extends Component {
                             </Col>
                         ) : ("")}
 
-                        {this.state.examtype == "1" || Cookies.get("examid") == "2" ? (
+                        {this.state.examtype == "1" || Cookies.get("examid") == "2" || Cookies.get("examid") == "6" ? (
                             <Form.Group as={Col} xl={3} lg={3} md={6} sm={12}>
                                 <Form.Label>Select Exam Type</Form.Label>
                                 <SelectDropDown

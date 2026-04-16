@@ -95,7 +95,7 @@ const TOTAL_VIEWS = gql`
 `;
 class SingleCustomRevisionMaterialSection extends Component {
     constructor(props) {
-    super(props);
+        super(props);
         this.state = {
             show: true,
             modalShowb: false,
@@ -138,7 +138,7 @@ class SingleCustomRevisionMaterialSection extends Component {
             ntagsValid: false,
             nnewtagValid: false,
             ncommentsValid: false,
-            getDerived:0
+            getDerived: 0
         }
         this.popoverHide2 = React.createRef();
         this.cancelFun2 = this.cancelFun2.bind(this);
@@ -159,36 +159,36 @@ class SingleCustomRevisionMaterialSection extends Component {
         let findex = this.state.index - 1;
 
         let array = this.state.getStudentRevisionMaterial[findex];
-    let ntagsvalue = [];
-    console.log("previousFunction", array);
-    let narray = array.notes.tags.split(",");
-    console.log("narray", narray);
-    narray.map((aa) => {
-      //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
-      let findData = this.props.studentGlobals.tags.find((a) => a.id == aa);
-      if (findData != undefined) {
-        const newObj = {
-          value: findData.id,
-          label: findData.tag
+        let ntagsvalue = [];
+        console.log("previousFunction", array);
+        let narray = array.notes.tags.split(",");
+        console.log("narray", narray);
+        narray.map((aa) => {
+            //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
+            let findData = this.props.studentGlobals.tags.find((a) => a.id == aa);
+            if (findData != undefined) {
+                const newObj = {
+                    value: findData.id,
+                    label: findData.tag
+                }
+
+                ntagsvalue.push(newObj);
+            }
+        });
+        if (array != undefined) {
+            this.setState({
+                index: findex,
+                ntags: array.tags,
+                ncomments: array.comments,
+                ntagsvalue: ntagsvalue,
+                bookmarked: array.bookmarked
+            }, () => this.totalviewhandleFormSubmit());
         }
 
-        ntagsvalue.push(newObj);
-      }
-    });
-    if (array != undefined) {
-        this.setState({
-          index: findex,
-          ntags: array.tags,
-          ncomments: array.comments,
-          ntagsvalue: ntagsvalue,
-          bookmarked: array.bookmarked
-        }, () => this.totalviewhandleFormSubmit());
-      }
-        
 
     }
     nextQuestion = async (e) => {
-       
+
         let findex = this.state.index + 1;
         let array = this.state.getStudentRevisionMaterial[findex];
         let ntagsvalue = [];
@@ -196,16 +196,16 @@ class SingleCustomRevisionMaterialSection extends Component {
         let narray = array.notes.tags.split(",");
         console.log("narray", narray);
         narray.map((aa) => {
-          //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
-          let findData = this.props.studentGlobals.tags.find((a) => a.id == aa);
-          if (findData != undefined) {
-            const newObj = {
-              value: findData.id,
-              label: findData.tag
+            //console.log("this.props.studentGlobals.tags",this.props.studentGlobals);
+            let findData = this.props.studentGlobals.tags.find((a) => a.id == aa);
+            if (findData != undefined) {
+                const newObj = {
+                    value: findData.id,
+                    label: findData.tag
+                }
+
+                ntagsvalue.push(newObj);
             }
-    
-            ntagsvalue.push(newObj);
-          }
         });
 
 
@@ -281,26 +281,30 @@ class SingleCustomRevisionMaterialSection extends Component {
                 },
             })
             if (result.data.getStudentRevisionMaterial.length > 0) {
-                this.setState({ getStudentRevisionMaterial: this.state.getStudentRevisionMaterial.concat(result.data.getStudentRevisionMaterial), 
-                    loader: 0, 
+                this.setState({
+                    getStudentRevisionMaterial: this.state.getStudentRevisionMaterial.concat(result.data.getStudentRevisionMaterial),
+                    loader: 0,
                     index: findex,
                     ntags: array.tags,
                     ncomments: array.comments,
                     ntagsvalue: ntagsvalue,
-                    bookmarked: array.bookmarked });
+                    bookmarked: array.bookmarked
+                });
             }
             else {
-                this.setState({ loader: 0, index: findex,ntags: array.tags,
+                this.setState({
+                    loader: 0, index: findex, ntags: array.tags,
                     ncomments: array.comments,
                     ntagsvalue: ntagsvalue,
-                    bookmarked: array.bookmarked });
+                    bookmarked: array.bookmarked
+                });
             }
 
 
         }
         else {
             this.setState({
-                index: findex,ntags: array.tags,
+                index: findex, ntags: array.tags,
                 ncomments: array.comments,
                 ntagsvalue: ntagsvalue,
                 bookmarked: array.bookmarked
@@ -357,7 +361,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                     const emptyMaterial = this.state.getStudentRevisionMaterial.map((item) => {
                         if (this.state.getStudentRevisionMaterial[this.state.index].id == item.id) {
                             console.log("sree", this.state.getStudentRevisionMaterial[this.state.index].id);
-                            return { ...item, bookmarked: false, bookmark_count:parseInt(this.state.getStudentRevisionMaterial[this.state.index].bookmark_count)-1 }
+                            return { ...item, bookmarked: false, bookmark_count: parseInt(this.state.getStudentRevisionMaterial[this.state.index].bookmark_count) - 1 }
                         }
                         else {
                             return { ...item }
@@ -444,7 +448,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                 const emptyMaterial = this.state.getStudentRevisionMaterial.map((item) => {
                     if (this.state.getStudentRevisionMaterial[this.state.index].id == item.id) {
                         console.log("sree", item, this.state.getStudentRevisionMaterial[this.state.index].id);
-                        return { ...item, bookmarked: true ,bookmark_count:parseInt(this.state.getStudentRevisionMaterial[this.state.index].bookmark_count)+1}
+                        return { ...item, bookmarked: true, bookmark_count: parseInt(this.state.getStudentRevisionMaterial[this.state.index].bookmark_count) + 1 }
                     }
                     else {
                         return { ...item }
@@ -484,30 +488,30 @@ class SingleCustomRevisionMaterialSection extends Component {
     noteshandleFormSubmit = (ntags, nnewtag, ncomments, contype, conid, getDerived) => {
         console.log("handleFormSubmit", contype, conid);
         //e.preventDefault();
-        
-            const params = {
-                mobile: Cookies.get("mobile"),
-                tags: ntags,
-                new_tag: nnewtag,
-                comments: ncomments,
-                content_type: parseInt(contype),
-                custom_content_id: parseInt(conid),
-            };
-            console.log("noteshandleFormSubmit", params);
-            this.addnotes(params,getDerived).catch((error) => {
-                console.log("catch if error");
-                console.log(error);
-                this.setState({
-                    submitError2: error.graphQLErrors.map((x) => x.message),
-                });
-                console.error(
-                    "ERR =>",
-                    error.graphQLErrors.map((x) => x.message)
-                );
+
+        const params = {
+            mobile: Cookies.get("mobile"),
+            tags: ntags,
+            new_tag: nnewtag,
+            comments: ncomments,
+            content_type: parseInt(contype),
+            custom_content_id: parseInt(conid),
+        };
+        console.log("noteshandleFormSubmit", params);
+        this.addnotes(params, getDerived).catch((error) => {
+            console.log("catch if error");
+            console.log(error);
+            this.setState({
+                submitError2: error.graphQLErrors.map((x) => x.message),
             });
-        
+            console.error(
+                "ERR =>",
+                error.graphQLErrors.map((x) => x.message)
+            );
+        });
+
     };
-    addnotes = async (params,getDerived) => {
+    addnotes = async (params, getDerived) => {
         await this.props.addnotes({
             variables: {
                 params,
@@ -620,7 +624,7 @@ class SingleCustomRevisionMaterialSection extends Component {
         });
     };
     SetpageLoad2 = (getDerived) => {
-        this.setState({ currentStep: 1, modalShow: false, show: true, getDerived:parseInt(getDerived)+1 });
+        this.setState({ currentStep: 1, modalShow: false, show: true, getDerived: parseInt(getDerived) + 1 });
 
     };
     //add report
@@ -735,18 +739,18 @@ class SingleCustomRevisionMaterialSection extends Component {
                     // });
                     const emptyMaterial = this.state.getStudentRevisionMaterial.map((item) => {
                         if (this.state.getStudentRevisionMaterial[this.state.index].id == item.id) {
-                          console.log("sree", this.state.getStudentRevisionMaterial[this.state.index].id);
-                          return { ...item, stared: true, star_count: parseInt(this.state.getStudentRevisionMaterial[this.state.index].star_count) + 1 }
+                            console.log("sree", this.state.getStudentRevisionMaterial[this.state.index].id);
+                            return { ...item, stared: true, star_count: parseInt(this.state.getStudentRevisionMaterial[this.state.index].star_count) + 1 }
                         }
                         else {
-                          return { ...item }
+                            return { ...item }
                         }
-            
-                      });
-            
-                      this.setState({
+
+                    });
+
+                    this.setState({
                         getStudentRevisionMaterial: emptyMaterial
-                      });
+                    });
                 }
             },
         });
@@ -786,7 +790,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                     const emptyMaterial = this.state.getStudentRevisionMaterial.map((item) => {
                         if (this.state.getStudentRevisionMaterial[this.state.index].id == item.id) {
                             console.log("sree", this.state.getStudentRevisionMaterial[this.state.index].id);
-                            return { ...item, stared: false, star_count:parseInt(this.state.getStudentRevisionMaterial[this.state.index].star_count)-1 }
+                            return { ...item, stared: false, star_count: parseInt(this.state.getStudentRevisionMaterial[this.state.index].star_count) - 1 }
                         }
                         else {
                             return { ...item }
@@ -1126,10 +1130,10 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 Report saved successfully
                             </Form.Text>
                         ) : (
-                                <Form.Text className="form-text text-danger">
-                                    {this.state.submitError1}
-                                </Form.Text>
-                            )}
+                            <Form.Text className="form-text text-danger">
+                                {this.state.submitError1}
+                            </Form.Text>
+                        )}
                         <Form>
                             <Form.Group controlId="SelectPrinciple">
                                 <SelectDropDown
@@ -1164,7 +1168,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 className="py-2"
                             >
                                 Cancel
-                  </Button>
+                            </Button>
                         </Col>
                         <Col xl={6} lg={6} md={6} sm={6} xs={6}>
                             <Button
@@ -1174,7 +1178,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 className="py-2"
                             >
                                 Submit
-                  </Button>
+                            </Button>
                         </Col>
                     </Row>
                 </Popover.Content>
@@ -1198,10 +1202,10 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 Note saved successfully
                             </Form.Text>
                         ) : (
-                                <Form.Text className="form-text text-danger">
-                                    {this.state.submitError2}
-                                </Form.Text>
-                            )}
+                            <Form.Text className="form-text text-danger">
+                                {this.state.submitError2}
+                            </Form.Text>
+                        )}
                         <Form>
                             <Form.Group controlId="SelectPrinciple">
                                 <Select
@@ -1249,7 +1253,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 className="py-2"
                             >
                                 Cancel
-                  </Button>
+                            </Button>
                         </Col>
                         <Col xl={6} lg={6} md={6} sm={6} xs={6}>
                             <Button
@@ -1260,7 +1264,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 className="py-2"
                             >
                                 Submit
-                  </Button>
+                            </Button>
                         </Col>
                     </Row>
                 </Popover.Content>
@@ -1284,10 +1288,10 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 Bookmark saved successfully
                             </Form.Text>
                         ) : (
-                                <Form.Text className="form-text text-danger">
-                                    {this.state.submitError3}
-                                </Form.Text>
-                            )}
+                            <Form.Text className="form-text text-danger">
+                                {this.state.submitError3}
+                            </Form.Text>
+                        )}
                         <Form>
                             <Form.Group
                                 //controlId="SelectBookmark"
@@ -1328,7 +1332,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 className="py-2"
                             >
                                 Cancel
-                  </Button>
+                            </Button>
                         </Col>
                         <Col xl={6} lg={6} md={6} sm={6} xs={6}>
                             <Button
@@ -1339,7 +1343,7 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 className="py-2"
                             >
                                 Submit
-                  </Button>
+                            </Button>
                         </Col>
                     </Row>
                 </Popover.Content>
@@ -1434,7 +1438,7 @@ class SingleCustomRevisionMaterialSection extends Component {
     }
 
     //total views start
-   totalviewhandleFormSubmit = (e) => {
+    totalviewhandleFormSubmit = (e) => {
         console.log("totalviewhandleFormSubmit", this.state.stateData.contentType);
         const params = {
             mobile: Cookies.get("mobile"),
@@ -1460,22 +1464,22 @@ class SingleCustomRevisionMaterialSection extends Component {
                 params,
             },
             update: (store, { data }) => {
-                console.log("updateStudentContentViews",data.updateStudentContentViews);
+                console.log("updateStudentContentViews", data.updateStudentContentViews);
                 if (data.updateStudentContentViews) {
                     const emptyMaterial = this.state.getStudentRevisionMaterial.map((item) => {
-                        
+
                         if (this.state.getStudentRevisionMaterial[this.state.index].id == item.id) {
-                            console.log("updateStudentContentViewsindex",this.state.index, this.state.getStudentRevisionMaterial[this.state.index].id, this.state.getStudentRevisionMaterial);
-                            let total_views=parseInt(this.state.getStudentRevisionMaterial[this.state.index].total_views)+1;
-                            let your_views=parseInt(this.state.getStudentRevisionMaterial[this.state.index].your_views)+1;
-                            return { ...item, total_views: total_views ,your_views:your_views}
+                            console.log("updateStudentContentViewsindex", this.state.index, this.state.getStudentRevisionMaterial[this.state.index].id, this.state.getStudentRevisionMaterial);
+                            let total_views = parseInt(this.state.getStudentRevisionMaterial[this.state.index].total_views) + 1;
+                            let your_views = parseInt(this.state.getStudentRevisionMaterial[this.state.index].your_views) + 1;
+                            return { ...item, total_views: total_views, your_views: your_views }
                         }
                         else {
                             return { ...item }
                         }
 
                     });
-                    this.props.stateData.views="1"
+                    this.props.stateData.views = "1"
                     this.setState({
                         getStudentRevisionMaterial: emptyMaterial
                     });
@@ -1483,19 +1487,19 @@ class SingleCustomRevisionMaterialSection extends Component {
             },
         });
     };
-   
+
     //total views end
-    componentDidMount=()=>{
+    componentDidMount = () => {
         console.log("totalviewcomponentDidMount", this.props.stateData.views);
-        if(this.props.stateData.views==""){
-           this.totalviewhandleFormSubmit();
+        if (this.props.stateData.views == "") {
+            this.totalviewhandleFormSubmit();
 
         }
 
     }
-    notonHide=(getDerived)=>{
-        this.setState({ modalShow: false,getDerived:parseInt(getDerived)+1 })
-      }
+    notonHide = (getDerived) => {
+        this.setState({ modalShow: false, getDerived: parseInt(getDerived) + 1 })
+    }
     render() {
         // Reasons
         const Reasons = [
@@ -1538,32 +1542,32 @@ class SingleCustomRevisionMaterialSection extends Component {
                                 <ul className="helpTags list-inline m-0 p-0">
                                     {this.state.getStudentRevisionMaterial[this.state.index].stared ==
                                         true ? (
-                                            <li className="list-inline-item">
-                                                <i
-                                                    title="star"
-                                                    className="fas fa-star text-warning"
-                                                    onClick={(e) =>
-                                                        this.removestarhandleFormSubmit(
-                                                            this.state.stateData.contentType,
-                                                            this.state.getStudentRevisionMaterial[this.state.index].id
-                                                        )
-                                                    }
-                                                />
-                                            </li>
-                                        ) : (
-                                            <li className="list-inline-item">
-                                                <i
-                                                    title="star"
-                                                    className="fal fa-star"
-                                                    onClick={(e) =>
-                                                        this.starhandleFormsubmit(
-                                                            this.state.stateData.contentType,
-                                                            this.state.getStudentRevisionMaterial[this.state.index].id
-                                                        )
-                                                    }
-                                                />
-                                            </li>
-                                        )}
+                                        <li className="list-inline-item">
+                                            <i
+                                                title="star"
+                                                className="fas fa-star text-warning"
+                                                onClick={(e) =>
+                                                    this.removestarhandleFormSubmit(
+                                                        this.state.stateData.contentType,
+                                                        this.state.getStudentRevisionMaterial[this.state.index].id
+                                                    )
+                                                }
+                                            />
+                                        </li>
+                                    ) : (
+                                        <li className="list-inline-item">
+                                            <i
+                                                title="star"
+                                                className="fal fa-star"
+                                                onClick={(e) =>
+                                                    this.starhandleFormsubmit(
+                                                        this.state.stateData.contentType,
+                                                        this.state.getStudentRevisionMaterial[this.state.index].id
+                                                    )
+                                                }
+                                            />
+                                        </li>
+                                    )}
 
                                     <li className="list-inline-item">
                                         <OverlayTrigger
@@ -1595,28 +1599,28 @@ class SingleCustomRevisionMaterialSection extends Component {
 
                                     {this.state.getStudentRevisionMaterial[this.state.index].bookmarked ==
                                         true ? (
-                                            <li className="list-inline-item">
-                                                <i
-                                                    className="fas fa-bookmark text-success"
-                                                    title="bookmark"
-                                                    onClick={(e) =>
-                                                        this.removebookhandleFormSubmit(
-                                                            this.state.stateData.contentType,
-                                                            this.state.getStudentRevisionMaterial[this.state.index].id
-                                                        )
-                                                    }
-                                                />
-                                            </li>
-                                        ) : (
-                          <li className="list-inline-item">
-                                                <Button variant="link p-0 text-decoration-none position-relative" style={{ lineHeight: '21px' }}
-                                                    //onClick={() => this.setState({ modalShowb: true })}
-                                                    onClick={() => this.bookmarkButton()}
-                                                >
-                                                    <i className="fal fa-bookmark" style={{ color: '#00000082' }} />
-                                                </Button>
-                                            </li>
-                                        )}
+                                        <li className="list-inline-item">
+                                            <i
+                                                className="fas fa-bookmark text-success"
+                                                title="bookmark"
+                                                onClick={(e) =>
+                                                    this.removebookhandleFormSubmit(
+                                                        this.state.stateData.contentType,
+                                                        this.state.getStudentRevisionMaterial[this.state.index].id
+                                                    )
+                                                }
+                                            />
+                                        </li>
+                                    ) : (
+                                        <li className="list-inline-item">
+                                            <Button variant="link p-0 text-decoration-none position-relative" style={{ lineHeight: '21px' }}
+                                                //onClick={() => this.setState({ modalShowb: true })}
+                                                onClick={() => this.bookmarkButton()}
+                                            >
+                                                <i className="fal fa-bookmark" style={{ color: '#00000082' }} />
+                                            </Button>
+                                        </li>
+                                    )}
                                 </ul>
                             </Card.Header>
                             <Card.Body className="pt-2">
@@ -1625,9 +1629,9 @@ class SingleCustomRevisionMaterialSection extends Component {
                         </Card>
                         <Card as={Card.Body} className="shadow-sm mb-5">
                             <Row>
-                               
-<Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-eye text-success"></i>My views : <strong>{singleData.your_views}</strong> </Col>
-{/* <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-eye text-primary"></i>Total Views : <strong>{singleData.total_views}</strong> </Col>
+
+                                <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-eye text-success"></i>My views : <strong>{singleData.your_views}</strong> </Col>
+                                {/* <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-eye text-primary"></i>Total Views : <strong>{singleData.total_views}</strong> </Col>
                     
                     <Col xl={3} lg={3} md={6} sm={6} xs={6}><i className="mr-2 fas fa-bookmark text-primary"></i>Total Bookmarks : <strong>{singleData.bookmark_count}</strong></Col>
 
@@ -1640,15 +1644,15 @@ class SingleCustomRevisionMaterialSection extends Component {
                         {this.state.index > 0 ? (<Button variant="outline-primary mr-3" style={{ width: 120 }} onClick={(e) => this.previousQuestion()}>Previous</Button>) : ("")}
                         {this.state.index <
                             parseFloat(this.state.getStudentRevisionMaterial.length) - 1 ? (
-                                <React.Fragment>
-                                    {this.state.loader == 1 ? (<Button variant="outline-primary" style={{ width: 120 }} disabled><span className="spinner-border spinner-border-sm"></span>
-                                        loading..</Button>) : (
-                                            <Button variant="outline-primary" style={{ width: 120 }} onClick={(e) => this.nextQuestion()}>Next</Button>
-                                        )}
+                            <React.Fragment>
+                                {this.state.loader == 1 ? (<Button variant="outline-primary" style={{ width: 120 }} disabled><span className="spinner-border spinner-border-sm"></span>
+                                    loading..</Button>) : (
+                                    <Button variant="outline-primary" style={{ width: 120 }} onClick={(e) => this.nextQuestion()}>Next</Button>
+                                )}
 
-                                </React.Fragment>
+                            </React.Fragment>
 
-                            ) : ("")}
+                        ) : ("")}
 
                     </div>
                 </Row>
@@ -1665,13 +1669,13 @@ class SingleCustomRevisionMaterialSection extends Component {
                     // show={this.state.modalShow} onHide={() => this.setState({ modalShow: false })} 
 
                     studentGlobals={this.props.studentGlobals}
-          noteshandleFormSubmit={this.noteshandleFormSubmit}
-          removecontypId={this.state.stateData.contentType}
-          custonid={this.state.getStudentRevisionMaterial[this.state.index].id}
-          stateData={this.state}
-          show={this.state.modalShow} 
-          onHide={this.notonHide}
-                    />
+                    noteshandleFormSubmit={this.noteshandleFormSubmit}
+                    removecontypId={this.state.stateData.contentType}
+                    custonid={this.state.getStudentRevisionMaterial[this.state.index].id}
+                    stateData={this.state}
+                    show={this.state.modalShow}
+                    onHide={this.notonHide}
+                />
 
 
                 <SingleBookModal

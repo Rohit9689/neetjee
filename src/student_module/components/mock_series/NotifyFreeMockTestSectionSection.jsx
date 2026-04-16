@@ -219,7 +219,7 @@ class NotifyFreeMockTestSectionSection extends Component {
                                                     return (<li>
                                                         <Card as={Card.Body}
                                                             className={smap.exam_started == true && smap.is_completed == false ? ("p-2 single-card active") : ("p-2 single-card")}>
-                                                            <Row className="align-items-center" className="g-0">
+                                                            <Row className="align-items-center" >
                                                                 <Col xl={7} lg={7} md={12}>
                                                                     <div className="d-flex align-items-center">
                                                                         <div className="img-block text-center mr-2">
@@ -282,19 +282,19 @@ class NotifyFreeMockTestSectionSection extends Component {
                                                                     {smap.exam_started == false ?
                                                                         (
                                                                             <React.Fragment>
-                                                                                {smap.is_registered == true ? (<Button className="mock-registered" className="w-100">Registered</Button>) : (
-                                                                                    <Button className="mock-btn" onClick={(e) => this.register(e, smap.id)} className="w-100">Register</Button>
+                                                                                {smap.is_registered == true ? (<Button className="mock-registered" >Registered</Button>) : (
+                                                                                    <Button className="mock-btn" onClick={(e) => this.register(e, smap.id)} >Register</Button>
                                                                                 )}
                                                                             </React.Fragment>
 
                                                                         )
-                                                                        : smap.exam_expired == true ? (<Button className="mock-btn" className="w-100">Exam Expired</Button>)
+                                                                        : smap.exam_expired == true ? (<Button className="mock-btn" >Exam Expired</Button>)
                                                                             : smap.amount == "0" || smap.is_purchased == true ?
                                                                                 (<Button className="mock-btn"
                                                                                     onClick={() => this.startExam(smap, islive, "schedule")}
 
-                                                                                    className="w-100">Start Test</Button>)
-                                                                                : (<Button className="mock-btn" onClick={() => this.modalaFun(smap.exam_name)} className="w-100">Buy Now</Button>)}
+                                                                                    >Start Test</Button>)
+                                                                                : (<Button className="mock-btn" onClick={() => this.modalaFun(smap.exam_name)} >Buy Now</Button>)}
                                                                 </Col>
                                                             </Row>
                                                         </Card>
@@ -338,19 +338,19 @@ class NotifyFreeMockTestSectionSection extends Component {
                                                                                 {smap1.exam_started == false ?
                                                                                     (
                                                                                         <React.Fragment>
-                                                                                            {smap1.is_registered == true ? (<Button className="mt-3 mock-registered" className="w-100">Registered</Button>) : (
-                                                                                                <Button className="mock-btn" onClick={(e) => this.register(e, smap1.id)} className="w-100">Register</Button>
+                                                                                            {smap1.is_registered == true ? (<Button className="mt-3 mock-registered" >Registered</Button>) : (
+                                                                                                <Button className="mock-btn" onClick={(e) => this.register(e, smap1.id)} >Register</Button>
                                                                                             )}
                                                                                         </React.Fragment>
 
                                                                                     )
-                                                                                    : smap1.exam_expired == true ? (<Button className="mt-3" className="w-100">Exam Expired</Button>)
+                                                                                    : smap1.exam_expired == true ? (<Button className="mt-3" >Exam Expired</Button>)
                                                                                         : smap1.amount == "0" || smap1.is_purchased == true ?
                                                                                             (<Button className="mock-btn"
                                                                                                 onClick={() => this.startExam(smap1, islive)}
 
-                                                                                                className="w-100">Start Test</Button>)
-                                                                                            : (<Button className="mt-3" onClick={() => this.modalaFun(smap1.exam_name)} className="w-100">Buy Now</Button>)}
+                                                                                                >Start Test</Button>)
+                                                                                            : (<Button className="mt-3" onClick={() => this.modalaFun(smap1.exam_name)} >Buy Now</Button>)}
                                                                             </Col>
                                                                         </Row>
                                                                     </Card>

@@ -13,7 +13,9 @@ class ChapterWeightage extends Component {
             activeSubject = "";
         }
         else {
-            activeSubject = props.getPreviousPaperAnalysis.subjects_weightage[0].subject
+            activeSubject = props.getPreviousPaperAnalysis.subjects_weightage?.length > 0
+                ? props.getPreviousPaperAnalysis.subjects_weightage[0].subject
+                : ""
         }
 
         this.state = {
