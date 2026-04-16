@@ -65,99 +65,86 @@ class ManageQuestionPaper extends Component {
   }
   menuToggler = () => {
     const toggled = Cookies.get("toggle");
-     if (toggled === "wrapper") {
-         this.setState({toggled:"wrapper sidebar-enable"});
-         Cookies.set("toggle", "wrapper sidebar-enable");
-     } else {
-         this.setState({toggled:"wrapper"});
-         Cookies.set("toggle", "wrapper");
-     }
- };
+    if (toggled === "wrapper") {
+      this.setState({ toggled: "wrapper sidebar-enable" });
+      Cookies.set("toggle", "wrapper sidebar-enable");
+    } else {
+      this.setState({ toggled: "wrapper" });
+      Cookies.set("toggle", "wrapper");
+    }
+  };
   handleDelete = async (e, cell, row, rowIndex, formatExtraData) => {
     await this.props.handleDelete({
-      variables: {
-        exam_paper_id: rowIndex.id
-      },
-      update: (store, { data }) => {
-        const data1 = store.readQuery({
-          query: FETCH_EXAMS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid")),
-            exam_paper_id: 0
-          }
-        });
+        variables: {
+            exam_paper_id: rowIndex.id
+        },
+        update: (store, { data }) => {
 
-        const globals = store.readQuery({
-          query: FETCH_EXAMS_COUNTS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
+            // ✅ Deep clone to avoid mutating frozen Apollo cache objects
+            const data1 = JSON.parse(JSON.stringify(store.readQuery({
+                query: FETCH_EXAMS,
+                variables: {
+                    institution_id: parseInt(Cookies.get("institutionid")),
+                    exam_paper_id: 0
+                }
+            })));
 
-        console.log("rowIndex", rowIndex);
-        console.log("globals", globals, this.props);
-        if (rowIndex.is_completed == "completed") {
-          console.log("globals", globals, this.props);
-          globals.globals.manageQuestionData.total = parseInt(globals.globals.manageQuestionData.total) - 1;
-          globals.globals.manageQuestionData.completed = parseInt(globals.globals.manageQuestionData.completed) - 1;
+            const globals = JSON.parse(JSON.stringify(store.readQuery({
+                query: FETCH_EXAMS_COUNTS,
+                variables: {
+                    institution_id: parseInt(Cookies.get("institutionid"))
+                }
+            })));
+
+            // ✅ Now safe to mutate since these are cloned copies
+            if (rowIndex.is_completed == "completed") {
+                globals.globals.manageQuestionData.total -= 1;
+                globals.globals.manageQuestionData.completed -= 1;
+            } else {
+                globals.globals.manageQuestionData.total -= 1;
+                let now = moment().unix();
+                if (now < rowIndex.start_time && rowIndex.is_completed == "Not completed") {
+                    globals.globals.manageQuestionData.future -= 1;
+                } else if (now > rowIndex.start_time && now <= rowIndex.end_time && rowIndex.is_completed == "Not completed") {
+                    globals.globals.manageQuestionData.ongoing -= 1;
+                }
+            }
+
+            // ✅ Write cloned + updated data back to store
+            try {
+                store.writeQuery({
+                    query: FETCH_EXAMS_COUNTS,
+                    variables: {
+                        institution_id: parseInt(Cookies.get("institutionid"))
+                    },
+                    data: globals
+                });
+            } catch (e) {
+                console.log("Exception", e);
+            }
+
+            // ✅ Filter out deleted record from cloned list
+            data1.manageQuestions = data1.manageQuestions.filter(x => x.id != rowIndex.id);
+            try {
+                store.writeQuery({
+                    query: FETCH_EXAMS,
+                    variables: {
+                        institution_id: parseInt(Cookies.get("institutionid")),
+                        exam_paper_id: 0
+                    },
+                    data: data1
+                });
+            } catch (e) {
+                console.log("Exception", e);
+            }
+
+            if (data.deleteExamPaper) {
+                this.setState({ status: 2 });
+                setTimeout(() => { this.DeleteSetpageLoad() }, 1000);
+            }
         }
-        else {
-          globals.globals.manageQuestionData.total = parseInt(globals.globals.manageQuestionData.total) - 1;
-          let now = moment().unix();
-          if (now < rowIndex.start_time && rowIndex.is_completed == "Not completed") {
-            globals.globals.manageQuestionData.future = parseInt(globals.globals.manageQuestionData.future) - 1;
-          }
-          else if (now > rowIndex.start_time && now <= rowIndex.end_time && rowIndex.is_completed == "Not completed") {
-            globals.globals.manageQuestionData.ongoing = parseInt(globals.globals.manageQuestionData.ongoing) - 1;
-          }
-
-        }
-
-        try {
-          store.writeQuery({
-            query: FETCH_EXAMS_COUNTS,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: globals
-          });
-
-        }
-        catch (e) {
-          console.log("Exception", e);
-        }
-
-        data1.manageQuestions = data1.manageQuestions.filter(x => x.id != rowIndex.id);
-        try {
-          store.writeQuery({
-            query: FETCH_EXAMS,
-            variables: {
-              institution_id: parseInt(Cookies.get("institutionid"))
-            },
-            data: data1
-          });
-
-        }
-        catch (e) {
-          console.log("Exception", e);
-        }
-
-        const data4 = store.readQuery({
-          query: FETCH_EXAMS,
-          variables: {
-            institution_id: parseInt(Cookies.get("institutionid"))
-          }
-        });
-        data1.manageQuestions = data4;
-        if (data.deleteExamPaper) {
-          this.setState({
-            status: 2
-          });
-          setTimeout(() => { this.DeleteSetpageLoad() }, 1000);
-        }
-      }
     });
-  }
+}
   DeleteSetpageLoad = () => {
     console.log("setTimeout");
     this.setState({ status: 1 });

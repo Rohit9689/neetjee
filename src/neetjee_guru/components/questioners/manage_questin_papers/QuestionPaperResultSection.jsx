@@ -400,16 +400,16 @@ class QuestionPaperResultSection extends Component {
                                     <div className="text-center">
                                         {moment().unix() >= this.props.getExams[0].start_time ? ("") : (
                                             <React.Fragment>
-                                                <Button className="btn btn-warning my-2" className="w-100" onClick={() => this.editQuestionPaper()}>Edit Question Paper</Button>
-                                                <Button className="btn btn-primary my-2" className="w-100" onClick={() => this.setState({ modalShow: true })}>Reschedule online question paper</Button>
+                                                <Button className="btn btn-warning my-2 w-100" onClick={() => this.editQuestionPaper()}>Edit Question Paper</Button>
+                                                <Button className="btn btn-primary my-2 w-100"  onClick={() => this.setState({ modalShow: true })}>Reschedule online question paper</Button>
                                             </React.Fragment>
 
                                         )}
 
-                                        <Button className="btn btn-success my-2" className="w-100" onClick={() => this.setState({ modalShowTwo: true })}>Preview &amp; Download question paper</Button>
+                                        <Button className="btn btn-success my-2 w-100"  onClick={() => this.setState({ modalShowTwo: true })}>Preview &amp; Download question paper</Button>
                                         {/* <Button className="btn btn-info my-2" block >Paper Download with Key</Button> */}
-                                        <a className="btn btn-info my-2" className="w-100" href={`http://admin.mylearningplus.in/pdf/generate_key.php?exam=${this.props.getExams[0].id}`} target="_self">Paper Download with Key</a>
-                                        <a className="btn btn-secondary my-2" className="w-100" href={`http://admin.mylearningplus.in/pdf/generate_expkey.php?exam=${this.props.getExams[0].id}`} target="_self">Paper Download with Explanation &amp; Key</a>
+                                        <a className="btn btn-info my-2 w-100"  href={`http://34.100.238.121:81/neetjee-dataadmin/pdf/generate_key.php?exam=${this.props.getExams[0].id}`} target="_self">Paper Download with Key</a>
+                                        <a className="btn btn-secondary my-2 w-100"  href={`http://34.100.238.121:81/neetjee-dataadmin/pdf/generate_expkey.php?exam=${this.props.getExams[0].id}`} target="_self">Paper Download with Explanation &amp; Key</a>
                                         {/* <Button className="btn btn-secondary my-2" block >Paper Download with Explanation &amp; Key</Button> */}
                                     </div>
                                 </Col>
