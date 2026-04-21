@@ -301,7 +301,7 @@ class CustomPracticeExamResultDetails extends Component {
                 </Col>
             )
         }
-        if (error1 !== undefined) {
+        if (error1 !== undefined && !getStudentSessions.getStudentSessions) {
             alert("Server Error. " + error1.message);
             return null;
         }
@@ -849,6 +849,7 @@ withRouter(
 
                 }
                 ,
-                fetchPolicy: "no-cache"
+                fetchPolicy: "no-cache",
+                errorPolicy: "all"
             }), name: "getStudentSessions"
         }))(CustomPracticeExamResultDetails));

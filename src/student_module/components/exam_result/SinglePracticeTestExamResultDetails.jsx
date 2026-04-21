@@ -262,7 +262,7 @@ class SinglePracticeTestExamResultDetails extends Component {
                 </Col>
             )
         }
-        if (error1 !== undefined) {
+        if (error1 !== undefined && !getStudentExamSessions.getStudentExamSessions) {
             alert("Server Error. " + error1.message);
             return null;
         }
@@ -739,6 +739,7 @@ export default
 
                 }
                 ,
-                fetchPolicy: "no-cache"
+                fetchPolicy: "no-cache",
+                errorPolicy: "all"
             }), name: "getStudentExamSessions"
         }))(SinglePracticeTestExamResultDetails);
